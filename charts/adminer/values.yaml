@@ -1,0 +1,61 @@
+---
+replicaCount: 1
+
+image:
+  registry: docker.io
+  repository: adminer
+  tag: ""
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+  containerPort: 8080
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  tls: []
+  hosts: []
+
+serviceAccount:
+  create: true
+  annotations: {}
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 50m
+    memory: 64Mi
+
+livenessProbe:
+  enabled: true
+
+readinessProbe:
+  enabled: true
+
+startupProbe:
+  enabled: true
+  periodSeconds: 2
+  failureThreshold: 15
+
+theme: null
+
+defaultServerType: null
+
+plugins:
+  enabled: false
+  list: []
+  # databaseHide: []
+  # designs: []
+  loginServers: []
+  # loginIP: []
+  # loginOTP: []
+  # loginPasswordLess: []
+  # loginSSL: []
+  # loginTable: []
+  # masterSlave: []
+  # prettyJsonColumn: []
