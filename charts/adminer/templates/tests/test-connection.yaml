@@ -1,0 +1,20 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "adminer.fullname" . | trunc 47 }}-test-connection
+  labels:
+    {{- include "adminer.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: test
+spec:
+  ttlSecondsAfterFinished: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: curl
+          image: curlimages/curl
+          args:
+            - -sIL
+            - http://{{ include "adminer.fullname" . }}:{{ default .Values.service.containerPort .Values.service.port }}

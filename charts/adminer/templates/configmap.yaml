@@ -1,0 +1,21 @@
+{{- if and .Values.plugins.enabled .Values.plugins.loginServers -}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "adminer.fullname" . | trunc 48 }}-plugins-config
+  labels:
+    {{- include "adminer.labels" . | nindent 4 }}
+data:
+  login-servers.php: |-
+    <?php
+    require_once('plugins/login-servers.php');
+
+    return new AdminerLoginServers(
+        $servers = array(
+            {{- range .Values.plugins.loginServers }}
+            {{ default .host .name | quote }} => array("server" => {{ if .port }}{{ printf "%s:%s" .host (.port | toString) | quote }}{{ else }}{{ .host | quote }}{{ end }}, "driver" => {{ default "mysql" .type | quote }}),
+            {{- end }}
+        )
+    );
+{{- end }}
