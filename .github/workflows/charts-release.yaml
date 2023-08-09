@@ -34,9 +34,6 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: helm package
-        run: helm package charts/${{ matrix.chart }}
-
       - name: helm login
         run: echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ghcr.io -u ${{ github.repository_owner }} --password-stdin
 
