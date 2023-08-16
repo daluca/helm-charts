@@ -1,0 +1,77 @@
+---
+name: Release
+
+on:
+  push:
+    branches: [main]
+    paths: [charts/**/Chart.yaml]
+
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  discovery:
+    name: discovery
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    outputs:
+      changed: ${{ steps.list-changed.outputs.changed }}
+      charts: ${{ steps.list-changed.outputs.charts }}
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+
+      - name: list changed charts
+        id: list-changed
+        run: |
+          changed=()
+          for chart in charts/*/; do
+              CHART="${chart#charts/}"
+              CHART="${CHART%/}"
+              CURRENT_VERSION="$(yq '.version' "charts/${CHART}/Chart.yaml")"
+              LAST_VERSION="$(helm show chart "oci://ghcr.io/${{ github.repository_owner }}/charts/${CHART}" | yq '.version')"
+              if [[ "${LAST_VERSION}" != "${CURRENT_VERSION}" ]]; then
+                  echo "changed=true" >> $GITHUB_OUTPUT
+                  changed+=("${CHART}")
+              fi
+          done
+          echo "charts=$(jq -Rsc 'split("\n") | .[0] | split(" ")' <<< "${changed[*]}" | sed 's|"|\"|g')" >> $GITHUB_OUTPUT
+
+  release:
+    name: charts
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [discovery]
+    if: needs.discovery.outputs.changed == 'true'
+
+    strategy:
+      fail-fast: true
+      matrix:
+        chart: ${{ fromJSON(needs.discovery.outputs.charts )}}
+
+    defaults:
+      run:
+        working-directory: charts/${{ matrix.chart }}
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+
+      - name: chart info
+        run: |
+          echo "CHART_NAME=$(yq '.name' Chart.yaml)" >> $GITHUB_ENV
+          echo "CHART_VERSION=$(yq '.version' Chart.yaml)" >> $GITHUB_ENV
+
+      - name: helm login
+        run: echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+
+      - name: helm package
+        run: helm package .
+
+      - name: helm push
+        run: helm push ${{ env.CHART_NAME }}-${{ env.CHART_VERSION }}.tgz oci://ghcr.io/${{ github.repository_owner }}/charts
