@@ -1,0 +1,42 @@
+---
+startupProbe:
+  failureThreshold: 30
+
+plugins:
+  enabled: true
+  list:
+    - dump-alter
+    - dump-bz2
+    - dump-date
+    - dump-json
+    - dump-php
+    - dump-xml
+    - dump-zip
+    - edit-calendar
+    - edit-foreign
+    - edit-textarea
+    - email-table
+    - enum-option
+    - enum-types
+    - file-upload
+    - foreign-system
+    - frames
+    - json-column
+    - slugify
+    - sql-log
+    - struct-comments
+    - table-indexes-structure
+    - table-structure
+    - tables-filter
+    - tinymce
+    - translation
+    - version-noverify
+    - wymeditor
+
+  loginServers:
+    - name: PostgreSQL Testing
+      host: postgresql.databases.svc.cluster.local
+      type: pgsql
+    - name: MariaDB Testing
+      host: mariadb.databases.svc.cluster.local
+      type: mysql

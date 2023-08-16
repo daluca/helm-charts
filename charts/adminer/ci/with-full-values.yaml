@@ -1,0 +1,50 @@
+---
+replicaCount: 2
+
+image:
+  registry: null
+
+service:
+  port: 80
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.allow-http: "false"
+  tls:
+    - hosts:
+        - localhost
+      secretName: localhost-tls
+  hosts:
+    - host: localhost
+      paths:
+        - pathType: Prefix
+          path: /
+
+serviceAccount:
+  create: true
+  annotations:
+    eks.amazonaws.com/role-arn: kind-testing
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 100m
+    memory: 128Mi
+
+theme: nette
+
+defaultServerType: pgsql
+
+plugins:
+  enabled: true
+  list: [tables-filter, tinymce]
+  loginServers:
+    - name: Testing
+      host: postgresql.databases.svc.cluster.local
+      port: 5432
+      type: pgsql

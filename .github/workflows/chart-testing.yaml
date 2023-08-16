@@ -1,0 +1,94 @@
+---
+name: Testing
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+env:
+  CT_TARGET_BRANCH: ${{ github.event.repository.default_branch }}
+  YAMLLINT_VERSION: 1.32.0
+
+jobs:
+  discovery:
+    name: discovery
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    outputs:
+      charts: ${{ steps.get-charts.outputs.charts }}
+      changed: ${{ steps.list-changed.outputs.changed }}
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: setup chart testing
+        uses: helm/chart-testing-action@v2.4.0
+        with:
+          yamllint_version: ${{ env.YAMLLINT_VERSION }}
+
+
+      - name: list changed charts
+        id: list-changed
+        run: |
+          changed=$(ct list-changed --config ct.yaml)
+          if [[ -n "${changed}" ]]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: charts matrix
+        id: get-charts
+        if: steps.list-changed.outputs.changed == 'true'
+        run: |
+          echo "charts=$(jq -Rsc 'split("\n") | [.[] | select( length > 0)]' <<< "$(ct list-changed --config ct.yaml)" | sed 's|charts/||g' | sed 's|"|\"|g')" >> $GITHUB_OUTPUT
+
+  testing:
+    name: charts
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [discovery]
+    if: needs.discovery.outputs.changed == 'true'
+
+    strategy:
+      fail-fast: true
+      matrix:
+        chart: ${{ fromJSON(needs.discovery.outputs.charts )}}
+        kubernetes_version: [1.26.6, 1.27.3, 1.28.0]
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: setup chart testing
+        uses: helm/chart-testing-action@v2.4.0
+        with:
+          yamllint_version: ${{ env.YAMLLINT_VERSION }}
+
+      - name: lint ${{ matrix.chart }} chart
+        run: ct lint --config ct.yaml --print-config --debug --charts charts/${{ matrix.chart }}
+
+      - name: create kind cluster
+        uses: helm/kind-action@v1.8.0
+        with:
+          node_image: kindest/node:v${{ matrix.kubernetes_version }}
+
+      - name: install ${{ matrix.chart }} chart
+        run: ct install --config ct.yaml --print-config --debug --charts charts/${{ matrix.chart }}
+
+  protection:
+    name: complete
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    needs: [testing]
+
+    steps:
+      - name: success
+        run: echo "Success on all tests"
