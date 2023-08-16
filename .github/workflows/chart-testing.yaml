@@ -10,6 +10,7 @@ permissions:
 
 env:
   CT_TARGET_BRANCH: ${{ github.event.repository.default_branch }}
+  YAMLLINT_VERSION: 1.32.0
 
 jobs:
   discovery:
@@ -29,6 +30,9 @@ jobs:
 
       - name: setup chart testing
         uses: helm/chart-testing-action@v2.4.0
+        with:
+          yamllint_version: ${{ env.YAMLLINT_VERSION }}
+
 
       - name: list changed charts
         id: list-changed
@@ -65,6 +69,8 @@ jobs:
 
       - name: setup chart testing
         uses: helm/chart-testing-action@v2.4.0
+        with:
+          yamllint_version: ${{ env.YAMLLINT_VERSION }}
 
       - name: lint ${{ matrix.chart }} chart
         run: ct lint --config ct.yaml --print-config --debug --charts charts/${{ matrix.chart }}
