@@ -59,7 +59,7 @@ jobs:
       fail-fast: true
       matrix:
         chart: ${{ fromJSON(needs.discovery.outputs.charts )}}
-        kubernetes_version: [1.25.11, 1.26.6, 1.27.3]
+        kubernetes_version: [1.26.6, 1.27.3, 1.28.0]
 
     steps:
       - name: checkout repository
