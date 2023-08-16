@@ -1,4 +1,9 @@
 ---
+ignore:
+  - .github/workflows/
+  - charts/*/templates/
+  - charts/*/Chart.lock
+
 rules:
   braces:
     forbid: false
