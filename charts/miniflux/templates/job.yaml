@@ -1,0 +1,80 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "miniflux.fullname" . | trunc 43 | trimSuffix "-" }}-database-migrations
+  labels:
+    {{- include "miniflux.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: pre-upgrade
+    helm.sh/hook-delete-policy: hook-succeeded
+spec:
+  template:
+    metadata:
+      name: {{ include "miniflux.fullname" . | trunc 43 | trimSuffix "-" }}-database-migrations
+      labels:
+        app.kubernetes.io/component: backend
+        {{- include "miniflux.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: database-migrations
+          image: {{ if .Values.image.registry }}{{ .Values.image.registry }}{{ end }}/{{ .Values.image.repository }}:{{ default .Chart.AppVersion .Values.image.tag }}{{ if .Values.image.sha }}{{ .Values.image.sha }}{{ end }}
+          imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
+          command: [miniflux]
+          args: [-migrate, -debug]
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  key: DATABASE_URL
+                  name: {{ include "miniflux.fullname" . | trunc 55 | trimSuffix "-" }}-secrets
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "miniflux.fullname" . | trunc 50 | trimSuffix "-" }}-create-admin
+  labels:
+    {{- include "miniflux.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: post-install
+    helm.sh/hook-delete-policy: hook-succeeded
+spec:
+  template:
+    metadata:
+      name: {{ include "miniflux.fullname" . | trunc 50 | trimSuffix "-" }}-create-admin
+      labels:
+        app.kubernetes.io/component: backend
+        {{- include "miniflux.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: create-admin
+          image: {{ if .Values.image.registry }}{{ .Values.image.registry }}{{ end }}/{{ .Values.image.repository }}:{{ default .Chart.AppVersion .Values.image.tag }}{{ if .Values.image.sha }}{{ .Values.image.sha }}{{ end }}
+          imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
+          command: [miniflux]
+          args: [-create-admin, -debug]
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  key: DATABASE_URL
+                  name: {{ include "miniflux.fullname" . | trunc 55 | trimSuffix "-" }}-secrets
+            - name: ADMIN_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  {{- if .Values.admin.existingSecret }}
+                  name: {{ .Values.admin.existingSecret }}
+                  {{- else }}
+                  name: {{ include "miniflux.fullname" . | trunc 57 | trimSuffix "-" }}-admin
+                  {{- end }}
+            - name: ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  {{- if .Values.admin.existingSecret }}
+                  name: {{ .Values.admin.existingSecret }}
+                  {{- else }}
+                  name: {{ include "miniflux.fullname" . | trunc 57 | trimSuffix "-" }}-admin
+                  {{- end }}

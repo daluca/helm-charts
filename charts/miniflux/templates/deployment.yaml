@@ -1,0 +1,72 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "miniflux.fullname" . }}
+  labels:
+    {{- include "miniflux.labels" . | nindent 4 }}
+spec:
+  replicas: {{ default 1 .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "miniflux.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: frontend
+        {{- include "miniflux.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- if .Values.serviceAccount.create }}
+      serviceAccountName: {{ include "miniflux.fullname" . }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ if .Values.image.registry }}{{ .Values.image.registry }}{{ end }}/{{ .Values.image.repository }}:{{ default .Chart.AppVersion .Values.image.tag }}{{ if .Values.image.sha }}{{ .Values.image.sha }}{{ end }}
+          imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.containerPort }}
+              protocol: TCP
+          env:
+            - name: DISABLE_SCHEDULER_SERVICE
+              value: "true"
+          envFrom:
+            - configMapRef:
+                name: {{ include "miniflux.fullname" . | trunc 56 | trimSuffix "-" }}-config
+            - secretRef:
+                name: {{ include "miniflux.fullname" . | trunc 55 | trimSuffix "-" }}-secrets
+            {{- if .Values.existingSecret }}
+            - secretRef:
+                name: {{ .Values.existingSecret }}
+              {{- end }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if .Values.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: {{ if .Values.config.BASE_URL }}/{{ trimPrefix "http://localhost/" .Values.config.BASE_URL | trimSuffix "/" }}{{ end }}/healthcheck
+              port: http
+          {{- with omit .Values.livenessProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: {{ if .Values.config.BASE_URL }}/{{ trimPrefix "http://localhost/" .Values.config.BASE_URL | trimSuffix "/" }}{{ end }}/healthcheck
+              port: http
+          {{- with omit .Values.readinessProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.startupProbe.enabled }}
+          startupProbe:
+            httpGet:
+              path: {{ if .Values.config.BASE_URL }}/{{ trimPrefix "http://localhost/" .Values.config.BASE_URL | trimSuffix "/" }}{{ end }}/healthcheck
+              port: http
+          {{- with omit .Values.startupProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
