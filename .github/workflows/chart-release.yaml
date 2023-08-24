@@ -70,7 +70,7 @@ jobs:
       - name: check dependencies
         id: check-dependencies
         run: |
-          if [[ -f "charts/${{ matrix.chart }}/Chart.yaml" ]]; then
+          if [[ -f "Chart.yaml" ]]; then
             echo "dependencies=true" >> $GITHUB_OUTPUT
           fi
 
