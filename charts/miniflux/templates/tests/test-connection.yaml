@@ -1,0 +1,20 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "miniflux.fullname" . | trunc 47 }}-test-connection
+  labels:
+    {{- include "miniflux.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: test
+spec:
+  ttlSecondsAfterFinished: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: curl
+          image: curlimages/curl
+          args:
+            - -sIL
+            - http://{{ include "miniflux.fullname" . }}:{{ default .Values.service.containerPort .Values.service.port }}{{ if .Values.config.BASE_URL }}/{{ trimPrefix "http://localhost/" .Values.config.BASE_URL | trimSuffix "/" }}{{ end }}/healthcheck

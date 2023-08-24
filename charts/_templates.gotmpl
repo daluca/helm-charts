@@ -1,0 +1,13 @@
+{{- define "custom.requirementsSection" -}}
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+{{- range .Dependencies }}
+{{- if .Alias }}
+| [{{ .Repository}}]({{ .Repository }}) | {{ .Alias }}{{ .Name }} | {{ .Version }} |
+{{- else }}
+| [{{ .Repository}}]({{ .Repository }}) | {{ .Name }} | {{ .Version }} |
+{{- end }}
+{{- end }}
+{{- end -}}

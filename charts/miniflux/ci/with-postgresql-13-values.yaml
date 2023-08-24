@@ -1,0 +1,7 @@
+---
+config:
+  DEBUG: "true"
+
+postgresql:
+  image:
+    tag: 13
