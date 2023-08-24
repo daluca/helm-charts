@@ -39,7 +39,7 @@ spec:
             {{- else }}
                 name: {{ include "miniflux.fullname" . | trunc 42 | trimSuffix "-" }}-database-credentials
             {{- end }}
-            {{- if .Values.secrets -}}
+            {{- if .Values.secrets }}
             - secretRef:
                 name: {{ include "miniflux.fullname" . | trunc 55 | trimSuffix "-" }}-secrets
             {{- end }}
