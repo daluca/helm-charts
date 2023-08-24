@@ -67,6 +67,27 @@ jobs:
           echo "CHART_NAME=$(yq '.name' Chart.yaml)" >> $GITHUB_ENV
           echo "CHART_VERSION=$(yq '.version' Chart.yaml)" >> $GITHUB_ENV
 
+      - name: check dependencies
+        id: check-dependencies
+        run: |
+          if [[ -f "charts/${{ matrix.chart }}/Chart.yaml" ]]; then
+            echo "dependencies=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: add helm repositories
+        if: steps.check-dependencies.outputs.dependencies == 'true'
+        run: |
+          dependencies="$(yq '.dependencies[].repository' Chart.yaml)"
+          IFS=$'\n' readarray -t repositories <<< "${dependencies}"
+
+          for (( i=0; i<"${#repositories[@]}"; i++ )); do
+              helm repo add "dependency-${i}" "${repositories[${i}]}"
+          done
+
+      - name: build helm dependencies
+        if: steps.check-dependencies.outputs.dependencies == 'true'
+        run: helm dependencies build
+
       - name: helm login
         run: echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ghcr.io -u ${{ github.repository_owner }} --password-stdin
 
