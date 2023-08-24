@@ -53,6 +53,7 @@ secrets: {}
 existingSecret: ""
 
 admin:
+  enabled: true
   username: admin
   password: password
   existingSecret: ""

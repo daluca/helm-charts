@@ -29,6 +29,7 @@ spec:
                 secretKeyRef:
                   key: DATABASE_URL
                   name: {{ include "miniflux.fullname" . | trunc 42 | trimSuffix "-" }}-database-credentials
+{{- if .Values.admin.enabled -}}
 ---
 apiVersion: batch/v1
 kind: Job
@@ -78,3 +79,4 @@ spec:
                   {{- else }}
                   name: {{ include "miniflux.fullname" . | trunc 57 | trimSuffix "-" }}-admin
                   {{- end }}
+{{- end }}
