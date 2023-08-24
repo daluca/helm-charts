@@ -57,9 +57,11 @@ admin:
   password: password
   existingSecret: ""
 
-database:
+externalDatabase:
+  enabled: false
   # -- (string)
   url: null
+  existingSecret: ""
 
 postgresql:
   enabled: true

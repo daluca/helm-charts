@@ -324,15 +324,21 @@
                 }
             }
         },
-        "database": {
+        "externalDatabase": {
             "type": "object",
-            "required": [],
+            "required": ["enabled"],
             "additionalProperties": false,
             "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
                 "url": {
                     "type": ["string", "null"],
                     "format": "uri",
                     "pattern": "^postgres(ql)?://"
+                },
+                "existingSecret": {
+                    "type": "string"
                 }
             }
         },
