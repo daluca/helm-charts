@@ -33,7 +33,11 @@ spec:
             - configMapRef:
                 name: {{ include "miniflux.fullname" . | trunc 56 | trimSuffix "-" }}-config
             - secretRef:
+            {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.existingSecret }}
+                name: {{ .Values.externalDatabase.existingSecret }}
+            {{- else }}
                 name: {{ include "miniflux.fullname" . | trunc 42 | trimSuffix "-" }}-database-credentials
+            {{- end }}
             {{- if .Values.secrets -}}
             - secretRef:
                 name: {{ include "miniflux.fullname" . | trunc 55 | trimSuffix "-" }}-secrets
