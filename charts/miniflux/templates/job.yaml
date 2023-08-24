@@ -28,7 +28,11 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: DATABASE_URL
+                  {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.existingSecret }}
+                  name: {{ .Values.externalDatabase.existingSecret }}
+                  {{- else }}
                   name: {{ include "miniflux.fullname" . | trunc 42 | trimSuffix "-" }}-database-credentials
+                  {{- end }}
 {{- if .Values.admin.enabled -}}
 ---
 apiVersion: batch/v1
@@ -60,7 +64,11 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: DATABASE_URL
+                  {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.existingSecret }}
+                  name: {{ .Values.externalDatabase.existingSecret }}
+                  {{- else }}
                   name: {{ include "miniflux.fullname" . | trunc 42 | trimSuffix "-" }}-database-credentials
+                  {{- end }}
             - name: ADMIN_USERNAME
               valueFrom:
                 secretKeyRef:
