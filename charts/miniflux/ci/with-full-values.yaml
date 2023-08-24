@@ -1,0 +1,37 @@
+---
+replicaCount: 2
+
+service:
+  port: 80
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.allow-http: "false"
+  hosts:
+    - host: localhost
+      paths:
+        - pathType: Prefix
+          path: /
+  tls:
+    - secretName: localhost-tls
+      hosts:
+        - localhost
+
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: kind-testing
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 256Mi
+  limits:
+    cpu: 200m
+    memory: 256Mi
+
+admin:
+  username: admin
+  password: somethingSecureIPromise

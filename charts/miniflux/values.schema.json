@@ -2,7 +2,15 @@
     "$schema": "http://json-schema.org/schema",
     "$id": "https://raw.githubusercontent.com/daluca/helm-charts/main/charts/synapse/values.schema.json",
     "type": "object",
-    "required": ["image", "postgresql"],
+    "required": [
+        "image",
+        "service",
+        "ingress",
+        "serviceAccount",
+        "admin",
+        "externalDatabase",
+        "postgresql"
+    ],
     "additionalProperties": false,
     "properties": {
         "nameOverride": {
@@ -311,8 +319,12 @@
         },
         "admin": {
             "type": "object",
+            "required": ["enabled"],
             "additionalProperties": false,
             "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
                 "username": {
                     "type": "string"
                 },
@@ -324,15 +336,21 @@
                 }
             }
         },
-        "database": {
+        "externalDatabase": {
             "type": "object",
-            "required": [],
+            "required": ["enabled"],
             "additionalProperties": false,
             "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
                 "url": {
                     "type": ["string", "null"],
                     "format": "uri",
                     "pattern": "^postgres(ql)?://"
+                },
+                "existingSecret": {
+                    "type": "string"
                 }
             }
         },
