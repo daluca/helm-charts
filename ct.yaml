@@ -2,6 +2,8 @@
 remote: origin
 target-branch: main
 lint-conf: .yamllint.yaml
-helm-extra-args: --timeout 800s
-chart-dirs: [charts]
 validate-maintainers: false
+chart-dirs: [charts]
+chart-repos:
+  - bitnami=https://charts.bitnami.com/bitnami
+helm-extra-args: --timeout 800s

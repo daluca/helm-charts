@@ -71,23 +71,6 @@ jobs:
         with:
           yamllint_version: ${{ env.YAMLLINT_VERSION }}
 
-      - name: check dependencies
-        id: check-dependencies
-        run: |
-          if [[ -f "charts/${{ matrix.chart }}/Chart.yaml" ]]; then
-            echo "dependencies=true" >> $GITHUB_OUTPUT
-          fi
-
-      - name: add helm repositories
-        if: steps.check-dependencies.outputs.dependencies == 'true'
-        run: |
-          dependencies="$(yq '.dependencies[].repository' "charts/${{ matrix.chart }}/Chart.yaml")"
-          IFS=$'\n' readarray -t repositories <<< "${dependencies}"
-
-          for (( i=0; i<"${#repositories[@]}"; i++ )); do
-              helm repo add "dependency-${i}" "${repositories[${i}]}"
-          done
-
       - name: lint ${{ matrix.chart }} chart
         run: ct lint --config ct.yaml --print-config --debug --charts charts/${{ matrix.chart }}
 
