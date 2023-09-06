@@ -1,0 +1,64 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "rss-bridge.fullname" . | trunc 56 | trimSuffix "-" }}-config
+  labels:
+    {{- include "rss-bridge.labels" . | nindent 4 }}
+data:
+  config.ini.php: |-
+    [system]
+    {{- range .Values.rssBridge.bridges }}
+    enabled_bridges[] = {{ . }}
+    {{- end }}
+    timezone = {{ .Values.rssBridge.system.timezone | quote }}
+    message = {{ .Values.rssBridge.system.message | quote }}
+    enabled_debug_mode = {{ .Values.rssBridge.system.debug.enabled }}
+    {{- range .Values.rssBridge.system.debug.whitelist }}
+    debug_mode_whitelist[] = {{ . }}
+    {{- end }}
+    enable_maintenance_mode = {{ .Values.rssBridge.system.maintenanceMode }}
+    [http]
+    timeout = {{ .Values.rssBridge.http.timeout }}
+    useragent = {{ .Values.rssBridge.http.useragent | quote }}
+    max_filesize = {{ .Values.rssBridge.http.maxFilesize }}
+    [cache]
+    {{- if .Values.memcached.enabled }}
+    type = "memcached"
+    {{- else }}
+    type = {{ .Values.rssBridge.cache.type | quote }}
+    {{- end }}
+    custom_timeout = {{ .Values.rssBridge.cache.customTimeout }}
+    [admin]
+    email = {{ default "" .Values.rssBridge.admin.email | quote }}
+    telegram = {{ .Values.rssBridge.admin.telegram | quote }}
+    donations = {{ .Values.rssBridge.admin.donations }}
+    [proxy]
+    url = {{ default "" .Values.rssBridge.proxy.url | quote }}
+    name = {{ .Values.rssBridge.proxy.name | quote }}
+    by_bridge = {{ .Values.rssBridge.proxy.byBridge }}
+    [authentication]
+    enable = {{ .Values.rssBridge.authentication.enabled }}
+    username = {{ .Values.rssBridge.authentication.username | quote }}
+    password = {{ .Values.rssBridge.authentication.password | quote }}
+    access_token = {{ .Values.rssBridge.authentication.accessToken | quote }}
+    [error]
+    output = {{ .Values.rssBridge.error.output | quote }}
+    report_limit = {{ .Values.rssBridge.error.reportLimit }}
+    [FileCache]
+    path = {{ .Values.rssBridge.fileCache.path | quote }}
+    enable_purge = {{ .Values.rssBridge.fileCache.enablePurge }}
+    [SQLiteCache]
+    file = {{ .Values.rssBridge.sqliteCache.file | quote }}
+    enable_purge = {{ .Values.rssBridge.sqliteCache.enablePurge }}
+    timeout = {{ .Values.rssBridge.sqliteCache.timeout }}
+    [MemcachedCache]
+    {{- if .Values.memcached.enabled }}
+    host = {{ printf "%s-memcached" (include "rss-bridge.fullname" .) | quote }}
+    port = {{ default 11211 .Values.memcached.service.ports.memcached }}
+    {{- else }}
+    host = {{ .Values.rssBridge.memcachedCache.host }}
+    port = {{ .Values.rssBridge.memcachedCache.port }}
+    {{- end }}
+    [DiscogsBridge]
+    personal_access_token = {{ .Values.rssBridge.discogsBridge.presonalAccessToken | quote }}

@@ -1,0 +1,129 @@
+---
+nameOverride: ""
+fullnameOverride: ""
+
+replicaCount: 1
+
+image:
+  registry: docker.io
+  repository: rssbridge/rss-bridge
+  tag: ""
+  sha: ""
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 3000
+  containerPort: 3000
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  tls: []
+  hosts: []
+
+serviceAccount:
+  create: true
+  annotations: {}
+
+resources:
+  requests:
+    cpu: 25m
+    memory: 92Mi
+  limits:
+    cpu: 250m
+    memory: 256Mi
+
+livenessProbe:
+  enabled: true
+
+readinessProbe:
+  enabled: true
+
+startupProbe:
+  enabled: true
+  periodSeconds: 2
+  failureThreshold: 15
+
+rssBridge:
+  system:
+    bridges:
+      - FeedMerge
+      - FeedReducerBridge
+      - Filter
+      - GettrBridge
+      - MastodonBridge
+      - Reddit
+      - RumbleBridge
+      - SoundcloudBridge
+      - Telegram
+      - ThePirateBay
+      - TikTokBridge
+      - Twitch
+      - Twitter
+      - Vk
+      - XPathBridge
+      - Youtube
+      - YouTubeCommunityTabBridge
+    timezone: UTC
+    message: ""
+    debug:
+      enabled: false
+      whitelist:
+        - 127.0.0.1
+        - 192.168.1.10
+    maintenanceMode: false
+
+  http:
+    timeout: 60
+    # yamllint disable-line rule:line-length
+    useragent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101 Firefox/102.0
+    maxFilesize: 20
+
+  cache:
+    type: file
+    customTimeout: false
+
+  admin:
+    # -- (string) format: email
+    email: null
+    telegram: ""
+    donations: true
+
+  proxy:
+    # -- (string) format: uri
+    url: null
+    name: Hidden proxy name
+    byBridge: false
+
+  authentication:
+    enabled: false
+    username: admin
+    password: somethingSecureIPromise
+    accessToken: ""
+
+  error:
+    output: feed
+    reportLimit: 1
+
+  fileCache:
+    path: ""
+    enablePurge: true
+
+  sqliteCache:
+    file: cache.sqlite
+    enablePurge: true
+    timeout: 5000
+
+  memcachedCache:
+    # -- (string) format: hostname
+    host: localhost
+    # -- (number) minimum: 0, maximum: 65535
+    port: 11211
+
+  discogsBridge:
+    presonalAccessToken: ""
+
+memcached:
+  enabled: true
