@@ -1,0 +1,10 @@
+---
+rssBridge:
+  system:
+    debug:
+      enabled: true
+  cache:
+    type: file
+
+memcached:
+  enabled: false

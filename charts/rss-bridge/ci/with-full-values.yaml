@@ -1,0 +1,25 @@
+---
+replicaCount: 2
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.allow-http: "false"
+  hosts:
+    - host: localhost
+      paths:
+        - pathType: Prefix
+          path: /
+  tls:
+    - secretName: localhost-tls
+      hosts:
+        - localhost
+
+rssBridge:
+  system:
+    bridges:
+      - Youtube
+    debug:
+      enabled: true
