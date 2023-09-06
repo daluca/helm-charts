@@ -8,7 +8,7 @@ metadata:
 data:
   config.ini.php: |-
     [system]
-    {{- range .Values.rssBridge.bridges }}
+    {{- range .Values.rssBridge.system.bridges }}
     enabled_bridges[] = {{ . }}
     {{- end }}
     timezone = {{ .Values.rssBridge.system.timezone | quote }}
