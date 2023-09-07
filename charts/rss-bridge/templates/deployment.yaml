@@ -14,6 +14,8 @@ spec:
     metadata:
       labels:
         {{- include "rss-bridge.selectorLabels" . | nindent 8 }}
+      annotations:
+        rss-bridge-config-hash: {{ toJson .Values.rssBridge | sha256sum }}
     spec:
       {{- if .Values.serviceAccount.create }}
       serviceAccountName: {{ include "rss-bridge.fullname" . }}
