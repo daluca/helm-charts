@@ -81,7 +81,7 @@ jobs:
           IFS=$'\n' readarray -t repositories <<< "${dependencies}"
 
           for (( i=0; i<"${#repositories[@]}"; i++ )); do
-              if [[ "${repositories[{i}]}" =~ https?://* ]]; then
+              if [[ "${repositories[${i}]}" =~ https?://* ]]; then
                   helm repo add "dependency-${i}" "${repositories[${i}]}"
               fi
           done
