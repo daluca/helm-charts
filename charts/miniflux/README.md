@@ -1,6 +1,6 @@
 # miniflux
 
-![Version: 0.3.2](https://img.shields.io/badge/Version-0.3.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.49](https://img.shields.io/badge/AppVersion-2.0.49-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.49](https://img.shields.io/badge/AppVersion-2.0.49-informational?style=flat-square)
 
 Minimalist and opinionated feed reader
 
@@ -14,7 +14,7 @@ Minimalist and opinionated feed reader
 
 | Repository | Name | Version |
 |------------|------|---------|
-| [https://charts.bitnami.com/bitnami](https://charts.bitnami.com/bitnami) | postgresql | >=12.0.0 <13.0.0 |
+| [oci://registry-1.docker.io/bitnamicharts](oci://registry-1.docker.io/bitnamicharts) | postgresql | >=12.0.0 <13.0.0 |
 
 ## Values
 

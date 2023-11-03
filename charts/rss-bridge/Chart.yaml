@@ -5,11 +5,11 @@ type: application
 home: https://github.com/daluca/helm-charts/tree/main/charts/rss-bridge
 sources:
   - https://github.com/RSS-Bridge/rss-bridge
-version: 0.2.0
+version: 0.3.0
 appVersion: "2023-09-24"
 description: The RSS feed for websites missing it
 dependencies:
   - name: memcached
     version: ">=6.0.0 <7.0.0"
-    repository: https://charts.bitnami.com/bitnami
+    repository: oci://registry-1.docker.io/bitnamicharts
     condition: memcached.enabled
