@@ -1,4 +1,6 @@
 ---
+nameOverride: whiskey-pig
+
 replicaCount: 2
 
 service:
@@ -14,7 +16,7 @@ ingress:
     - host: localhost
       paths:
         - pathType: Prefix
-          path: /
+          path: /rss
   tls:
     - secretName: localhost-tls
       hosts:
@@ -31,6 +33,9 @@ resources:
   limits:
     cpu: 200m
     memory: 256Mi
+
+config:
+  DEBUG: "true"
 
 admin:
   username: admin

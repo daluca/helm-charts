@@ -8,6 +8,16 @@ metadata:
 data:
   LISTEN_ADDR: 0.0.0.0:{{ .Values.service.containerPort }}
   HTTP_CLIENT_USER_AGENT: Mozilla/5.0 (compatible; Miniflux/{{ default .Chart.AppVersion .Values.image.tag }}; +https://miniflux.app)
-  {{- with omit .Values.config "LISTEN_ADDR" "HTTP_CLIENT_USER_AGENT" "RUN_MIGRATIONS" "DATABASE_URL" }}
+  {{- if .Values.ingress.enabled }}
+  {{- with index .Values.ingress.hosts 0 }}
+  BASE_URL: {{ if $.Values.ingress.tls }}https://{{ else }}http://{{ end }}{{ .host }}
+  {{- with index .paths 0 }}
+  {{- if ne "/" .path }}
+  BASE_PATH: {{ .path }}
+  {{- end }}
+  {{- end }}
+  {{- end }}
+  {{- end }}
+  {{- with omit .Values.config "LISTEN_ADDR" "HTTP_CLIENT_USER_AGENT" "RUN_MIGRATIONS" "DATABASE_URL" "BASE_URL" "BASE_PATH" }}
   {{- toYaml . | nindent 2 }}
   {{- end }}
