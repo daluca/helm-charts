@@ -8,7 +8,7 @@ service:
   port: 80
 
 serviceAccount:
-  name: testing
+  name: keycloak
   annotations:
     eks.amazonaws.com/role-arn: kind-testing
 

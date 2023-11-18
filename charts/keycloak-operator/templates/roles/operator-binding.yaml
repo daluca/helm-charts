@@ -5,6 +5,7 @@ metadata:
   name: {{ include "keycloak-operator.fullname" . }}
   labels:
     {{- include "keycloak-operator.labels" . | nindent 4 }}
+    app.kubernetes.io/component: keycloak-operator
 roleRef:
   kind: Role
   name: {{ include "keycloak-operator.fullname" . }}
