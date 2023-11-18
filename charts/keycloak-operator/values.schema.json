@@ -1,0 +1,184 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/daluca/helm-charts/main/charts/keycloak-operator/values.schema.json",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["image", "service", "keycloakImage"],
+    "properties": {
+        "nameOverride": {
+            "$ref": "#/$defs/dns-name"
+        },
+        "fullnameOverride": {
+            "$ref": "#/$defs/dns-name"
+        },
+        "replicaCount": {
+            "type": "number",
+            "minimum": 0
+        },
+        "image": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["repository"],
+            "properties": {
+                "registry": {
+                    "type": "string"
+                },
+                "repository": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                },
+                "sha256": {
+                    "$ref": "#/$defs/sha256"
+                },
+                "pullPolicy": {
+                    "enum": ["Always", "Never", "IfNotPresent"]
+                }
+            }
+        },
+        "service": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["containerPort"],
+            "properties": {
+                "type": {
+                    "enum": ["ClusterIP", "NodePort", "LoadBalancer"]
+                },
+                "port": {
+                    "$ref": "#/$defs/port"
+                },
+                "containerPort": {
+                    "$ref": "#/$defs/port"
+                }
+            }
+        },
+        "serviceAccount": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "create": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "annotations": {
+                    "$ref": "#/$defs/annotations"
+                }
+            }
+        },
+        "resources": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+                "requests": {
+                    "$ref": "#/$defs/resource"
+                },
+                "limits": {
+                    "$ref": "#/$defs/resource"
+                }
+            }
+        },
+        "livenessProbe": {
+            "$ref": "#/$defs/probe"
+        },
+        "readinessProbe": {
+            "$ref": "#/$defs/probe"
+        },
+        "startupProbe": {
+            "$ref": "#/$defs/probe"
+        },
+        "keycloakImage": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["repository"],
+            "properties": {
+                "registry": {
+                    "type": "string"
+                },
+                "repository": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                },
+                "sha256": {
+                    "$ref": "#/$defs/sha256"
+                }
+            }
+        }
+    },
+    "$defs": {
+        "dns-name": {
+            "type": "string",
+            "maxLength": 63,
+            "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?|)$"
+        },
+        "port": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 65535
+        },
+        "sha256": {
+            "type": "string",
+            "pattern": "^(|[a-z0-9]{64})$"
+        },
+        "annotations": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "string"
+            }
+        },
+        "resource": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "cpu": {
+                    "type": "string"
+                },
+                "memory": {
+                    "type": "string"
+                }
+            },
+            "patternProperties": {
+                "^hugepages-": {
+                    "type": "string"
+                }
+            }
+        },
+        "probe": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "initialDelaySeconds": {
+                    "type": "number",
+                    "minimum": 0
+                },
+                "periodSeconds": {
+                    "type": "number",
+                    "minimum": 1
+                },
+                "timeoutSeconds": {
+                    "type": "number",
+                    "minimum": 1
+                },
+                "successThreshold": {
+                    "type": "number",
+                    "minimum": 1
+                },
+                "failureThreshold": {
+                    "type": "number",
+                    "minimum": 1
+                },
+                "terminationGracePeriodSeconds": {
+                    "type": "number",
+                    "minimum": 1
+                }
+            }
+        }
+    }
+}

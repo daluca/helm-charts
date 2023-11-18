@@ -3,6 +3,7 @@ ignore:
   - .github/workflows/
   - charts/*/templates/
   - charts/*/Chart.lock
+  - charts/*/crds/
 
 rules:
   braces:

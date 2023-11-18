@@ -1,0 +1,39 @@
+---
+nameOverride: ""
+fullnameOverride: ""
+
+replicaCount: 1
+
+image:
+  registry: quay.io
+  repository: keycloak/keycloak-operator
+  tag: ""
+  sha256: ""
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+  containerPort: 8080
+
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+resources: {}
+
+livenessProbe:
+  enabled: true
+
+readinessProbe:
+  enabled: true
+
+startupProbe:
+  enabled: false
+
+keycloakImage:
+  registry: quay.io
+  repository: keycloak/keycloak
+  tag: ""
+  sha256: ""
