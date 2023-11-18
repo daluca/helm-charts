@@ -16,6 +16,7 @@ spec:
         app.kubernetes.io/component: backend
         {{- include "miniflux.selectorLabels" . | nindent 8 }}
     spec:
+      serviceAccountName: {{ include "miniflux.serviceAccountName" . }}
       containers:
         - name: {{ .Chart.Name }}-scheduler
           image: {{ if .Values.image.registry }}{{ .Values.image.registry }}{{ end }}/{{ .Values.image.repository }}:{{ default .Chart.AppVersion .Values.image.tag }}{{ if .Values.image.sha }}{{ .Values.image.sha }}{{ end }}

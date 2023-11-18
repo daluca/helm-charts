@@ -160,6 +160,9 @@
                 "create": {
                     "type": "boolean"
                 },
+                "name": {
+                    "type": "string"
+                },
                 "annotations": {
                     "type": "object",
                     "additionalProperties": {

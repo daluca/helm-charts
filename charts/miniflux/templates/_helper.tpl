@@ -1,13 +1,13 @@
 {{/* vim: set filetype=mustache: */}}
 {{/*
-Expand the name of the chart
+Expand the name of the chart.
 */}}
 {{- define "miniflux.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
-Create a default fully qualified app name
+Create a default fully qualified app name.
 */}}
 {{- define "miniflux.fullname" -}}
 {{- if .Values.fullnameOverride }}
@@ -23,14 +23,14 @@ Create a default fully qualified app name
 {{- end }}
 
 {{/*
-Chart name and version as used by the chart label
+Chart name and version as used by the chart label.
 */}}
 {{- define "miniflux.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
-Common labels
+Common labels.
 */}}
 {{- define "miniflux.labels" -}}
 helm.sh/chart: {{ include "miniflux.chart" . }}
@@ -42,9 +42,20 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
-Selector labels
+Selector labels.
 */}}
 {{- define "miniflux.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "miniflux.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
+Create the name of the service account to use.
+*/}}
+{{- define "miniflux.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create }}
+{{- default (include "miniflux.fullname" .) .Values.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.serviceAccount.name }}
+{{- end }}
 {{- end }}
