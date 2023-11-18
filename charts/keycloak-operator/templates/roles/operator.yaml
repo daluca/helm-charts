@@ -11,7 +11,7 @@ rules:
       - apps
       - extensions
     resources:
-      - deployments
+      - statefulsets
     verbs:
       - get
       - list
