@@ -1,13 +1,14 @@
 # miniflux
 
-![Version: 0.4.2](https://img.shields.io/badge/Version-0.4.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.50](https://img.shields.io/badge/AppVersion-2.0.50-informational?style=flat-square)
+![Version: 0.4.3](https://img.shields.io/badge/Version-0.4.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.50](https://img.shields.io/badge/AppVersion-2.0.50-informational?style=flat-square)
 
 Minimalist and opinionated feed reader
 
-**Homepage:** <https://github.com/daluca/helm-charts/tree/main/charts/miniflux>
+**Homepage:** <https://miniflux.app>
 
 ## Source Code
 
+* <https://github.com/daluca/helm-charts/tree/main/charts/miniflux>
 * <https://github.com/miniflux/v2>
 
 ## Requirements
