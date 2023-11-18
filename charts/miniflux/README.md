@@ -1,6 +1,6 @@
 # miniflux
 
-![Version: 0.4.3](https://img.shields.io/badge/Version-0.4.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.50](https://img.shields.io/badge/AppVersion-2.0.50-informational?style=flat-square)
+![Version: 0.4.4](https://img.shields.io/badge/Version-0.4.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.50](https://img.shields.io/badge/AppVersion-2.0.50-informational?style=flat-square)
 
 Minimalist and opinionated feed reader
 
@@ -38,6 +38,7 @@ Minimalist and opinionated feed reader
 | ingress.tls | list | `[]` |  |
 | ingress.hosts | list | `[]` |  |
 | serviceAccount.create | bool | `true` |  |
+| serviceAccount.name | string | `""` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | resources.requests.cpu | string | `"25m"` |  |
 | resources.requests.memory | string | `"92Mi"` |  |

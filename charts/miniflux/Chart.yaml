@@ -6,7 +6,7 @@ home: https://miniflux.app
 sources:
   - https://github.com/daluca/helm-charts/tree/main/charts/miniflux
   - https://github.com/miniflux/v2
-version: 0.4.3
+version: 0.4.4
 appVersion: 2.0.50
 description: Minimalist and opinionated feed reader
 dependencies:

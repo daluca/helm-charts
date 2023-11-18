@@ -18,9 +18,7 @@ spec:
       annotations:
         miniflux-config-hash: {{ toJson .Values.config | sha256sum }}
     spec:
-      {{- if .Values.serviceAccount.create }}
-      serviceAccountName: {{ include "miniflux.fullname" . }}
-      {{- end }}
+      serviceAccountName: {{ include "miniflux.serviceAccountName" . }}
       containers:
         - name: {{ .Chart.Name }}
           image: {{ if .Values.image.registry }}{{ .Values.image.registry }}{{ end }}/{{ .Values.image.repository }}:{{ default .Chart.AppVersion .Values.image.tag }}{{ if .Values.image.sha }}{{ .Values.image.sha }}{{ end }}
