@@ -1,0 +1,20 @@
+---
+nameOverride: whiskey-pig
+
+image:
+  sha256: fb3c208c734b347489f2f5379f8214ef421013eef275d93779c5fb598e376bfa
+
+service:
+  port: 80
+
+serviceAccount:
+  name: testing
+  annotations:
+    eks.amazonaws.com/role-arn: kind-testing
+
+startupProbe:
+  periodSeconds: 2
+  failureThreshold: 15
+
+keycloakImage:
+  sha256: bfa8852e52c279f0857fe8da239c0ad6bbd2cc07793a28a6770f7e24c1e25444

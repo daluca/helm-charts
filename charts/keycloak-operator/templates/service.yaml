@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "keycloak-operator.fullname" . }}
+  labels:
+    {{- include "keycloak-operator.labels" . | nindent 4 }}
+    app.kubernetes.io/component: keycloak-operator
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    {{- include "keycloak-operator.selectorLabels" . | nindent 4 }}
+  ports:
+    - port: {{ default .Values.service.containerPort .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
