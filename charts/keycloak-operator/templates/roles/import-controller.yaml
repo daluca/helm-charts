@@ -5,6 +5,7 @@ metadata:
   name: {{ include "keycloak-operator.importControllerName" . }}
   labels:
     {{- include "keycloak-operator.labels" . | nindent 4 }}
+    app.kubernetes.io/component: keycloak-operator
 rules:
   - apiGroups:
       - k8s.keycloak.org
