@@ -8,7 +8,7 @@ sources:
   - https://github.com/keycloak/keycloak/tree/main/operator
   - https://github.com/keycloak/keycloak
   - https://github.com/keycloak/keycloak-k8s-resources
-version: 0.1.2
+version: 0.1.3
 appVersion: 22.0.5
 description: >-
   Open source Identity and Access Management for modern applications and
