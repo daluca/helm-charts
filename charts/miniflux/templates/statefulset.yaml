@@ -15,6 +15,8 @@ spec:
       labels:
         app.kubernetes.io/component: backend
         {{- include "miniflux.selectorLabels" . | nindent 8 }}
+      annotations:
+        miniflux-config-hash: {{ toJson .Values.config | sha256sum }}
     spec:
       serviceAccountName: {{ include "miniflux.serviceAccountName" . }}
       containers:
