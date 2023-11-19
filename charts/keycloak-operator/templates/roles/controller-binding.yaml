@@ -8,8 +8,8 @@ metadata:
     app.kubernetes.io/component: keycloak-operator
 roleRef:
   kind: ClusterRole
-  name: {{ include "keycloak-operator.controllerName" . }}
   apiGroup: rbac.authorization.k8s.io
+  name: {{ include "keycloak-operator.controllerName" . }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "keycloak-operator.serviceAccountName" . }}

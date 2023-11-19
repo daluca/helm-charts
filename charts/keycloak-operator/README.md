@@ -13,11 +13,6 @@ Open source Identity and Access Management for modern applications and services
 * <https://github.com/keycloak/keycloak>
 * <https://github.com/keycloak/keycloak-k8s-resources>
 
-## Requirements
-
-| Repository | Name | Version |
-|------------|------|---------|
-
 ## Values
 
 | Key | Type | Default | Description |
@@ -39,7 +34,9 @@ Open source Identity and Access Management for modern applications and services
 | resources | object | `{}` |  |
 | livenessProbe.enabled | bool | `true` |  |
 | readinessProbe.enabled | bool | `true` |  |
-| startupProbe.enabled | bool | `false` |  |
+| startupProbe.enabled | bool | `true` |  |
+| startupProbe.periodSeconds | int | `2` |  |
+| startupProbe.failureThreshold | int | `15` |  |
 | keycloakImage.registry | string | `"quay.io"` |  |
 | keycloakImage.repository | string | `"keycloak/keycloak"` |  |
 | keycloakImage.tag | string | `""` |  |

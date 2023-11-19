@@ -30,7 +30,9 @@ readinessProbe:
   enabled: true
 
 startupProbe:
-  enabled: false
+  enabled: true
+  periodSeconds: 2
+  failureThreshold: 15
 
 keycloakImage:
   registry: quay.io

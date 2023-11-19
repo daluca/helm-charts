@@ -42,6 +42,7 @@ spec:
             httpGet:
               path: /q/health/live
               port: http
+              scheme: HTTP
           {{- with omit .Values.livenessProbe "enabled" }}
             {{- toYaml . | nindent 12 -}}
           {{- end }}
@@ -51,6 +52,7 @@ spec:
             httpGet:
               path: /q/health/ready
               port: http
+              scheme: HTTP
           {{- with omit .Values.readinessProbe "enabled" }}
             {{- toYaml . | nindent 12 -}}
           {{- end }}
@@ -58,8 +60,9 @@ spec:
           {{- if .Values.startupProbe.enabled }}
           startupProbe:
             httpGet:
-              path: /q/health/ready
+              path: /q/health/started
               port: http
+              scheme: HTTP
           {{- with omit .Values.startupProbe "enabled" }}
             {{- toYaml . | nindent 12 -}}
           {{- end }}
