@@ -18,12 +18,12 @@ repos:
         args: [--strict]
 
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.10.0
+    rev: v0.11.0
     hooks:
       - id: markdownlint-cli2
 
   - repo: https://github.com/zricethezav/gitleaks
-    rev: v8.18.0
+    rev: v8.18.1
     hooks:
       - id: gitleaks
 
@@ -40,3 +40,9 @@ repos:
           - --template-files=charts/_templates.gotmpl
           - --template-files=README.md.gotmpl
           - --sort-values-order=file
+
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.27.1
+    hooks:
+      - id: check-github-actions
+        args: [--verbose]

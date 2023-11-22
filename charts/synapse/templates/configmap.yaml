@@ -25,7 +25,7 @@ data:
     {{- end }}
     log_config: /synapse/logging.yaml
     report_stats: {{ .Values.homeserver.report_stats }}
-    {{- with omit .Values.homeserver "report_stats" "report_stats" "database" "macaroon_secret_key" "registration_shared_secret" "form_secret" }}
+    {{- with omit .Values.homeserver "server_name" "report_stats" "database" "macaroon_secret_key" "registration_shared_secret" "form_secret" "existingSecret" }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
   logging.yaml: |-

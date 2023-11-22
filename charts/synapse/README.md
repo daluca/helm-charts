@@ -1,6 +1,6 @@
 # synapse
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.96.1](https://img.shields.io/badge/AppVersion-1.96.1-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.96.1](https://img.shields.io/badge/AppVersion-1.96.1-informational?style=flat-square)
 
 Matrix homeserver written in Python/Twisted
 
@@ -49,7 +49,7 @@ Matrix homeserver written in Python/Twisted
 | startupProbe.periodSeconds | int | `2` |  |
 | startupProbe.failureThreshold | int | `30` |  |
 | persistence.enabled | bool | `false` |  |
-| persistence.storageClassName | string | `""` |  |
+| persistence.storageClass | string | `""` |  |
 | persistence.size | string | `"1Gi"` |  |
 | persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
 | admin.create | bool | `true` |  |
@@ -61,6 +61,7 @@ Matrix homeserver written in Python/Twisted
 | homeserver.macaroon_secret_key | string | `""` |  |
 | homeserver.registration_shared_secret | string | `""` |  |
 | homeserver.form_secret | string | `""` |  |
+| homeserver.existingSecret | string | `""` |  |
 | logging.level | string | `"INFO"` |  |
 | logging.handlers[0] | string | `"console"` |  |
 | logging.buffer.level | string | `"NOTSET"` |  |
