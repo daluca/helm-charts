@@ -1,0 +1,17 @@
+{{- if .Values.persistence.enabled -}}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ printf "%s-%s" (include "synapse.fullname" .) "data" }}
+  labels:
+    {{- include "synapse.labels" . | nindent 4 }}
+spec:
+  {{- if .Values.persistence.storageClassName }}
+  storageClassName: {{ .Values.persistence.storageClassName }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.size }}
+  accessModes: {{ .Values.persistence.accessModes }}
+{{- end }}

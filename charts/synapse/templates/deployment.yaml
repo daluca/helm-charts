@@ -1,0 +1,102 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "synapse.fullname" . }}
+  labels:
+    {{- include "synapse.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "synapse.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "synapse.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "synapse.fullname" . }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ if .Values.image.registry }}{{ .Values.image.registry }}/{{ end }}{{ .Values.image.repository }}:{{ default (printf "v%s" .Chart.AppVersion) .Values.image.tag }}{{ if .Values.image.sha256 }}@sha256:{{ .Values.image.sha256 }}{{ end }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: [python3, -m, synapse.app.homeserver]
+          args:
+            - --config-path=/synapse/homeserver.yaml
+            - --config-path=/synapse/homeserver.d
+            - --config-directory=/synapse
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.containerPort }}
+              protocol: TCP
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if .Values.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          {{- with omit .Values.livenessProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          {{- with omit .Values.readinessProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.startupProbe.enabled }}
+          startupProbe:
+            httpGet:
+              path: /health
+              port: http
+          {{- with omit .Values.startupProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          volumeMounts:
+            - mountPath: /synapse/homeserver.yaml
+              subPath: homeserver.yaml
+              name: synapse-config
+            - mountPath: /synapse/homeserver.d
+              name: synapse-config-directory
+            - mountPath: /synapse/homeserver.d/secrets.yaml
+              subPath: secrets.yaml
+              name: synapse-secrets
+            - mountPath: /synapse/logging.yaml
+              subPath: logging.yaml
+              name: synapse-config
+            {{- if not (eq "sqlite" .Values.database.type) }}
+            - mountPath: /synapse/homeserver.d/database.yaml
+              subPath: database.yaml
+              name: database-credentials
+            {{- end }}
+      volumes:
+        - name: synapse-config
+          configMap:
+            name: {{ printf "%s-%s" (include "synapse.fullname" .) "config" }}
+        - name: synapse-secrets
+          secret:
+            secretName: {{ printf "%s-%s" (include "synapse.fullname" .) "secrets" }}
+        {{- if not (eq "sqlite" .Values.database.type) }}
+        - name: database-credentials
+          secret:
+            {{- if .Values.database.existingSecret }}
+            secretName: {{ .Values.database.existingSecret }}
+            {{- else }}
+            secretName: {{ printf "%s-%s" (include "synapse.fullname" .) "database-credentials" }}
+            {{- end }}
+        {{- end }}
+        - name: synapse-config-directory
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ printf "%s-%s" (include "synapse.fullname" .) "data" }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}

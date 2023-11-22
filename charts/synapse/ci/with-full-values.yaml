@@ -1,0 +1,48 @@
+---
+nameOverride: whisky-pig
+
+image:
+  registry: null
+
+service:
+  port: 80
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.allow-http: "false"
+  host: localhost
+  tls: true
+
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: kind-testing
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 512Mi
+  limits: null
+
+persistence:
+  enabled: true
+
+admin:
+  create: false
+
+homeserver:
+  server_name: example.org
+
+logging:
+  level: DEBUG
+
+delegation:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.allow-http: "false"
+
+postgresql:
+  enabled: true
