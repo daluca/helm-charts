@@ -61,6 +61,7 @@ Matrix homeserver written in Python/Twisted
 | homeserver.macaroon_secret_key | string | `""` |  |
 | homeserver.registration_shared_secret | string | `""` |  |
 | homeserver.form_secret | string | `""` |  |
+| homeserver.existingSecret | string | `""` |  |
 | logging.level | string | `"INFO"` |  |
 | logging.handlers[0] | string | `"console"` |  |
 | logging.buffer.level | string | `"NOTSET"` |  |

@@ -66,6 +66,7 @@ homeserver:
   macaroon_secret_key: ""
   registration_shared_secret: ""
   form_secret: ""
+  existingSecret: ""
 
 logging:
   level: INFO

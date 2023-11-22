@@ -171,6 +171,9 @@
                 },
                 "report_stats": {
                     "type": "boolean"
+                },
+                "existingSecret": {
+                    "type": "string"
                 }
             }
         },
