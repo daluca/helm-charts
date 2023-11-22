@@ -1,0 +1,35 @@
+---
+apiVersion: v2
+name: synapse
+type: application
+description: Matrix homeserver written in Python/Twisted
+version: 0.1.0
+appVersion: 1.96.1
+kubeVersion: ">=1.19.0"
+icon: https://matrix.org/images/matrix-favicon.svg
+home: https://github.com/matrix-org/synapse
+sources:
+  - https://github.com/daluca/helm-charts/tree/main/charts/synapse
+dependencies:
+  - name: postgresql
+    version: ">=13.0.0 <14.0.0"
+    repository: oci://registry-1.docker.io/bitnamicharts
+    condition: postgresql.enabled
+annotations:
+  artifacthub.io/alternativeName: matrix-synapse
+  artifacthub.io/images: |-
+    - name: synapse
+      image: matrixdotorg/synapse:1.96.1
+      platforms:
+        - linux/amd64
+        - linux/arm64
+    - name: postgresql
+      image: bitnami/postgresql:16.1.0-debian-11-r9
+      platforms:
+        - linux/amd64
+        - linux/arm64
+  artifacthub.io/links: |-
+    - name: chart
+      url: https://github.com/daluca/helm-charts/tree/main/charts/synapse
+    - name: support
+      url: https://github.com/daluca/helm-charts/issues

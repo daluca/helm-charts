@@ -1,0 +1,106 @@
+---
+nameOverride: ""
+fullnameOverride: ""
+
+replicaCount: 1
+
+image:
+  registry: docker.io
+  repository: matrixdotorg/synapse
+  tag: ""
+  sha256: ""
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8008
+  containerPort: 8008
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  host: example.org
+  tls: true
+
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 200m
+    memory: 512Mi
+
+livenessProbe:
+  enabled: true
+
+readinessProbe:
+  enabled: false
+
+startupProbe:
+  enabled: true
+  periodSeconds: 2
+  failureThreshold: 30
+
+persistence:
+  enabled: false
+  storageClassName: ""
+  size: 1Gi
+  accessModes: [ReadWriteOnce]
+
+admin:
+  create: true
+  username: ""
+  password: ""
+  # -- secret must contain the keys `username` and `password`
+  existingSecret: ""
+
+homeserver:
+  server_name: localhost
+  report_stats: false
+  macaroon_secret_key: ""
+  registration_shared_secret: ""
+  form_secret: ""
+
+logging:
+  level: INFO
+  handlers: [console]
+  buffer:
+    level: NOTSET
+    location: /synapse/homeserver.log
+  console:
+    level: NOTSET
+
+delegation:
+  enabled: false
+  className: ""
+  annotations: {}
+  tls: true
+
+database:
+  type: postgresql
+  external: false
+  name: synapse
+  host: localhost
+  port: 5432
+  username: synapse
+  password: synapse
+  existingSecret: ""
+  arguments:
+    cp_min: 5
+    cp_max: 10
+
+postgresql:
+  enabled: true
+  auth:
+    username: synapse
+    password: synapse
+    database: synapse
+  primary:
+    initdb:
+      args: --lc-collate=C --lc-ctype=C

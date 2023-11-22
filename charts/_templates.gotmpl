@@ -4,10 +4,6 @@
 | Repository | Name | Version |
 |------------|------|---------|
 {{- range .Dependencies }}
-{{- if .Alias }}
-| [{{ .Repository}}]({{ .Repository }}) | {{ .Alias }}{{ .Name }} | {{ .Version }} |
-{{- else }}
-| [{{ .Repository}}]({{ .Repository }}) | {{ .Name }} | {{ .Version }} |
-{{- end }}
+| <{{ .Repository }}> | {{ if .Alias }}{{ .Alias }}{{ end }}{{ .Name }} | {{ .Version }} |
 {{- end }}
 {{- end -}}

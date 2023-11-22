@@ -1,0 +1,40 @@
+{{- if .Values.delegation.enabled }}
+{{- $fullName := include "synapse.fullname" . -}}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ printf "%s-%s" (include "synapse.fullname" .) "well-known-server" }}
+  labels:
+    {{- include "synapse.labels" . | nindent 4 }}
+  {{- with omit .Values.delegation.annotations "nginx.ingress.kubernetes.io/configuration-snippet" }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+    {{- if (default $.Values.ingress.className $.Values.delegation.className) }}
+    nginx.ingress.kubernetes.io/configuration-snippet: |-
+      default_type application/json;
+      return 200 '{ "m.server": "{{ $.Values.ingress.host }}:443" }';
+    {{- end }}
+  {{- end }}
+spec:
+  {{- if (default .Values.ingress.className .Values.delegation.className) }}
+  ingressClassName: {{ default .Values.ingress.className .Values.delegation.className }}
+  {{- end }}
+  {{- if .Values.delegation.tls }}
+  tls:
+    - hosts:
+        - {{ .Values.homeserver.server_name }}
+      secretName: {{ printf "%s-%s" .Values.homeserver.server_name "tls" }}
+  {{- end }}
+  rules:
+    - host: {{ .Values.homeserver.server_name }}
+      http:
+        paths:
+          - path: /.well-known/matrix/server
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  name: http
+{{- end }}
