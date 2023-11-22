@@ -49,7 +49,7 @@ startupProbe:
 
 persistence:
   enabled: false
-  storageClassName: ""
+  storageClass: ""
   size: 1Gi
   accessModes: [ReadWriteOnce]
 

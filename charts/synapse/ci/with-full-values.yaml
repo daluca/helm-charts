@@ -28,6 +28,7 @@ resources:
 
 persistence:
   enabled: true
+  accessModes: [ReadWriteOnce, ReadWriteMany]
 
 admin:
   create: false

@@ -119,7 +119,7 @@
                 "enabled": {
                     "type": "boolean"
                 },
-                "storageClassName": {
+                "storageClass": {
                     "type": "string"
                 },
                 "size": {
