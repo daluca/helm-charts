@@ -6,6 +6,7 @@ metadata:
   name: {{ printf "%s-%s" (include "synapse.fullname" .) "data" }}
   labels:
     {{- include "synapse.labels" . | nindent 4 }}
+    app.kubernetes.io/component: synapse
 spec:
   {{- if .Values.persistence.storageClass }}
   storageClassName: {{ .Values.persistence.storageClass }}

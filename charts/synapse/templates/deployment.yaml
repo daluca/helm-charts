@@ -5,15 +5,18 @@ metadata:
   name: {{ include "synapse.fullname" . }}
   labels:
     {{- include "synapse.labels" . | nindent 4 }}
+    app.kubernetes.io/component: synapse
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       {{- include "synapse.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: synapse
   template:
     metadata:
       labels:
         {{- include "synapse.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: synapse
       annotations:
         synapse-config-hash: {{ toJson .Values.homeserver | sha256sum }}
     spec:
@@ -94,7 +97,7 @@ spec:
         {{- if not (eq "sqlite" .Values.database.type) }}
         - name: database-credentials
           secret:
-            {{- if .Values.database.existingSecret }}
+            {{- if and .Values.database.external .Values.database.existingSecret }}
             secretName: {{ .Values.database.existingSecret }}
             {{- else }}
             secretName: {{ printf "%s-%s" (include "synapse.fullname" .) "database-credentials" }}

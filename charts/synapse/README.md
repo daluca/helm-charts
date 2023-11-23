@@ -1,6 +1,6 @@
 # synapse
 
-![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.96.1](https://img.shields.io/badge/AppVersion-1.96.1-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.96.1](https://img.shields.io/badge/AppVersion-1.96.1-informational?style=flat-square)
 
 Matrix homeserver written in Python/Twisted
 
@@ -31,6 +31,7 @@ Matrix homeserver written in Python/Twisted
 | service.type | string | `"ClusterIP"` |  |
 | service.port | int | `8008` |  |
 | service.containerPort | int | `8008` |  |
+| service.annotations | object | `{}` |  |
 | ingress.enabled | bool | `false` |  |
 | ingress.className | string | `""` |  |
 | ingress.annotations | object | `{}` |  |
@@ -73,9 +74,28 @@ Matrix homeserver written in Python/Twisted
 | logging.buffer.location | string | `"/synapse/homeserver.log"` |  |
 | logging.console.level | string | `"NOTSET"` |  |
 | delegation.enabled | bool | `false` |  |
-| delegation.className | string | `""` |  |
-| delegation.annotations | object | `{}` |  |
-| delegation.tls | bool | `true` |  |
+| delegation.replicaCount | int | `1` |  |
+| delegation.image.registry | string | `"docker.io"` |  |
+| delegation.image.repository | string | `"nginx"` |  |
+| delegation.image.tag | string | `"1.25.3-alpine"` |  |
+| delegation.image.sha256 | string | `""` |  |
+| delegation.image.pullPolicy | string | `"IfNotPresent"` |  |
+| delegation.service.type | string | `"ClusterIP"` |  |
+| delegation.service.port | int | `80` |  |
+| delegation.service.containerPort | int | `80` |  |
+| delegation.service.annotations | object | `{}` |  |
+| delegation.ingress.className | string | `""` |  |
+| delegation.ingress.annotations | object | `{}` |  |
+| delegation.ingress.tls | bool | `true` |  |
+| delegation.resources.requests.cpu | string | `"50m"` |  |
+| delegation.resources.requests.memory | string | `"64Mi"` |  |
+| delegation.resources.limits.cpu | string | `"50m"` |  |
+| delegation.resources.limits.memory | string | `"64Mi"` |  |
+| delegation.livenessProbe.enabled | bool | `true` |  |
+| delegation.readinessProbe.enabled | bool | `false` |  |
+| delegation.startupProbe.enabled | bool | `true` |  |
+| delegation.startupProbe.periodSeconds | int | `2` |  |
+| delegation.startupProbe.failureThreshold | int | `15` |  |
 | database.type | string | `"postgresql"` |  |
 | database.external | bool | `false` |  |
 | database.name | string | `"synapse"` |  |

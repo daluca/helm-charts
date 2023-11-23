@@ -41,9 +41,10 @@ logging:
 
 delegation:
   enabled: true
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-    kubernetes.io/ingress.allow-http: "false"
+  ingress:
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      kubernetes.io/ingress.allow-http: "false"
 
 postgresql:
   enabled: true

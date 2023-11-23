@@ -7,10 +7,10 @@ metadata:
   name: {{ include "synapse.fullname" . }}
   labels:
     {{- include "synapse.labels" . | nindent 4 }}
+    app.kubernetes.io/component: synapse
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
-    nginx.ingress.kubernetes.io/use-regex: "true"
   {{- end }}
 spec:
   {{- if .Values.ingress.className }}
@@ -26,8 +26,22 @@ spec:
     - host: {{ .Values.ingress.host }}
       http:
         paths:
-          - path: /_(matrix|synapse/client)
-            pathType: ImplementationSpecific
+          - path: /_matrix
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  name: http
+          - path: /_synapse/client
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  name: http
+          - path: /
+            pathType: Exact
             backend:
               service:
                 name: {{ $fullName }}
