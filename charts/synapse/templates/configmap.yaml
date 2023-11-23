@@ -6,7 +6,7 @@ metadata:
   labels:
     {{- include "synapse.labels" . | nindent 4 }}
 data:
-  homeserver.yaml: |-
+  homeserver.yaml: |
     server_name: {{ .Values.homeserver.server_name }}
     listeners:
       - port: {{ .Values.service.containerPort }}
@@ -29,7 +29,7 @@ data:
     {{- with omit .Values.homeserver "server_name" "report_stats" "database" "signing_key_path" "macaroon_secret_key" "registration_shared_secret" "form_secret" "existingSecret" }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
-  logging.yaml: |-
+  logging.yaml: |
     version: 1
     formatters:
       precise:
