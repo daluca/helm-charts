@@ -5,10 +5,12 @@ metadata:
   name: {{ include "synapse.fullname" . }}
   labels:
     {{- include "synapse.labels" . | nindent 4 }}
+    app.kubernetes.io/component: synapse
 spec:
   type: {{ .Values.service.type }}
   selector:
     {{- include "synapse.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: synapse
   ports:
     - port: {{ default .Values.service.containerPort .Values.service.port }}
       targetPort: http

@@ -5,15 +5,18 @@ metadata:
   name: {{ include "synapse.fullname" . }}
   labels:
     {{- include "synapse.labels" . | nindent 4 }}
+    app.kubernetes.io/component: synapse
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       {{- include "synapse.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: synapse
   template:
     metadata:
       labels:
         {{- include "synapse.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: synapse
       annotations:
         synapse-config-hash: {{ toJson .Values.homeserver | sha256sum }}
     spec:
