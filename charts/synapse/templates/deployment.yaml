@@ -69,8 +69,14 @@ spec:
             - mountPath: /synapse/homeserver.yaml
               subPath: homeserver.yaml
               name: synapse-config
-            - mountPath: /synapse/homeserver.d
-              name: synapse-config-directory
+            - mountPath: /synapse/
+              subPath: root
+              name: synapse-data
+            {{- if .Values.mediaStore.enabled }}
+            - mountPath: {{ .Values.mediaStore.path }}
+              subPath: media
+              name: synapse-data
+            {{- end }}
             - mountPath: /synapse/homeserver.d/secrets.yaml
               subPath: secrets.yaml
               name: synapse-secrets
@@ -103,7 +109,7 @@ spec:
             secretName: {{ printf "%s-%s" (include "synapse.fullname" .) "database-credentials" }}
             {{- end }}
         {{- end }}
-        - name: synapse-config-directory
+        - name: synapse-data
           {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
             claimName: {{ printf "%s-%s" (include "synapse.fullname" .) "data" }}

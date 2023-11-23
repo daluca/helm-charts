@@ -77,6 +77,10 @@ signingKey:
   key: ""
   existingSecret: ""
 
+mediaStore:
+  enabled: true
+  path: /synapse/media_store
+
 logging:
   level: INFO
   handlers: [console]
