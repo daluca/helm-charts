@@ -94,7 +94,7 @@ spec:
         {{- if not (eq "sqlite" .Values.database.type) }}
         - name: database-credentials
           secret:
-            {{- if .Values.database.existingSecret }}
+            {{- if and .Values.database.external .Values.database.existingSecret }}
             secretName: {{ .Values.database.existingSecret }}
             {{- else }}
             secretName: {{ printf "%s-%s" (include "synapse.fullname" .) "database-credentials" }}
