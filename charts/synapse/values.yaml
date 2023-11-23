@@ -68,6 +68,11 @@ homeserver:
   form_secret: ""
   existingSecret: ""
 
+signingKey:
+  enabled: false
+  key: ""
+  existingSecret: ""
+
 logging:
   level: INFO
   handlers: [console]

@@ -77,6 +77,11 @@ spec:
               subPath: database.yaml
               name: database-credentials
             {{- end }}
+            {{- if .Values.signingKey.enabled }}
+            - mountPath: /synapse/{{ printf "%s.key" .Values.homeserver.server_name }}
+              subPath: signing.key
+              name: signing-key
+            {{- end }}
       volumes:
         - name: synapse-config
           configMap:
@@ -100,3 +105,12 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
+        {{- if .Values.signingKey.enabled }}
+        - name: signing-key
+          secret:
+            {{- if .Values.signingKey.existingSecret }}
+            secretName: {{ .Values.signingKey.existingSecret }}
+            {{- else }}
+            secretName: {{ printf "%s-%s" (include "synapse.fullname" .) "signing-key" }}
+            {{- end }}
+        {{- end }}

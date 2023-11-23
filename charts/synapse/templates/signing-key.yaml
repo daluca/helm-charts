@@ -1,0 +1,12 @@
+{{- if and .Values.signingKey.enabled (not .Values.signingKey.existingSecret) -}}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ printf "%s-%s" (include "synapse.fullname" .) "signing-key" }}
+  labels:
+    {{- include "synapse.labels" . | nindent 4 }}
+type: Opaque
+data:
+  signing.key: {{ printf "%s\n" .Values.signingKey.key | b64enc }}
+{{- end -}}

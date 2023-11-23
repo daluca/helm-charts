@@ -62,6 +62,9 @@ Matrix homeserver written in Python/Twisted
 | homeserver.registration_shared_secret | string | `""` |  |
 | homeserver.form_secret | string | `""` |  |
 | homeserver.existingSecret | string | `""` |  |
+| signingKey.enabled | bool | `false` |  |
+| signingKey.key | string | `""` |  |
+| signingKey.existingSecret | string | `""` |  |
 | logging.level | string | `"INFO"` |  |
 | logging.handlers[0] | string | `"console"` |  |
 | logging.buffer.level | string | `"NOTSET"` |  |

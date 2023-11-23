@@ -177,6 +177,22 @@
                 }
             }
         },
+        "signingKey": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "key": {
+                    "type": "string",
+                    "pattern": "^(|ed25519 a_[a-zA-Z0-9]{4} .*)$"
+                },
+                "existingSecret": {
+                    "type": "string"
+                }
+            }
+        },
         "logging": {
             "type": "object",
             "additionalProperties": false,
