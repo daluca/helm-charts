@@ -88,9 +88,35 @@ logging:
 
 delegation:
   enabled: false
-  className: ""
-  annotations: {}
-  tls: true
+  replicaCount: 1
+  image:
+    registry: docker.io
+    repository: nginx
+    tag: 1.25.3-alpine
+    sha256: ""
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+    containerPort: 80
+    annotations: {}
+  ingress:
+    className: ""
+    annotations: {}
+    tls: true
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 50m
+      memory: 64Mi
+  livenessProbe:
+    enabled: true
+  readinessProbe:
+    enabled: false
+  startupProbe:
+    enabled: true
 
 database:
   type: postgresql

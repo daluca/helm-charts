@@ -1,0 +1,36 @@
+{{- if .Values.delegation.enabled }}
+{{- $fullName := include "synapse.wellKnownFullname" . -}}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "synapse.wellKnownFullname" . }}
+  labels:
+    {{- include "synapse.labels" . | nindent 4 }}
+    app.kubernetes.io/component: delegation
+  {{- with omit .Values.delegation.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if (default .Values.ingress.className .Values.delegation.ingress.className) }}
+  ingressClassName: {{ default .Values.ingress.className .Values.delegation.ingress.className }}
+  {{- end }}
+  {{- if .Values.delegation.tls }}
+  tls:
+    - hosts:
+        - {{ .Values.homeserver.server_name }}
+      secretName: {{ printf "%s-%s" .Values.homeserver.server_name "tls" }}
+  {{- end }}
+  rules:
+    - host: {{ .Values.homeserver.server_name }}
+      http:
+        paths:
+          - path: /.well-known/matrix
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  name: http
+{{- end }}

@@ -240,14 +240,87 @@
                 "enabled": {
                     "type": "boolean"
                 },
-                "className": {
-                    "type": "string"
+                "replicaCount": {
+                    "type": "number",
+                    "minimum": 0
                 },
-                "annotations": {
-                    "$ref": "#/$defs/annotations"
+                "image": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["repository"],
+                    "properties": {
+                        "registry": {
+                            "type": "string"
+                        },
+                        "repository": {
+                            "type": "string"
+                        },
+                        "tag": {
+                            "type": "string"
+                        },
+                        "sha256": {
+                            "type": "string",
+                            "pattern": "^(|[a-z0-9]{64})$"
+                        },
+                        "pullPolicy": {
+                            "enum": ["Always", "Never", "IfNotPresent"]
+                        }
+                    }
                 },
-                "tls": {
-                    "type": "boolean"
+                "service": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["containerPort"],
+                    "properties": {
+                        "type": {
+                            "enum": ["ClusterIP", "NodePort", "LoadBalancer"]
+                        },
+                        "port": {
+                            "$ref": "#/$defs/port"
+                        },
+                        "containerPort": {
+                            "$ref": "#/$defs/port"
+                        },
+                        "annotations": {
+                            "$ref": "#/$defs/annotations"
+                        }
+                    }
+                },
+                "ingress": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "className": {
+                            "type": "string"
+                        },
+                        "annotations": {
+                            "$ref": "#/$defs/annotations"
+                        },
+                        "tls": {
+                            "type": "boolean"
+                        }
+                    }
+                },
+                "resources": {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                        "requests": {
+                            "$ref": "#/$defs/resource"
+                        },
+                        "limits": {
+                            "$ref": "#/$defs/resource"
+                        }
+                    }
+                },
+                "livenessProbe": {
+                    "$ref": "#/$defs/probe"
+                },
+                "readinessProbe": {
+                    "$ref": "#/$defs/probe"
+                },
+                "startupProbe": {
+                    "$ref": "#/$defs/probe"
                 }
             }
         },

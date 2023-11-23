@@ -1,0 +1,24 @@
+{{- if .Values.delegation.enabled -}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "synapse.wellKnownFullname" . }}
+  labels:
+    {{- include "synapse.labels" . | nindent 4 }}
+    app.kubernetes.io/component: delegation
+  {{- with .Values.service.annotations }}
+  annotations:
+    {{ toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    {{- include "synapse.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: delegation
+  ports:
+    - port: {{ default .Values.delegation.service.containerPort .Values.delegation.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+{{- end }}

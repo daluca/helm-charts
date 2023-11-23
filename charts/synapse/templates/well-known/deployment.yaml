@@ -1,0 +1,69 @@
+{{- if .Values.delegation.enabled -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "synapse.wellKnownFullname" . }}
+  labels:
+    {{- include "synapse.labels" . | nindent 4 }}
+    app.kubernetes.io/component: delegation
+spec:
+  replicas: {{ default 1 .Values.delegation.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "synapse.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: delegation
+  template:
+    metadata:
+      labels:
+        {{- include "synapse.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: delegation
+    spec:
+      serviceAccountName: {{ include "synapse.serviceAccountName" . }}
+      containers:
+        - name: nginx
+          image: {{ if .Values.delegation.image.registry }}{{ .Values.delegation.image.registry }}/{{ end }}{{ .Values.delegation.image.repository }}:{{ .Values.delegation.image.tag }}{{ if .Values.delegation.image.sha256 }}@sha256:{{ .Values.delegation.image.sha256 }}{{ end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.delegation.service.containerPort }}
+              protocol: TCP
+          {{- with .Values.delegation.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if .Values.delegation.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          {{- with omit .Values.delegation.livenessProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.delegation.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          {{- with omit .Values.delegation.readinessProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.delegation.startupProbe.enabled }}
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          {{- with omit .Values.delegation.startupProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          volumeMounts:
+            - mountPath: /etc/nginx/conf.d/default.conf
+              subPath: nginx.conf
+              name: nginx-config
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: {{ printf "%s-%s" (include "synapse.wellKnownFullname" .) "config" }}
+{{- end }}
