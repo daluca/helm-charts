@@ -63,9 +63,17 @@ admin:
 homeserver:
   server_name: localhost
   report_stats: false
+  media_store_path: /synapse/media_store
+  trusted_key_servers:
+    - server_name: matrix.org
   macaroon_secret_key: ""
   registration_shared_secret: ""
   form_secret: ""
+  existingSecret: ""
+
+signingKey:
+  enabled: false
+  key: ""
   existingSecret: ""
 
 logging:
