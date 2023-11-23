@@ -16,7 +16,7 @@ spec:
   {{- if (default .Values.ingress.className .Values.delegation.ingress.className) }}
   ingressClassName: {{ default .Values.ingress.className .Values.delegation.ingress.className }}
   {{- end }}
-  {{- if .Values.delegation.tls }}
+  {{- if .Values.delegation.ingress.tls }}
   tls:
     - hosts:
         - {{ .Values.homeserver.server_name }}
