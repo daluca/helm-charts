@@ -194,6 +194,19 @@
                 }
             }
         },
+        "mediaStore": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "path": {
+                    "type": "string",
+                    "pattern": "^/"
+                }
+            }
+        },
         "logging": {
             "type": "object",
             "additionalProperties": false,
