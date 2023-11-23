@@ -160,9 +160,7 @@
         },
         "homeserver": {
             "type": "object",
-            "additionalProperties": {
-                "type": ["string", "boolean"]
-            },
+            "additionalProperties": true,
             "required": ["server_name", "report_stats"],
             "properties": {
                 "server_name": {

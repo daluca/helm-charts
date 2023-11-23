@@ -1,6 +1,6 @@
 # synapse
 
-![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.96.1](https://img.shields.io/badge/AppVersion-1.96.1-informational?style=flat-square)
+![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.96.1](https://img.shields.io/badge/AppVersion-1.96.1-informational?style=flat-square)
 
 Matrix homeserver written in Python/Twisted
 
@@ -58,6 +58,8 @@ Matrix homeserver written in Python/Twisted
 | admin.existingSecret | string | `""` | secret must contain the keys `username` and `password` |
 | homeserver.server_name | string | `"localhost"` |  |
 | homeserver.report_stats | bool | `false` |  |
+| homeserver.media_store_path | string | `"/synapse/media_store"` |  |
+| homeserver.trusted_key_servers[0].server_name | string | `"matrix.org"` |  |
 | homeserver.macaroon_secret_key | string | `""` |  |
 | homeserver.registration_shared_secret | string | `""` |  |
 | homeserver.form_secret | string | `""` |  |
