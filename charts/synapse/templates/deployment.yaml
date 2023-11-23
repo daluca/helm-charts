@@ -14,6 +14,8 @@ spec:
     metadata:
       labels:
         {{- include "synapse.selectorLabels" . | nindent 8 }}
+      annotations:
+        synapse-config-hash: {{ toJson .Values.homeserver | sha256sum }}
     spec:
       serviceAccountName: {{ include "synapse.fullname" . }}
       containers:
