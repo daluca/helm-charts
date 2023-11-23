@@ -31,6 +31,7 @@ Matrix homeserver written in Python/Twisted
 | service.type | string | `"ClusterIP"` |  |
 | service.port | int | `8008` |  |
 | service.containerPort | int | `8008` |  |
+| service.annotations | object | `{}` |  |
 | ingress.enabled | bool | `false` |  |
 | ingress.className | string | `""` |  |
 | ingress.annotations | object | `{}` |  |

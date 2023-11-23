@@ -15,6 +15,7 @@ service:
   type: ClusterIP
   port: 8008
   containerPort: 8008
+  annotations: {}
 
 ingress:
   enabled: false
