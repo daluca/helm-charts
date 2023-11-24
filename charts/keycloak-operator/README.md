@@ -1,6 +1,6 @@
 # keycloak-operator
 
-![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 22.0.5](https://img.shields.io/badge/AppVersion-22.0.5-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.0.0](https://img.shields.io/badge/AppVersion-23.0.0-informational?style=flat-square)
 
 Open source Identity and Access Management for modern applications and services
 
@@ -13,12 +13,17 @@ Open source Identity and Access Management for modern applications and services
 * <https://github.com/keycloak/keycloak>
 * <https://github.com/keycloak/keycloak-k8s-resources>
 
+## Requirements
+
+Kubernetes: `>=1.19.0`
+
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | nameOverride | string | `""` |  |
 | fullnameOverride | string | `""` |  |
+| openshift | bool | `false` |  |
 | replicaCount | int | `1` |  |
 | image.registry | string | `"quay.io"` |  |
 | image.repository | string | `"keycloak/keycloak-operator"` |  |

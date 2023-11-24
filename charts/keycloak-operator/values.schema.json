@@ -11,6 +11,9 @@
         "fullnameOverride": {
             "$ref": "#/$defs/dns-name"
         },
+        "openshift": {
+            "type": "boolean"
+        },
         "replicaCount": {
             "type": "number",
             "minimum": 0

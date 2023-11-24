@@ -75,3 +75,10 @@ Keycloak Operator import controller role name.
 {{- define "keycloak-operator.importControllerName" -}}
 {{ printf "%s-%s" (include "keycloak-operator.fullname" .) "import-controller" }}
 {{- end }}
+
+{{/*
+Keycloak Operator watched secrets controller role name.
+*/}}
+{{- define "keycloak-operator.watchedSecretsControllerName" -}}
+{{ printf "%s-%s" (include "keycloak-operator.fullname" .) "watched-secrets-controller" }}
+{{- end }}

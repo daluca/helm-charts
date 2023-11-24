@@ -2,6 +2,8 @@
 nameOverride: ""
 fullnameOverride: ""
 
+openshift: false
+
 replicaCount: 1
 
 image:
