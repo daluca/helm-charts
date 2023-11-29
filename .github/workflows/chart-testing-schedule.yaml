@@ -9,6 +9,10 @@ on:
 permissions:
   contents: read
 
+env:
+  CT_TARGET_BRANCH: ${{ github.event.repository.default_branch }}
+  YAMLLINT_VERSION: 1.33.0
+
 jobs:
   testing:
     name: charts
