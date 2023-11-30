@@ -101,7 +101,7 @@ Matrix homeserver written in Python/Twisted
 | delegation.startupProbe.periodSeconds | int | `2` |  |
 | delegation.startupProbe.failureThreshold | int | `15` |  |
 | delegation.nginx.logHealthCheck | bool | `false` |  |
-| delegation.nginx.defaultType | string | `"application/json"` |  |
+| delegation.nginx.defaultType | string | `"application/json; charset=utf-8"` |  |
 | delegation.nginx.cors.enabled | bool | `true` |  |
 | delegation.nginx.cors.origin | string | `"*"` |  |
 | delegation.nginx.cors.headers | string | `"X-Requested-With, Content-Type, Authorization, Date"` |  |

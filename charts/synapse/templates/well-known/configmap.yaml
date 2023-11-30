@@ -19,16 +19,15 @@ data:
             {{- if .Values.delegation.nginx.logHealthCheck }}
             access_log off;
             {{- end }}
-
             return 200 'OK';
         }
 
         location ^~ /.well-known/matrix {
-            default_type {{ .Values.delegation.nginx.defaultType }};
+            default_type {{ .Values.delegation.nginx.defaultType | squote }};
             {{- if .Values.delegation.nginx.cors.enabled }}
-            add_header Access-Control-Allow-Origin {{ .Values.delegation.nginx.cors.origin }};
-            add_header Access-Control-Allow-Headers {{ .Values.delegation.nginx.cors.headers }};
-            add_header Access-Control-Allow-Methods {{ .Values.delegation.nginx.cors.methods | upper }};
+            add_header 'Access-Control-Allow-Origin' {{ .Values.delegation.nginx.cors.origin | squote }};
+            add_header 'Access-Control-Allow-Headers' {{ .Values.delegation.nginx.cors.headers | squote }};
+            add_header 'Access-Control-Allow-Methods' {{ .Values.delegation.nginx.cors.methods | upper | squote }};
             {{- end }}
 
             location /.well-known/matrix/server {

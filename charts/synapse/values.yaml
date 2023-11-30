@@ -138,7 +138,7 @@ delegation:
 
   nginx:
     logHealthCheck: false
-    defaultType: application/json
+    defaultType: application/json; charset=utf-8
     cors:
       enabled: true
       origin: "*"
