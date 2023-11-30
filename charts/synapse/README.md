@@ -1,6 +1,6 @@
 # synapse
 
-![Version: 0.4.1](https://img.shields.io/badge/Version-0.4.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.97.0](https://img.shields.io/badge/AppVersion-1.97.0-informational?style=flat-square)
+![Version: 0.4.2](https://img.shields.io/badge/Version-0.4.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.97.0](https://img.shields.io/badge/AppVersion-1.97.0-informational?style=flat-square)
 
 Matrix homeserver written in Python/Twisted
 
@@ -100,6 +100,12 @@ Matrix homeserver written in Python/Twisted
 | delegation.startupProbe.enabled | bool | `true` |  |
 | delegation.startupProbe.periodSeconds | int | `2` |  |
 | delegation.startupProbe.failureThreshold | int | `15` |  |
+| delegation.ngnix.logHealthCheck | bool | `false` |  |
+| delegation.ngnix.defaultType | string | `"application/json"` |  |
+| delegation.ngnix.cors.enabled | bool | `true` |  |
+| delegation.ngnix.cors.origin | string | `"*"` |  |
+| delegation.ngnix.cors.headers | string | `"X-Requested-With, Content-Type, Authorization, Date"` |  |
+| delegation.ngnix.cors.methods | string | `"GET, HEAD, POST, PUT, DELETE, OPTIONS"` |  |
 | database.type | string | `"postgresql"` |  |
 | database.external | bool | `false` |  |
 | database.name | string | `"matrix_synapse"` |  |

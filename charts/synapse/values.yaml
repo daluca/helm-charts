@@ -136,6 +136,15 @@ delegation:
     periodSeconds: 2
     failureThreshold: 15
 
+  ngnix:
+    logHealthCheck: false
+    defaultType: application/json
+    cors:
+      enabled: true
+      origin: "*"
+      headers: X-Requested-With, Content-Type, Authorization, Date
+      methods: GET, HEAD, POST, PUT, DELETE, OPTIONS
+
 database:
   type: postgresql
   external: false

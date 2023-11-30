@@ -502,6 +502,36 @@
                 },
                 "startupProbe": {
                     "$ref": "#/$defs/probe"
+                },
+                "nginx": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "logHealthCheck": {
+                            "type": "boolean"
+                        },
+                        "defaultType": {
+                            "type": "string"
+                        },
+                        "cors": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean"
+                                },
+                                "origin": {
+                                    "type": "string"
+                                },
+                                "headers": {
+                                    "type": "string"
+                                },
+                                "methods": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
                 }
             }
         },
