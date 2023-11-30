@@ -90,7 +90,7 @@ spec:
               subPath: signing.key
               name: signing-key
             {{- end }}
-      {{- if any (eq "postgresql" .Values.database.type) }}
+      {{- if any (eq "postgresql" .Values.database.type) .Values.extraMergeVolumeMounts }}
       initContainers:
         - name: merge-config
           image: docker.io/mikefarah/yq:4.40.3
