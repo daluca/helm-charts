@@ -1,0 +1,5 @@
+[codespell]
+builtin = clear,rare,code
+skip = .git
+check-filename =
+check-hidden =
