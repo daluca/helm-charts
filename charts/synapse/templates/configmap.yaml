@@ -75,7 +75,7 @@ data:
       args:
         database: {{ if .Values.database.external }}{{ .Values.database.name }}{{ else }}{{ .Values.postgresql.auth.database }}{{ end }}
         host: {{ if .Values.database.external }}{{ .Values.database.host }}{{ else }}{{ printf "%s-%s.%s" .Release.Name "postgresql" .Release.Namespace }}{{ end }}
-        port: {{ if .Values.database.external }}{{ .Values.database.port }}{{ else }}{{ .Values.postgresql.service.ports }}{{ end }}
+        port: {{ if .Values.database.external }}{{ .Values.database.port }}{{ else }}{{ .Values.postgresql.service.ports.postgresql }}{{ end }}
         {{- with .Values.database.arguments }}
         {{- toYaml . | nindent 8 }}
         {{ end }}
