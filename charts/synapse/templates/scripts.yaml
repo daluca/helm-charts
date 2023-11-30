@@ -11,5 +11,5 @@ data:
 
     yq eval-all '. as $item ireduce ({}; . *d $item)' /workdir/config/*.yaml /workdir/secrets/*.yaml > /target/merged.yaml
 
-    echo "These files have been combined"
+    echo "These files have been merged"
     ls -1 /workdir/config/*.yaml /workdir/secrets/*.yaml
