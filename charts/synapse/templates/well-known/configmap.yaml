@@ -16,7 +16,7 @@ data:
         access_log /dev/stdout;
 
         location = /healthz {
-            {{- if .Values.delegation.ngnix.logHealthCheck }}
+            {{- if .Values.delegation.nginx.logHealthCheck }}
             access_log off;
             {{- end }}
 
@@ -24,11 +24,11 @@ data:
         }
 
         location ^~ /.well-known/matrix {
-            default_type {{ .Values.delegation.ngnix.defaultType }};
-            {{- .Values.delegation.ngnix.cors.enabled }}
-            add_header Access-Control-Allow-Origin {{ .Values.delegation.ngnix.cors.origin }};
-            add_header Access-Control-Allow-Headers {{ .Values.delegation.ngnix.cors.headers }}
-            add_header Access-Control-Allow-Methods {{ .Values.delegation.ngnix.cors.methods | upper }}
+            default_type {{ .Values.delegation.nginx.defaultType }};
+            {{- if .Values.delegation.nginx.cors.enabled }}
+            add_header Access-Control-Allow-Origin {{ .Values.delegation.nginx.cors.origin }};
+            add_header Access-Control-Allow-Headers {{ .Values.delegation.nginx.cors.headers }}
+            add_header Access-Control-Allow-Methods {{ .Values.delegation.nginx.cors.methods | upper }}
             {{- end }}
 
             location /.well-known/matrix/server {

@@ -100,12 +100,12 @@ Matrix homeserver written in Python/Twisted
 | delegation.startupProbe.enabled | bool | `true` |  |
 | delegation.startupProbe.periodSeconds | int | `2` |  |
 | delegation.startupProbe.failureThreshold | int | `15` |  |
-| delegation.ngnix.logHealthCheck | bool | `false` |  |
-| delegation.ngnix.defaultType | string | `"application/json"` |  |
-| delegation.ngnix.cors.enabled | bool | `true` |  |
-| delegation.ngnix.cors.origin | string | `"*"` |  |
-| delegation.ngnix.cors.headers | string | `"X-Requested-With, Content-Type, Authorization, Date"` |  |
-| delegation.ngnix.cors.methods | string | `"GET, HEAD, POST, PUT, DELETE, OPTIONS"` |  |
+| delegation.nginx.logHealthCheck | bool | `false` |  |
+| delegation.nginx.defaultType | string | `"application/json"` |  |
+| delegation.nginx.cors.enabled | bool | `true` |  |
+| delegation.nginx.cors.origin | string | `"*"` |  |
+| delegation.nginx.cors.headers | string | `"X-Requested-With, Content-Type, Authorization, Date"` |  |
+| delegation.nginx.cors.methods | string | `"GET, HEAD, POST, PUT, DELETE, OPTIONS"` |  |
 | database.type | string | `"postgresql"` |  |
 | database.external | bool | `false` |  |
 | database.name | string | `"matrix_synapse"` |  |

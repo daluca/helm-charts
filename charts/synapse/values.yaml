@@ -136,7 +136,7 @@ delegation:
     periodSeconds: 2
     failureThreshold: 15
 
-  ngnix:
+  nginx:
     logHealthCheck: false
     defaultType: application/json
     cors:

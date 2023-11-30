@@ -28,8 +28,8 @@ spec:
           command: [python3, -m, synapse.app.homeserver]
           args:
             - --config-path=/synapse/homeserver.yaml
-            - --config-path=/synapse/homeserver.d
-            - --config-directory=/synapse
+            - --config-path=/synapse/homeserver.d/
+            - --config-directory=/synapse/
           ports:
             - name: http
               containerPort: {{ .Values.service.containerPort }}
