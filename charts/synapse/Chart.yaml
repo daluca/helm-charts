@@ -3,7 +3,7 @@ apiVersion: v2
 name: synapse
 type: application
 description: Matrix homeserver written in Python/Twisted
-version: 0.3.3
+version: 0.4.0
 appVersion: 1.96.1
 kubeVersion: ">=1.19.0"
 icon: https://matrix.org/images/matrix-favicon.svg
@@ -38,6 +38,12 @@ annotations:
         - linux/arm64/v8
         - linux/ppc64le
         - linux/s390x
+    - name: yq
+      image: mikefarah/yq:4.40.3
+      platforms:
+        - linux/amd64
+        - linux/arm64
+        - linux/ppc64le
   artifacthub.io/links: |-
     - name: chart
       url: https://github.com/daluca/helm-charts/tree/main/charts/synapse

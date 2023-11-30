@@ -90,6 +90,10 @@ logging:
   console:
     level: NOTSET
 
+extraMergeVolumeMounts: []
+
+extraVolumes: []
+
 delegation:
   enabled: false
 
@@ -135,11 +139,11 @@ delegation:
 database:
   type: postgresql
   external: false
-  name: synapse
+  name: matrix_synapse
   host: localhost
   port: 5432
-  username: synapse
-  password: synapse
+  username: synapse_user
+  password: somethingSecureIPromise
   existingSecret: ""
   arguments:
     cp_min: 5
@@ -154,3 +158,6 @@ postgresql:
   primary:
     initdb:
       args: --lc-collate=C --lc-ctype=C
+  service:
+    ports:
+      postgresql: 5432

@@ -77,22 +77,43 @@ spec:
               subPath: media
               name: synapse-data
             {{- end }}
+            - mountPath: /synapse/homeserver.d/
+              name: config-data
             - mountPath: /synapse/homeserver.d/secrets.yaml
               subPath: secrets.yaml
               name: synapse-secrets
             - mountPath: /synapse/logging.yaml
               subPath: logging.yaml
               name: synapse-config
-            {{- if not (eq "sqlite" .Values.database.type) }}
-            - mountPath: /synapse/homeserver.d/database.yaml
-              subPath: database.yaml
-              name: database-credentials
-            {{- end }}
             {{- if .Values.signingKey.enabled }}
             - mountPath: /synapse/{{ printf "%s.key" .Values.homeserver.server_name }}
               subPath: signing.key
               name: signing-key
             {{- end }}
+      {{- if any (eq "postgresql" .Values.database.type) }}
+      initContainers:
+        - name: merge-config
+          image: docker.io/mikefarah/yq:4.40.3
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: [merge.sh]
+          volumeMounts:
+            - mountPath: /usr/local/bin/merge.sh
+              subPath: merge.sh
+              name: scripts
+            - mountPath: /target
+              name: config-data
+            {{- if eq "postgresql" .Values.database.type }}
+            - mountPath: /workdir/config/database.yaml
+              subPath: database.yaml
+              name: synapse-config
+            - mountPath: /workdir/secrets/database.yaml
+              subPath: database.yaml
+              name: database-credentials
+            {{- end }}
+            {{- with .Values.extraMergeVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+      {{- end }}
       volumes:
         - name: synapse-config
           configMap:
@@ -124,4 +145,15 @@ spec:
             {{- else }}
             secretName: {{ printf "%s-%s" (include "synapse.fullname" .) "signing-key" }}
             {{- end }}
+        {{- end }}
+        {{- if any (eq "postgresql" .Values.database.type) }}
+        - name: scripts
+          configMap:
+            name: {{ printf "%s-%s" (include "synapse.fullname" .) "scripts" }}
+            defaultMode: 0777
+        {{- end }}
+        - name: config-data
+          emptyDir: {}
+        {{- with .Values.extraVolumes }}
+        {{- toYaml . | nindent 8 }}
         {{- end }}

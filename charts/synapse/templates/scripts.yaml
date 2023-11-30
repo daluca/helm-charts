@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ printf "%s-%s" (include "synapse.fullname" .) "scripts" }}
+  labels:
+    {{- include "synapse.labels" . | nindent 4 }}
+data:
+  merge.sh: |
+    #!/bin/sh
+
+    yq eval-all '. as $item ireduce ({}; . *d $item)' /workdir/config/*.yaml /workdir/secrets/*.yaml > /target/merged.yaml
+
+    echo "These files have been merged"
+    ls -1 /workdir/config/*.yaml /workdir/secrets/*.yaml
