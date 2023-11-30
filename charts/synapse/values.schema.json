@@ -12,7 +12,7 @@
             "$ref": "#/$defs/dns-name"
         },
         "replicaCount": {
-            "type": "number",
+            "type": "integer",
             "minimum": 0
         },
         "image": {
@@ -131,6 +131,7 @@
                 "accessModes": {
                     "type": "array",
                     "uniqueItems": true,
+                    "additionalItems": false,
                     "items": {
                         "enum": [
                             "ReadWriteOnce",
@@ -246,6 +247,173 @@
                 }
             }
         },
+        "extraMergeVolumeMounts": {
+            "type": "array",
+            "uniqueItems": false,
+            "additionalItems": false,
+            "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["mountPath", "name"],
+                "properties": {
+                    "mountPath": {
+                        "type": "string",
+                        "pattern": "^/"
+                    },
+                    "mountPropagation": {
+                        "type": ["string", "null"]
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "readOnly": {
+                        "type": "boolean"
+                    },
+                    "subPath": {
+                        "type": ["string", "null"]
+                    },
+                    "subPathExpr": {
+                        "type": ["string", "null"]
+                    }
+                }
+            }
+        },
+        "extraVolumes": {
+            "type": "array",
+            "uniqueItems": true,
+            "additionalItems": false,
+            "items": {
+                "type": "object",
+                "additionalProperties": {
+                    "type": "object"
+                },
+                "required": ["name"],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "configMap": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": ["name"],
+                        "properties": {
+                            "defaultModes": {
+                                "type": "integer"
+                            },
+                            "items": {
+                                "type": ["array", "null"],
+                                "uniqueItems": true,
+                                "additionalItems": false,
+                                "items": {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "required": ["key", "path"],
+                                    "properties": {
+                                        "key": {
+                                            "type": "string"
+                                        },
+                                        "path": {
+                                            "type": "string"
+                                        },
+                                        "mode": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "optional": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "emptyDir": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "medium": {
+                                "type": ["string", "null"]
+                            },
+                            "sizeLimit": {
+                                "oneOf": [
+                                    {
+                                        "type": ["string", "null"]
+                                    },
+                                    {
+                                        "type": "integer"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "hostPath": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": ["path"],
+                        "properties": {
+                            "path": {
+                                "type": "string"
+                            },
+                            "type": {
+                                "type": ["string", "null"]
+                            }
+                        }
+                    },
+                    "persistentVolumeClaim": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": ["claimName"],
+                        "properties": {
+                            "claimName": {
+                                "type": "string"
+                            },
+                            "readOnly": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "secret": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": ["secretName"],
+                        "properties": {
+                            "defaultModes": {
+                                "type": "integer"
+                            },
+                            "items": {
+                                "type": ["array", "null"],
+                                "uniqueItems": true,
+                                "additionalItems": false,
+                                "items": {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "required": ["key", "path"],
+                                    "properties": {
+                                        "key": {
+                                            "type": "string"
+                                        },
+                                        "path": {
+                                            "type": "string"
+                                        },
+                                        "mode": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            },
+                            "optional": {
+                                "type": "boolean"
+                            },
+                            "secretName": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "delegation": {
             "type": "object",
             "additionalProperties": false,
@@ -254,7 +422,7 @@
                     "type": "boolean"
                 },
                 "replicaCount": {
-                    "type": "number",
+                    "type": "integer",
                     "minimum": 0
                 },
                 "image": {
@@ -371,7 +539,7 @@
                 "arguments": {
                     "type": "object",
                     "additionalProperties": {
-                        "type": ["string", "number"]
+                        "type": ["string", "integer"]
                     }
                 }
             }
@@ -394,7 +562,7 @@
             "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?|)$"
         },
         "port": {
-            "type": "number",
+            "type": "integer",
             "minimum": 0,
             "maximum": 65535
         },
@@ -429,27 +597,27 @@
                     "type": "boolean"
                 },
                 "initialDelaySeconds": {
-                    "type": "number",
+                    "type": "integer",
                     "minimum": 0
                 },
                 "periodSeconds": {
-                    "type": "number",
+                    "type": "integer",
                     "minimum": 1
                 },
                 "timeoutSeconds": {
-                    "type": "number",
+                    "type": "integer",
                     "minimum": 1
                 },
                 "successThreshold": {
-                    "type": "number",
+                    "type": "integer",
                     "minimum": 1
                 },
                 "failureThreshold": {
-                    "type": "number",
+                    "type": "integer",
                     "minimum": 1
                 },
                 "terminationGracePeriodSeconds": {
-                    "type": "number",
+                    "type": "integer",
                     "minimum": 1
                 }
             }

@@ -1,6 +1,6 @@
 # synapse
 
-![Version: 0.3.3](https://img.shields.io/badge/Version-0.3.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.96.1](https://img.shields.io/badge/AppVersion-1.96.1-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.96.1](https://img.shields.io/badge/AppVersion-1.96.1-informational?style=flat-square)
 
 Matrix homeserver written in Python/Twisted
 
@@ -75,6 +75,8 @@ Matrix homeserver written in Python/Twisted
 | logging.buffer.level | string | `"NOTSET"` |  |
 | logging.buffer.location | string | `"/synapse/homeserver.log"` |  |
 | logging.console.level | string | `"NOTSET"` |  |
+| extraMergeVolumeMounts | list | `[]` |  |
+| extraVolumes | list | `[]` |  |
 | delegation.enabled | bool | `false` |  |
 | delegation.replicaCount | int | `1` |  |
 | delegation.image.registry | string | `"docker.io"` |  |
@@ -100,11 +102,11 @@ Matrix homeserver written in Python/Twisted
 | delegation.startupProbe.failureThreshold | int | `15` |  |
 | database.type | string | `"postgresql"` |  |
 | database.external | bool | `false` |  |
-| database.name | string | `"synapse"` |  |
+| database.name | string | `"matrix_synapse"` |  |
 | database.host | string | `"localhost"` |  |
 | database.port | int | `5432` |  |
-| database.username | string | `"synapse"` |  |
-| database.password | string | `"synapse"` |  |
+| database.username | string | `"synapse_user"` |  |
+| database.password | string | `"somethingSecureIPromise"` |  |
 | database.existingSecret | string | `""` |  |
 | database.arguments.cp_min | int | `5` |  |
 | database.arguments.cp_max | int | `10` |  |
@@ -113,3 +115,4 @@ Matrix homeserver written in Python/Twisted
 | postgresql.auth.password | string | `"synapse"` |  |
 | postgresql.auth.database | string | `"synapse"` |  |
 | postgresql.primary.initdb.args | string | `"--lc-collate=C --lc-ctype=C"` |  |
+| postgresql.service.ports.postgresql | int | `5432` |  |
