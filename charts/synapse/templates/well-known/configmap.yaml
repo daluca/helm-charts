@@ -16,7 +16,7 @@ data:
         access_log /dev/stdout;
 
         location = /healthz {
-            {{- if .Values.delegation.nginx.logHealthCheck }}
+            {{- if not .Values.delegation.nginx.logHealthCheck }}
             access_log off;
             {{- end }}
             return 200 'OK';
