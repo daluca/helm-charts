@@ -3,7 +3,7 @@ apiVersion: v2
 name: synapse
 type: application
 description: Matrix homeserver written in Python/Twisted
-version: 0.4.2
+version: 0.4.3
 appVersion: 1.97.0
 kubeVersion: ">=1.19.0-0"
 icon: https://matrix.org/images/matrix-favicon.svg
@@ -47,7 +47,7 @@ annotations:
   artifacthub.io/links: |-
     - name: chart
       url: https://github.com/daluca/helm-charts/tree/main/charts/synapse
-    - name: application
+    - name: source
       url: https://github.com/matrix-org/synapse
     - name: support
       url: https://github.com/daluca/helm-charts/issues
