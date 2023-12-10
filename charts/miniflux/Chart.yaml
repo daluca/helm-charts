@@ -3,6 +3,7 @@ apiVersion: v2
 name: miniflux
 type: application
 home: https://miniflux.app
+icon: https://raw.githubusercontent.com/miniflux/logo/master/original/icon-180.png
 sources:
   - https://github.com/daluca/helm-charts/tree/main/charts/miniflux
   - https://github.com/miniflux/v2
