@@ -11,6 +11,6 @@ appVersion: 2.0.50
 description: Minimalist and opinionated feed reader
 dependencies:
   - name: postgresql
-    version: ">=12.0.0 <13.0.0"
+    version: ">=13.0.0 <14.0.0"
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled

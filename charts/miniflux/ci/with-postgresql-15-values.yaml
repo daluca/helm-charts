@@ -4,4 +4,4 @@ config:
 
 postgresql:
   image:
-    tag: 16
+    tag: 15
