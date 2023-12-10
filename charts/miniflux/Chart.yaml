@@ -2,8 +2,8 @@
 apiVersion: v2
 name: miniflux
 type: application
-home: https://miniflux.app
 icon: https://raw.githubusercontent.com/miniflux/logo/master/original/icon-180.png
+home: https://miniflux.app
 sources:
   - https://github.com/daluca/helm-charts/tree/main/charts/miniflux
   - https://github.com/miniflux/v2
@@ -16,3 +16,19 @@ dependencies:
     version: ">=13.0.0 <14.0.0"
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
+annotations:
+  artifacthub.io/images: |-
+    - name: miniflux
+      image: miniflux/miniflux:2.0.50
+      platforms:
+        - linux/amd64
+        - linux/arm/v6
+        - linux/arm/v7
+        - linux/arm64
+  artifacthub.io/links: |-
+    - name: chart
+      url: https://github.com/daluca/helm-charts/tree/main/charts/miniflux
+    - name: source
+      url: https://github.com/miniflux/v2
+    - name: support
+      url: https://github.com/daluca/helm-charts/issues
