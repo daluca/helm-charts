@@ -9,6 +9,7 @@ sources:
   - https://github.com/miniflux/v2
 version: 0.4.4
 appVersion: 2.0.50
+kubeVersion: ">=1.19.0"
 description: Minimalist and opinionated feed reader
 dependencies:
   - name: postgresql
