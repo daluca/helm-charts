@@ -6,6 +6,7 @@ metadata:
   name: {{ include "miniflux.fullname" . | trunc 50 | trimSuffix "-" }}-create-admin
   labels:
     {{- include "miniflux.labels" . | nindent 4 }}
+    app.kubernetes.io/component: miniflux
   annotations:
     helm.sh/hook: post-install
     helm.sh/hook-delete-policy: hook-succeeded
@@ -14,8 +15,8 @@ spec:
     metadata:
       name: {{ include "miniflux.fullname" . | trunc 50 | trimSuffix "-" }}-create-admin
       labels:
-        app.kubernetes.io/component: backend
         {{- include "miniflux.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: miniflux
     spec:
       restartPolicy: OnFailure
       containers:

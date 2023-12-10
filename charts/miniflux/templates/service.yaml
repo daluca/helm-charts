@@ -5,6 +5,7 @@ metadata:
   name: {{ include "miniflux.fullname" . }}
   labels:
     {{- include "miniflux.labels" . | nindent 4 }}
+    app.kubernetes.io/component: miniflux
 spec:
   type: {{ default "ClusterIP" .Values.service.type }}
   selector:

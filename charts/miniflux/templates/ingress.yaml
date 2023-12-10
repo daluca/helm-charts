@@ -14,6 +14,7 @@ metadata:
   name: {{ include "miniflux.fullname" . }}
   labels:
     {{- include "miniflux.labels" . | nindent 4 }}
+    app.kubernetes.io/component: miniflux
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
