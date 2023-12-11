@@ -9,7 +9,7 @@ spec:
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 5
-  schedule: "43 16 * * *"
+  schedule: {{ .Values.cronJobs.cleanupTasksSchedule }}
   jobTemplate:
     spec:
       template:

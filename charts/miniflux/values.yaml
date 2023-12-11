@@ -47,7 +47,14 @@ startupProbe:
   periodSeconds: 2
   failureThreshold: 15
 
+cronJobs:
+  # -- Runs every hour on the hour
+  refreshFeedsSchedule: 0 * * * *
+  # -- Runs every day at 2:30am UTC
+  cleanupTasksSchedule: 30 2 * * *
+
 config:
+  POLLING_FREQUENCY: "60"
   WATCHDOG: "false"
 
 secrets: {}

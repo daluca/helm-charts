@@ -49,6 +49,9 @@ Minimalist and opinionated feed reader
 | startupProbe.enabled | bool | `true` |  |
 | startupProbe.periodSeconds | int | `2` |  |
 | startupProbe.failureThreshold | int | `15` |  |
+| cronJobs.refreshFeedsSchedule | string | `"0 * * * *"` | Runs every hour on the hour |
+| cronJobs.cleanupTasksSchedule | string | `"30 2 * * *"` | Runs every day at 2:30am UTC |
+| config.POLLING_FREQUENCY | string | `"60"` |  |
 | config.WATCHDOG | string | `"false"` |  |
 | secrets | object | `{}` |  |
 | existingSecret | string | `""` |  |

@@ -296,6 +296,18 @@
                 }
             }
         },
+        "cronJobs": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "refreshFeedsSchedule": {
+                    "type": "string"
+                },
+                "cleanupTasksSchedule": {
+                    "type": "string"
+                }
+            }
+        },
         "config": {
             "type": "object",
             "additionalProperties": {
