@@ -1,0 +1,45 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ printf "%s-%s" (include "miniflux.fullname" .) "cleanup-tasks" }}
+  labels:
+    app.kubernetes.io/component: cleanup-tasks
+spec:
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 5
+  schedule: {{ .Values.cronJobs.cleanupTasksSchedule }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          name: {{ printf "%s-%s" (include "miniflux.fullname" .) "cleanup-tasks" }}
+          labels:
+            {{- include "miniflux.selectorLabels" . | nindent 12 }}
+            app.kubernetes.io/component: cleanup-tasks
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: cleanup-tasks
+              image: {{ if .Values.image.registry }}{{ .Values.image.registry }}{{ end }}/{{ .Values.image.repository }}:{{ default .Chart.AppVersion .Values.image.tag }}{{ if .Values.image.sha }}{{ .Values.image.sha }}{{ end }}
+              imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
+              command: [miniflux]
+              args: [-run-cleanup-tasks, -debug]
+              envFrom:
+                - configMapRef:
+                    name: {{ printf "%s-%s" (include "miniflux.fullname" .) "config" }}
+                - secretRef:
+                {{- if and .Values.database.external .Values.database.existingSecret }}
+                    name: {{ .Values.database.existingSecret }}
+                {{- else }}
+                    name: {{ printf "%s-%s" (include "miniflux.fullname" .) "database-credentials" }}
+                {{- end }}
+                {{- if .Values.secrets }}
+                - secretRef:
+                    name: {{ printf "%s-%s" (include "miniflux.fullname" .) "secrets" }}
+                {{- end }}
+                {{- if .Values.existingSecret }}
+                - secretRef:
+                    name: {{ .Values.existingSecret }}
+                {{- end }}

@@ -3,19 +3,20 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "miniflux.fullname" . | trunc 50 | trimSuffix "-" }}-create-admin
+  name: {{ printf "%s-%s" (include "miniflux.fullname" .) "create-admin" }}
   labels:
     {{- include "miniflux.labels" . | nindent 4 }}
+    app.kubernetes.io/component: miniflux
   annotations:
     helm.sh/hook: post-install
     helm.sh/hook-delete-policy: hook-succeeded
 spec:
   template:
     metadata:
-      name: {{ include "miniflux.fullname" . | trunc 50 | trimSuffix "-" }}-create-admin
+      name: {{ printf "%s-%s" (include "miniflux.fullname" .) "create-admin" }}
       labels:
-        app.kubernetes.io/component: backend
         {{- include "miniflux.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: miniflux
     spec:
       restartPolicy: OnFailure
       containers:
@@ -29,10 +30,10 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: DATABASE_URL
-                  {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.existingSecret }}
-                  name: {{ .Values.externalDatabase.existingSecret }}
+                  {{- if and .Values.database.external .Values.database.existingSecret }}
+                  name: {{ .Values.database.existingSecret }}
                   {{- else }}
-                  name: {{ include "miniflux.fullname" . | trunc 42 | trimSuffix "-" }}-database-credentials
+                  name: {{ printf "%s-%s" (include "miniflux.fullname" .) "database-credentials" }}
                   {{- end }}
             - name: ADMIN_USERNAME
               valueFrom:
@@ -41,7 +42,7 @@ spec:
                   {{- if .Values.admin.existingSecret }}
                   name: {{ .Values.admin.existingSecret }}
                   {{- else }}
-                  name: {{ include "miniflux.fullname" . | trunc 57 | trimSuffix "-" }}-admin
+                  name: {{ printf "%s-%s" (include "miniflux.fullname" .) "admin-credentials" }}
                   {{- end }}
             - name: ADMIN_PASSWORD
               valueFrom:
@@ -50,6 +51,6 @@ spec:
                   {{- if .Values.admin.existingSecret }}
                   name: {{ .Values.admin.existingSecret }}
                   {{- else }}
-                  name: {{ include "miniflux.fullname" . | trunc 57 | trimSuffix "-" }}-admin
+                  name: {{ printf "%s-%s" (include "miniflux.fullname" .) "admin-credentials" }}
                   {{- end }}
 {{- end }}

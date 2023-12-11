@@ -2,15 +2,6 @@
     "$schema": "http://json-schema.org/schema",
     "$id": "https://raw.githubusercontent.com/daluca/helm-charts/main/charts/synapse/values.schema.json",
     "type": "object",
-    "required": [
-        "image",
-        "service",
-        "ingress",
-        "serviceAccount",
-        "admin",
-        "externalDatabase",
-        "postgresql"
-    ],
     "additionalProperties": false,
     "properties": {
         "nameOverride": {
@@ -305,6 +296,18 @@
                 }
             }
         },
+        "cronJobs": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "refreshFeedsSchedule": {
+                    "type": "string"
+                },
+                "cleanupTasksSchedule": {
+                    "type": "string"
+                }
+            }
+        },
         "config": {
             "type": "object",
             "additionalProperties": {
@@ -339,18 +342,31 @@
                 }
             }
         },
-        "externalDatabase": {
+        "database": {
             "type": "object",
-            "required": ["enabled"],
             "additionalProperties": false,
             "properties": {
-                "enabled": {
+                "external": {
                     "type": "boolean"
                 },
-                "url": {
-                    "type": ["string", "null"],
-                    "format": "uri",
-                    "pattern": "^postgres(ql)?://"
+                "name": {
+                    "type": "string"
+                },
+                "host": {
+                    "type": "string",
+                    "format": "hostname"
+                },
+                "port": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 65535
+                },
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string",
+                    "minimum": 12
                 },
                 "existingSecret": {
                     "type": "string"
