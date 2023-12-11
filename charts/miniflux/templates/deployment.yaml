@@ -32,6 +32,10 @@ spec:
           env:
             - name: DISABLE_SCHEDULER_SERVICE
               value: "true"
+          {{- if .Release.IsInstall }}
+            - name: RUN_MIGRATIONS
+              value: "true"
+          {{- end }}
           envFrom:
             - configMapRef:
                 name: {{ include "miniflux.fullname" . | trunc 56 | trimSuffix "-" }}-config
