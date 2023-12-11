@@ -40,8 +40,8 @@ spec:
             - configMapRef:
                 name: {{ printf "%s-%s" (include "miniflux.fullname" .) "config" }}
             - secretRef:
-            {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.existingSecret }}
-                name: {{ .Values.externalDatabase.existingSecret }}
+            {{- if and .Values.database.external .Values.database.existingSecret }}
+                name: {{ .Values.database.existingSecret }}
             {{- else }}
                 name: {{ printf "%s-%s" (include "miniflux.fullname" .) "database-credentials" }}
             {{- end }}

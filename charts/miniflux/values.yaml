@@ -59,18 +59,26 @@ admin:
   password: password
   existingSecret: ""
 
-externalDatabase:
-  enabled: false
-  # -- (string)
-  url: null
+database:
+  external: false
+  name: miniflux_db
+  host: localhost
+  port: 5432
+  username: miniflux_user
+  password: somethingSecureIPromise
   existingSecret: ""
 
 postgresql:
   enabled: true
+  auth:
+    username: miniflux
+    password: miniflux
+    database: miniflux
   primary:
     initdb:
       scripts:
         miniflux.sql: |-
           CREATE EXTENSION hstore;
-          CREATE USER miniflux WITH ENCRYPTED PASSWORD 'password';
-          CREATE DATABASE miniflux WITH OWNER miniflux;
+  service:
+    ports:
+      postgresql: 5432

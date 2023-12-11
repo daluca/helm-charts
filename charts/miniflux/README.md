@@ -1,6 +1,6 @@
 # miniflux
 
-![Version: 0.4.4](https://img.shields.io/badge/Version-0.4.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.50](https://img.shields.io/badge/AppVersion-2.0.50-informational?style=flat-square)
+![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.50](https://img.shields.io/badge/AppVersion-2.0.50-informational?style=flat-square)
 
 Minimalist and opinionated feed reader
 
@@ -15,7 +15,7 @@ Minimalist and opinionated feed reader
 
 | Repository | Name | Version |
 |------------|------|---------|
-| [oci://registry-1.docker.io/bitnamicharts](oci://registry-1.docker.io/bitnamicharts) | postgresql | >=12.0.0 <13.0.0 |
+| <oci://registry-1.docker.io/bitnamicharts> | postgresql | >=13.0.0 <14.0.0 |
 
 ## Values
 
@@ -56,8 +56,16 @@ Minimalist and opinionated feed reader
 | admin.username | string | `"admin"` |  |
 | admin.password | string | `"password"` |  |
 | admin.existingSecret | string | `""` |  |
-| externalDatabase.enabled | bool | `false` |  |
-| externalDatabase.url | string | `nil` |  |
-| externalDatabase.existingSecret | string | `""` |  |
+| database.external | bool | `false` |  |
+| database.name | string | `"miniflux_db"` |  |
+| database.host | string | `"localhost"` |  |
+| database.port | int | `5432` |  |
+| database.username | string | `"miniflux_user"` |  |
+| database.password | string | `"somethingSecureIPromise"` |  |
+| database.existingSecret | string | `""` |  |
 | postgresql.enabled | bool | `true` |  |
-| postgresql.primary.initdb.scripts."miniflux.sql" | string | `"CREATE EXTENSION hstore;\nCREATE USER miniflux WITH ENCRYPTED PASSWORD 'password';\nCREATE DATABASE miniflux WITH OWNER miniflux;"` |  |
+| postgresql.auth.username | string | `"miniflux"` |  |
+| postgresql.auth.password | string | `"miniflux"` |  |
+| postgresql.auth.database | string | `"miniflux"` |  |
+| postgresql.primary.initdb.scripts."miniflux.sql" | string | `"CREATE EXTENSION hstore;"` |  |
+| postgresql.service.ports.postgresql | int | `5432` |  |
