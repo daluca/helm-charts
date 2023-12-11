@@ -5,9 +5,9 @@ metadata:
   name: {{ include "miniflux.fullname" . | trunc 43 | trimSuffix "-" }}-database-migrations
   labels:
     {{- include "miniflux.labels" . | nindent 4 }}
-    app.kubernetes.io/component: miniflux
+    app.kubernetes.io/component: database-migrations
   annotations:
-    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook: pre-upgrade
     helm.sh/hook-delete-policy: hook-succeeded
 spec:
   template:
@@ -15,7 +15,7 @@ spec:
       name: {{ include "miniflux.fullname" . | trunc 43 | trimSuffix "-" }}-database-migrations
       labels:
         {{- include "miniflux.selectorLabels" . | nindent 8 }}
-        app.kubernetes.io/component: miniflux
+        app.kubernetes.io/component: database-migrations
     spec:
       restartPolicy: OnFailure
       containers:
