@@ -26,13 +26,20 @@ spec:
               imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
               command: [miniflux]
               args: [-refresh-feeds, -debug]
-              env:
-                - name: DATABASE_URL
-                  valueFrom:
-                    secretKeyRef:
-                      key: DATABASE_URL
-                      {{- if and .Values.database.external .Values.database.existingSecret }}
-                      name: {{ .Values.database.existingSecret }}
-                      {{- else }}
-                      name: {{ printf "%s-%s" (include "miniflux.fullname" .) "database-credentials" }}
-                      {{- end }}
+              envFrom:
+                - configMapRef:
+                    name: {{ printf "%s-%s" (include "miniflux.fullname" .) "config" }}
+                - secretRef:
+                {{- if and .Values.database.external .Values.database.existingSecret }}
+                    name: {{ .Values.database.existingSecret }}
+                {{- else }}
+                    name: {{ printf "%s-%s" (include "miniflux.fullname" .) "database-credentials" }}
+                {{- end }}
+                {{- if .Values.secrets }}
+                - secretRef:
+                    name: {{ printf "%s-%s" (include "miniflux.fullname" .) "secrets" }}
+                {{- end }}
+                {{- if .Values.existingSecret }}
+                - secretRef:
+                    name: {{ .Values.existingSecret }}
+                {{- end }}
