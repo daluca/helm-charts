@@ -3,7 +3,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "miniflux.fullname" . | trunc 50 | trimSuffix "-" }}-create-admin
+  name: {{ printf "%s-%s" (include "miniflux.fullname" .) "create-admin" }}
   labels:
     {{- include "miniflux.labels" . | nindent 4 }}
     app.kubernetes.io/component: miniflux
@@ -13,7 +13,7 @@ metadata:
 spec:
   template:
     metadata:
-      name: {{ include "miniflux.fullname" . | trunc 50 | trimSuffix "-" }}-create-admin
+      name: {{ printf "%s-%s" (include "miniflux.fullname" .) "create-admin" }}
       labels:
         {{- include "miniflux.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: miniflux
@@ -33,7 +33,7 @@ spec:
                   {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.existingSecret }}
                   name: {{ .Values.externalDatabase.existingSecret }}
                   {{- else }}
-                  name: {{ include "miniflux.fullname" . | trunc 42 | trimSuffix "-" }}-database-credentials
+                  name: {{ printf "%s-%s" (include "miniflux.fullname" .) "database-credentials" }}
                   {{- end }}
             - name: ADMIN_USERNAME
               valueFrom:
@@ -42,7 +42,7 @@ spec:
                   {{- if .Values.admin.existingSecret }}
                   name: {{ .Values.admin.existingSecret }}
                   {{- else }}
-                  name: {{ include "miniflux.fullname" . | trunc 57 | trimSuffix "-" }}-admin
+                  name: {{ printf "%s-%s" (include "miniflux.fullname" .) "admin-credentials" }}
                   {{- end }}
             - name: ADMIN_PASSWORD
               valueFrom:
@@ -51,6 +51,6 @@ spec:
                   {{- if .Values.admin.existingSecret }}
                   name: {{ .Values.admin.existingSecret }}
                   {{- else }}
-                  name: {{ include "miniflux.fullname" . | trunc 57 | trimSuffix "-" }}-admin
+                  name: {{ printf "%s-%s" (include "miniflux.fullname" .) "admin-credentials" }}
                   {{- end }}
 {{- end }}

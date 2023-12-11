@@ -34,5 +34,5 @@ spec:
                       {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.existingSecret }}
                       name: {{ .Values.externalDatabase.existingSecret }}
                       {{- else }}
-                      name: {{ include "miniflux.fullname" . | trunc 42 | trimSuffix "-" }}-database-credentials
+                      name: {{ printf "%s-%s" (include "miniflux.fullname" .) "database-credentials" }}
                       {{- end }}

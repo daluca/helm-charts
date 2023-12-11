@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "miniflux.fullname" . | trunc 43 | trimSuffix "-" }}-database-migrations
+  name: {{ printf "%s-%s" (include "miniflux.fullname" .) "database-migrations" }}
   labels:
     {{- include "miniflux.labels" . | nindent 4 }}
     app.kubernetes.io/component: database-migrations
@@ -12,7 +12,7 @@ metadata:
 spec:
   template:
     metadata:
-      name: {{ include "miniflux.fullname" . | trunc 43 | trimSuffix "-" }}-database-migrations
+      name: {{ printf "%s-%s" (include "miniflux.fullname" .) "database-migrations" }}
       labels:
         {{- include "miniflux.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: database-migrations
@@ -32,5 +32,5 @@ spec:
                   {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.existingSecret }}
                   name: {{ .Values.externalDatabase.existingSecret }}
                   {{- else }}
-                  name: {{ include "miniflux.fullname" . | trunc 42 | trimSuffix "-" }}-database-credentials
+                  name: {{ printf "%s-%s" (include "miniflux.fullname" .) "database-credentials" }}
                   {{- end }}

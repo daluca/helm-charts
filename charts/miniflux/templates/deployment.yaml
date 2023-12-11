@@ -38,16 +38,16 @@ spec:
           {{- end }}
           envFrom:
             - configMapRef:
-                name: {{ include "miniflux.fullname" . | trunc 56 | trimSuffix "-" }}-config
+                name: {{ printf "%s-%s" (include "miniflux.fullname" .) "config" }}
             - secretRef:
             {{- if and .Values.externalDatabase.enabled .Values.externalDatabase.existingSecret }}
                 name: {{ .Values.externalDatabase.existingSecret }}
             {{- else }}
-                name: {{ include "miniflux.fullname" . | trunc 42 | trimSuffix "-" }}-database-credentials
+                name: {{ printf "%s-%s" (include "miniflux.fullname" .) "database-credentials" }}
             {{- end }}
             {{- if .Values.secrets }}
             - secretRef:
-                name: {{ include "miniflux.fullname" . | trunc 55 | trimSuffix "-" }}-secrets
+                name: {{ printf "%s-%s" (include "miniflux.fullname" .) "secrets" }}
             {{- end }}
             {{- if .Values.existingSecret }}
             - secretRef:
