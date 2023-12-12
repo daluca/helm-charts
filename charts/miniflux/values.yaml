@@ -54,7 +54,7 @@ cronJobs:
   cleanupTasksSchedule: 30 2 * * *
 
 config:
-  POLLING_FREQUENCY: "60"
+  POLLING_FREQUENCY: "59"
   WATCHDOG: "false"
 
 secrets: {}
