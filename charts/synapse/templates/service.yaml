@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/component: synapse
   {{- with .Values.service.annotations }}
   annotations:
-    {{ toYaml . | nindent 4 }}
+    {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
   type: {{ .Values.service.type }}
