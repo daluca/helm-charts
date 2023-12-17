@@ -54,7 +54,7 @@ cronJobs:
   cleanupTasksSchedule: 30 2 * * *
 
 config:
-  POLLING_FREQUENCY: "59"
+  SCHEDULER_ROUND_ROBIN_MIN_INTERVAL: "59"
   WATCHDOG: "false"
 
 secrets: {}

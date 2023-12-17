@@ -1,6 +1,6 @@
 # miniflux
 
-![Version: 0.5.2](https://img.shields.io/badge/Version-0.5.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.51](https://img.shields.io/badge/AppVersion-2.0.51-informational?style=flat-square)
+![Version: 0.5.3](https://img.shields.io/badge/Version-0.5.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.51](https://img.shields.io/badge/AppVersion-2.0.51-informational?style=flat-square)
 
 Minimalist and opinionated feed reader
 
@@ -51,7 +51,7 @@ Minimalist and opinionated feed reader
 | startupProbe.failureThreshold | int | `15` |  |
 | cronJobs.refreshFeedsSchedule | string | `"0 * * * *"` | Runs every hour on the hour |
 | cronJobs.cleanupTasksSchedule | string | `"30 2 * * *"` | Runs every day at 2:30am UTC |
-| config.POLLING_FREQUENCY | string | `"59"` |  |
+| config.SCHEDULER_ROUND_ROBIN_MIN_INTERVAL | string | `"59"` |  |
 | config.WATCHDOG | string | `"false"` |  |
 | secrets | object | `{}` |  |
 | existingSecret | string | `""` |  |
