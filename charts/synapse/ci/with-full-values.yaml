@@ -1,9 +1,6 @@
 ---
 nameOverride: whisky-pig
 
-image:
-  registry: null
-
 service:
   port: 80
 
