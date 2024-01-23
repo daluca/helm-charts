@@ -5,8 +5,8 @@ fullnameOverride: ""
 replicaCount: 1
 
 image:
-  registry: docker.io
-  repository: matrixdotorg/synapse
+  registry: ghcr.io
+  repository: element-hq/synapse
   tag: ""
   sha256: ""
   pullPolicy: IfNotPresent
