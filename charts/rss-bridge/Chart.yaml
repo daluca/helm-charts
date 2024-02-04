@@ -3,7 +3,7 @@ apiVersion: v2
 name: rss-bridge
 type: application
 description: The RSS feed for websites missing it
-version: 0.4.0
+version: 0.4.1
 appVersion: "2024-02-02"
 kubeVersion: ">=1.19.0-0"
 icon: https://raw.githubusercontent.com/RSS-Bridge/rss-bridge/master/static/favicon.png

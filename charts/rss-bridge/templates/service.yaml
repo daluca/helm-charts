@@ -5,10 +5,12 @@ metadata:
   name: {{ include "rss-bridge.fullname" . }}
   labels:
     {{- include "rss-bridge.labels" . | nindent 4 }}
+    app.kubernetes.io/component: rss-bridge
 spec:
   type: {{ default "ClusterIP" .Values.service.type }}
   selector:
     {{- include "rss-bridge.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: rss-bridge
   ports:
     - name: http
       port: {{ default .Values.service.containerPort .Values.service.port }}
