@@ -20,6 +20,7 @@ data:
     enable_maintenance_mode = {{ .Values.rssBridge.system.maintenanceMode }}
     [http]
     timeout = {{ .Values.rssBridge.http.timeout }}
+    retries = {{ .Values.rssBridge.http.retries }}
     useragent = {{ .Values.rssBridge.http.useragent | quote }}
     max_filesize = {{ .Values.rssBridge.http.maxFilesize }}
     [cache]
