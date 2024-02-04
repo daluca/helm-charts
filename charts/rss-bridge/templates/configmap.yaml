@@ -5,6 +5,7 @@ metadata:
   name: {{ include "rss-bridge.fullname" . | trunc 56 | trimSuffix "-" }}-config
   labels:
     {{- include "rss-bridge.labels" . | nindent 4 }}
+    app.kubernetes.io/component: rss-bridge
 data:
   config.ini.php: |-
     [system]

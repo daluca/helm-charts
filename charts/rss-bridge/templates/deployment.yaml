@@ -5,15 +5,18 @@ metadata:
   name: {{ include "rss-bridge.fullname" . }}
   labels:
     {{- include "rss-bridge.labels" . | nindent 4 }}
+    app.kubernetes.io/component: rss-bridge
 spec:
   replicas: {{ default 1 .Values.replicaCount }}
   selector:
     matchLabels:
       {{- include "rss-bridge.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: rss-bridge
   template:
     metadata:
       labels:
         {{- include "rss-bridge.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: rss-bridge
       annotations:
         rss-bridge-config-hash: {{ toJson .Values.rssBridge | sha256sum }}
     spec:
