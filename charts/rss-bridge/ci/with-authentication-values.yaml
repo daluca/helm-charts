@@ -1,0 +1,7 @@
+---
+rssBridge:
+  authentication:
+    enabled: true
+    username: admin
+    password: thisThatAndTheOtherThing
+    token: somethingSecureIPromise
