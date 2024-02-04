@@ -6,13 +6,18 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.{yaml, yml}]
+[*.{yaml,yml}]
 indent_style = space
 indent_size = 2
 
 [*.json]
 indent_style = space
 indent_size = 4
+
+[*.{jsonnet,libsonnet}]
+indent_style = space
+indent_size = 2
+quote_type = single
 
 [*.md]
 indent_style = space
