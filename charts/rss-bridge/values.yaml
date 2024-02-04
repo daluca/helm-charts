@@ -101,7 +101,7 @@ rssBridge:
     enabled: false
     username: admin
     password: somethingSecureIPromise
-    accessToken: ""
+    token: null
 
   error:
     output: feed

@@ -41,7 +41,7 @@ data:
     enable = {{ .Values.rssBridge.authentication.enabled }}
     username = {{ .Values.rssBridge.authentication.username | quote }}
     password = {{ .Values.rssBridge.authentication.password | quote }}
-    access_token = {{ .Values.rssBridge.authentication.accessToken | quote }}
+    token = {{ .Values.rssBridge.authentication.token | quote }}
     [error]
     output = {{ .Values.rssBridge.error.output | quote }}
     report_limit = {{ .Values.rssBridge.error.reportLimit }}
