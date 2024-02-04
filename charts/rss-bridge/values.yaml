@@ -8,7 +8,7 @@ image:
   registry: docker.io
   repository: rssbridge/rss-bridge
   tag: ""
-  sha: ""
+  sha256: ""
   pullPolicy: IfNotPresent
 
 service:
@@ -25,6 +25,7 @@ ingress:
 
 serviceAccount:
   create: true
+  name: ""
   annotations: {}
 
 resources:
@@ -120,7 +121,7 @@ rssBridge:
   memcachedCache:
     # -- (string) format: hostname
     host: localhost
-    # -- (number) minimum: 0, maximum: 65535
+    # -- (integer) minimum: 0, maximum: 65535
     port: 11211
 
   discogsBridge:
