@@ -1,10 +1,10 @@
 # rss-bridge
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2023-09-24](https://img.shields.io/badge/AppVersion-2023--09--24-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2024-02-02](https://img.shields.io/badge/AppVersion-2024--02--02-informational?style=flat-square)
 
 The RSS feed for websites missing it
 
-**Homepage:** <https://github.com/daluca/helm-charts/tree/main/charts/rss-bridge>
+**Homepage:** <https://rss-bridge.github.io/rss-bridge>
 
 ## Source Code
 
@@ -14,7 +14,7 @@ The RSS feed for websites missing it
 
 | Repository | Name | Version |
 |------------|------|---------|
-| [oci://registry-1.docker.io/bitnamicharts](oci://registry-1.docker.io/bitnamicharts) | memcached | >=6.0.0 <7.0.0 |
+| <oci://registry-1.docker.io/bitnamicharts> | memcached | >=6.0.0 <7.0.0 |
 
 ## Values
 
@@ -26,7 +26,7 @@ The RSS feed for websites missing it
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"rssbridge/rss-bridge"` |  |
 | image.tag | string | `""` |  |
-| image.sha | string | `""` |  |
+| image.sha256 | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | service.type | string | `"ClusterIP"` |  |
 | service.port | int | `3000` |  |
@@ -37,6 +37,7 @@ The RSS feed for websites missing it
 | ingress.tls | list | `[]` |  |
 | ingress.hosts | list | `[]` |  |
 | serviceAccount.create | bool | `true` |  |
+| serviceAccount.name | string | `""` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | resources.requests.cpu | string | `"25m"` |  |
 | resources.requests.memory | string | `"92Mi"` |  |
@@ -71,6 +72,7 @@ The RSS feed for websites missing it
 | rssBridge.system.debug.whitelist[1] | string | `"192.168.1.10"` |  |
 | rssBridge.system.maintenanceMode | bool | `false` |  |
 | rssBridge.http.timeout | int | `60` |  |
+| rssBridge.http.retries | int | `2` |  |
 | rssBridge.http.useragent | string | `"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101 Firefox/102.0"` |  |
 | rssBridge.http.maxFilesize | int | `20` |  |
 | rssBridge.cache.type | string | `"file"` |  |
@@ -84,7 +86,7 @@ The RSS feed for websites missing it
 | rssBridge.authentication.enabled | bool | `false` |  |
 | rssBridge.authentication.username | string | `"admin"` |  |
 | rssBridge.authentication.password | string | `"somethingSecureIPromise"` |  |
-| rssBridge.authentication.accessToken | string | `""` |  |
+| rssBridge.authentication.token | string | `nil` |  |
 | rssBridge.error.output | string | `"feed"` |  |
 | rssBridge.error.reportLimit | int | `1` |  |
 | rssBridge.fileCache.path | string | `""` |  |
@@ -93,6 +95,6 @@ The RSS feed for websites missing it
 | rssBridge.sqliteCache.enablePurge | bool | `true` |  |
 | rssBridge.sqliteCache.timeout | int | `5000` |  |
 | rssBridge.memcachedCache.host | string | `"localhost"` | format: hostname |
-| rssBridge.memcachedCache.port | number | `11211` | minimum: 0, maximum: 65535 |
+| rssBridge.memcachedCache.port | integer | `11211` | minimum: 0, maximum: 65535 |
 | rssBridge.discogsBridge.presonalAccessToken | string | `""` |  |
 | memcached.enabled | bool | `true` |  |
