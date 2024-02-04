@@ -326,6 +326,10 @@
                             "minimum": 1,
                             "type": "integer"
                         },
+                        "retries": {
+                            "minimum": 0,
+                            "type": "integer"
+                        },
                         "timeout": {
                             "minimum": 1,
                             "type": "integer"
