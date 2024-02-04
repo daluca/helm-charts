@@ -8,7 +8,7 @@ image:
   registry: docker.io
   repository: rssbridge/rss-bridge
   tag: ""
-  sha: ""
+  sha256: ""
   pullPolicy: IfNotPresent
 
 service:
@@ -25,6 +25,7 @@ ingress:
 
 serviceAccount:
   create: true
+  name: ""
   annotations: {}
 
 resources:
@@ -77,6 +78,7 @@ rssBridge:
 
   http:
     timeout: 60
+    retries: 2
     # yamllint disable-line rule:line-length
     useragent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101 Firefox/102.0
     maxFilesize: 20
@@ -101,7 +103,7 @@ rssBridge:
     enabled: false
     username: admin
     password: somethingSecureIPromise
-    accessToken: ""
+    token: null
 
   error:
     output: feed
@@ -119,7 +121,7 @@ rssBridge:
   memcachedCache:
     # -- (string) format: hostname
     host: localhost
-    # -- (number) minimum: 0, maximum: 65535
+    # -- (integer) minimum: 0, maximum: 65535
     port: 11211
 
   discogsBridge:

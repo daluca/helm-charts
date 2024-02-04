@@ -2,14 +2,31 @@
 apiVersion: v2
 name: rss-bridge
 type: application
-home: https://github.com/daluca/helm-charts/tree/main/charts/rss-bridge
+description: The RSS feed for websites missing it
+version: 0.4.0
+appVersion: "2024-02-02"
+kubeVersion: ">=1.19.0-0"
+icon: https://raw.githubusercontent.com/RSS-Bridge/rss-bridge/master/static/favicon.png
+home: https://rss-bridge.github.io/rss-bridge
 sources:
   - https://github.com/RSS-Bridge/rss-bridge
-version: 0.3.0
-appVersion: "2023-09-24"
-description: The RSS feed for websites missing it
 dependencies:
   - name: memcached
     version: ">=6.0.0 <7.0.0"
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: memcached.enabled
+annotations:
+  artifacthub.io/images: |-
+    - name: rss-bridge
+      image: rssbridge/rss-bridge:2024-02-02
+      platforms:
+        - linux/amd64
+        - linux/arm64
+        - linux/arm/v7
+  artifacthub.io/links: |-
+    - name: chart
+      url: https://github.com/daluca/helm-charts/tree/main/charts/rss-bridge
+    - name: source
+      url: https://github.com/RSS-Bridge/rss-bridge
+    - name: support
+      url: https://github.com/daluca/helm-charts/issues

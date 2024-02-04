@@ -38,8 +38,17 @@ spec:
           {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
             httpGet:
+            {{- if and .Values.rssBridge.authentication.enabled .Values.rssBridge.authentication.token }}
+              path: /?action=health&token={{ .Values.rssBridge.authentication.token }}
+            {{- else }}
               path: /?action=health
+            {{- end }}
               port: http
+            {{- if and .Values.rssBridge.authentication.enabled }}
+              httpHeaders:
+                - name: Authorization
+                  value: Basic {{ printf "%s:%s" .Values.rssBridge.authentication.username .Values.rssBridge.authentication.password | b64enc }}
+            {{- end }}
           {{- with omit .Values.livenessProbe "enabled" }}
             {{- toYaml . | nindent 12 -}}
           {{- end }}
@@ -47,18 +56,36 @@ spec:
           {{- if .Values.readinessProbe.enabled }}
           readinessProbe:
             httpGet:
+            {{- if and .Values.rssBridge.authentication.enabled .Values.rssBridge.authentication.token }}
+              path: /?action=health&token={{ .Values.rssBridge.authentication.token }}
+            {{- else }}
               path: /?action=health
+            {{- end }}
               port: http
-          {{- with omit .Values.readinessProbe "enabled" }}
+            {{- if and .Values.rssBridge.authentication.enabled }}
+              httpHeaders:
+                - name: Authorization
+                  value: Basic {{ printf "%s:%s" .Values.rssBridge.authentication.username .Values.rssBridge.authentication.password | b64enc }}
+            {{- end }}
+          {{- with omit .Values.livenessProbe "enabled" }}
             {{- toYaml . | nindent 12 -}}
           {{- end }}
           {{- end }}
           {{- if .Values.startupProbe.enabled }}
           startupProbe:
             httpGet:
+            {{- if and .Values.rssBridge.authentication.enabled .Values.rssBridge.authentication.token }}
+              path: /?action=health&token={{ .Values.rssBridge.authentication.token }}
+            {{- else }}
               path: /?action=health
+            {{- end }}
               port: http
-          {{- with omit .Values.startupProbe "enabled" }}
+            {{- if and .Values.rssBridge.authentication.enabled }}
+              httpHeaders:
+                - name: Authorization
+                  value: Basic {{ printf "%s:%s" .Values.rssBridge.authentication.username .Values.rssBridge.authentication.password | b64enc }}
+            {{- end }}
+          {{- with omit .Values.livenessProbe "enabled" }}
             {{- toYaml . | nindent 12 -}}
           {{- end }}
           {{- end }}
