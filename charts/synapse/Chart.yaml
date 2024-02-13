@@ -12,7 +12,7 @@ sources:
   - https://github.com/daluca/helm-charts/tree/main/charts/synapse
 dependencies:
   - name: postgresql
-    version: ">=13.0.0 <14.0.0"
+    version: ">=14.0.0 <15.0.0"
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
 annotations:
@@ -24,7 +24,7 @@ annotations:
         - linux/amd64
         - linux/arm64
     - name: postgresql
-      image: bitnami/postgresql:16.1.0-debian-11-r9
+      image: bitnami/postgresql:16.2.0-debian-11-r1
       platforms:
         - linux/amd64
         - linux/arm64
