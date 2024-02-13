@@ -14,7 +14,7 @@ Matrix homeserver written in Python/Twisted
 
 | Repository | Name | Version |
 |------------|------|---------|
-| <oci://registry-1.docker.io/bitnamicharts> | postgresql | >=13.0.0 <14.0.0 |
+| <oci://registry-1.docker.io/bitnamicharts> | postgresql | >=14.0.0 <15.0.0 |
 
 ## Values
 

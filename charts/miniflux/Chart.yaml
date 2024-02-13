@@ -13,7 +13,7 @@ kubeVersion: ">=1.19.0"
 description: Minimalist and opinionated feed reader
 dependencies:
   - name: postgresql
-    version: ">=13.0.0 <14.0.0"
+    version: ">=14.0.0 <15.0.0"
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
 annotations:
@@ -24,6 +24,11 @@ annotations:
         - linux/amd64
         - linux/arm/v6
         - linux/arm/v7
+        - linux/arm64
+    - name: postgresql
+      image: docker.io/bitnami/postgresql:16.2.0-debian-11-r1
+      platforms:
+        - linux/amd64
         - linux/arm64
   artifacthub.io/links: |-
     - name: chart
