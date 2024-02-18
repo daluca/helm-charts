@@ -99,4 +99,4 @@ spec:
       volumes:
         - name: rss-bridge-config
           configMap:
-            name: {{ include "rss-bridge.fullname" . | trunc 56 | trimSuffix "-" }}-config
+            name: {{ include "rss-bridge.fullname" . }}-config
