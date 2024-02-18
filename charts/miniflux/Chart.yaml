@@ -7,8 +7,8 @@ home: https://miniflux.app
 sources:
   - https://github.com/daluca/helm-charts/tree/main/charts/miniflux
   - https://github.com/miniflux/v2
-version: 0.5.3
-appVersion: 2.0.51
+version: 0.6.0
+appVersion: 2.1.0
 kubeVersion: ">=1.19.0"
 description: Minimalist and opinionated feed reader
 dependencies:
@@ -19,7 +19,7 @@ dependencies:
 annotations:
   artifacthub.io/images: |-
     - name: miniflux
-      image: miniflux/miniflux:2.0.51
+      image: docker.io/miniflux/miniflux:2.1.0
       platforms:
         - linux/amd64
         - linux/arm/v6
