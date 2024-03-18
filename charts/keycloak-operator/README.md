@@ -1,6 +1,6 @@
 # keycloak-operator
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 24.0.1](https://img.shields.io/badge/AppVersion-24.0.1-informational?style=flat-square)
+![Version: 0.3.1](https://img.shields.io/badge/Version-0.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 24.0.1](https://img.shields.io/badge/AppVersion-24.0.1-informational?style=flat-square)
 
 Open source Identity and Access Management for modern applications and services
 
@@ -33,6 +33,7 @@ Kubernetes: `>=1.19.0`
 | service.type | string | `"ClusterIP"` |  |
 | service.port | int | `8080` |  |
 | service.containerPort | int | `8080` |  |
+| service.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | serviceAccount.annotations | object | `{}` |  |
