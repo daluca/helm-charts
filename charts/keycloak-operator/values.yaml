@@ -41,4 +41,5 @@ keycloakImage:
   registry: quay.io
   repository: keycloak/keycloak
   tag: ""
-  sha256: ""
+  # linux-x86_64 default image sha as a work-around for nightly image being pulled
+  sha256: 050b5430f5a2f417ef41dd5ccdda70f900761bb757d08a17dd6957796e61acc9
