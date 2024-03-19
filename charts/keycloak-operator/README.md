@@ -46,4 +46,4 @@ Kubernetes: `>=1.19.0`
 | keycloakImage.registry | string | `"quay.io"` |  |
 | keycloakImage.repository | string | `"keycloak/keycloak"` |  |
 | keycloakImage.tag | string | `""` |  |
-| keycloakImage.sha256 | string | `""` |  |
+| keycloakImage.sha256 | string | `"050b5430f5a2f417ef41dd5ccdda70f900761bb757d08a17dd6957796e61acc9"` |  |

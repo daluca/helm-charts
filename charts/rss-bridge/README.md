@@ -1,6 +1,6 @@
 # rss-bridge
 
-![Version: 0.4.1](https://img.shields.io/badge/Version-0.4.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2024-02-02](https://img.shields.io/badge/AppVersion-2024--02--02-informational?style=flat-square)
+![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2024-02-02](https://img.shields.io/badge/AppVersion-2024--02--02-informational?style=flat-square)
 
 The RSS feed for websites missing it
 
@@ -14,7 +14,7 @@ The RSS feed for websites missing it
 
 | Repository | Name | Version |
 |------------|------|---------|
-| <oci://registry-1.docker.io/bitnamicharts> | memcached | >=6.0.0 <7.0.0 |
+| <oci://registry-1.docker.io/bitnamicharts> | memcached | >=7.0.0 <8.0.0 |
 
 ## Values
 
