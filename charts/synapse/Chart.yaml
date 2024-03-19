@@ -3,7 +3,7 @@ apiVersion: v2
 name: synapse
 type: application
 description: Matrix homeserver written in Python/Twisted
-version: 0.8.0
+version: 0.9.0
 appVersion: 1.102.0
 kubeVersion: ">=1.19.0-0"
 icon: https://matrix.org/images/matrix-favicon.svg
@@ -12,7 +12,7 @@ sources:
   - https://github.com/daluca/helm-charts/tree/main/charts/synapse
 dependencies:
   - name: postgresql
-    version: ">=14.0.0 <15.0.0"
+    version: ">=15.0.0 <16.0.0"
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
 annotations:
@@ -24,12 +24,12 @@ annotations:
         - linux/amd64
         - linux/arm64
     - name: postgresql
-      image: bitnami/postgresql:16.2.0-debian-11-r1
+      image: docker.io/bitnami/postgresql:16.2.0-debian-12-r8
       platforms:
         - linux/amd64
         - linux/arm64
     - name: nginx
-      image: nginx:1.25.3-alpine
+      image: docker.io/nginx:1.25.4-alpine
       platforms:
         - linux/386
         - linux/amd64
@@ -39,7 +39,7 @@ annotations:
         - linux/ppc64le
         - linux/s390x
     - name: yq
-      image: mikefarah/yq:4.40.3
+      image: docker.io/mikefarah/yq:4.42.1
       platforms:
         - linux/amd64
         - linux/arm64

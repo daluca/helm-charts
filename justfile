@@ -5,7 +5,7 @@ default:
 kubernetes_version := "1.28.6"
 
 create-kind version=kubernetes_version: _create-kind-lock-file
-  kind create cluster --name development --config kind-cluster-config.yaml --image kindest/node:v{{ version }}
+  kind create cluster --name development --image kindest/node:v{{ version }}
 
 delete-kind: _delete-kind-lock-file
   kind delete cluster --name development
@@ -15,6 +15,9 @@ test chart:
 
 test-all:
   ct lint-and-install
+
+update-dependencies chart:
+  helm dependency update charts/{{ chart }}
 
 update-documentation chart:
   helm-docs --chart-search-root charts/ --template-files ./_templates.gotmpl --template-files README.md.gotmpl --sort-values-order file --chart-to-generate charts/{{ chart }}
