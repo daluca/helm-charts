@@ -1,6 +1,6 @@
 # synapse
 
-![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.102.0](https://img.shields.io/badge/AppVersion-1.102.0-informational?style=flat-square)
+![Version: 0.9.0](https://img.shields.io/badge/Version-0.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.103.0](https://img.shields.io/badge/AppVersion-1.103.0-informational?style=flat-square)
 
 Matrix homeserver written in Python/Twisted
 
@@ -14,7 +14,7 @@ Matrix homeserver written in Python/Twisted
 
 | Repository | Name | Version |
 |------------|------|---------|
-| <oci://registry-1.docker.io/bitnamicharts> | postgresql | >=14.0.0 <15.0.0 |
+| <oci://registry-1.docker.io/bitnamicharts> | postgresql | >=15.0.0 <16.0.0 |
 
 ## Values
 
@@ -81,7 +81,7 @@ Matrix homeserver written in Python/Twisted
 | delegation.replicaCount | int | `1` |  |
 | delegation.image.registry | string | `"docker.io"` |  |
 | delegation.image.repository | string | `"nginx"` |  |
-| delegation.image.tag | string | `"1.25.3-alpine"` |  |
+| delegation.image.tag | string | `"1.25.4-alpine"` |  |
 | delegation.image.sha256 | string | `""` |  |
 | delegation.image.pullPolicy | string | `"IfNotPresent"` |  |
 | delegation.service.type | string | `"ClusterIP"` |  |
