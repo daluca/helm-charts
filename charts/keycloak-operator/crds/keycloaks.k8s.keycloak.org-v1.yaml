@@ -276,6 +276,7 @@ spec:
                   additionalProperties:
                     properties:
                       name:
+                        description: Not used. To be removed in later versions.
                         type: string
                       secret:
                         properties:
@@ -288,7 +289,6 @@ spec:
                         type: object
                     required:
                       - secret
-                      - name
                     type: object
                   description: In this section you can configure Keycloak truststores.
                   type: object
