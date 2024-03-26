@@ -32,7 +32,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-            - name: OPERATOR_KEYCLOAK_IMAGE
+            - name: RELATED_IMAGE_KEYCLOAK
               value: {{ if .Values.keycloakImage.registry }}{{ .Values.keycloakImage.registry }}/{{ end }}{{ .Values.keycloakImage.repository }}:{{ default .Chart.AppVersion .Values.image.tag }}{{ if .Values.keycloakImage.sha256 }}@sha256:{{ .Values.keycloakImage.sha256 }}{{ end }}
           {{- with .Values.resources }}
           resources:

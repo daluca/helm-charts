@@ -5,7 +5,7 @@ type: application
 description: >-
   Open source Identity and Access Management for modern applications and
   services
-version: 0.3.2
+version: 0.3.3
 appVersion: 24.0.2
 kubeVersion: ">=1.19.0"
 icon: https://www.keycloak.org/resources/images/icon.svg
