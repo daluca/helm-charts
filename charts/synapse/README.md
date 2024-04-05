@@ -106,6 +106,8 @@ Matrix homeserver written in Python/Twisted
 | delegation.nginx.cors.origin | string | `"*"` |  |
 | delegation.nginx.cors.headers | string | `"X-Requested-With, Content-Type, Authorization, Date"` |  |
 | delegation.nginx.cors.methods | string | `"GET, HEAD, POST, PUT, DELETE, OPTIONS"` |  |
+| delegation.slidingSync.enabled | bool | `false` |  |
+| delegation.slidingSync.host | string | `"example.org"` |  |
 | database.type | string | `"postgresql"` |  |
 | database.external | bool | `false` |  |
 | database.name | string | `"matrix_synapse"` |  |
