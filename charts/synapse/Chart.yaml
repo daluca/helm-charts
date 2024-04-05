@@ -7,7 +7,7 @@ version: 0.9.0
 appVersion: 1.103.0
 kubeVersion: ">=1.19.0-0"
 icon: https://matrix.org/images/matrix-favicon.svg
-home: https://github.com/matrix-org/synapse
+home: https://github.com/element-hq/synapse
 sources:
   - https://github.com/daluca/helm-charts/tree/main/charts/synapse
 dependencies:
@@ -48,6 +48,6 @@ annotations:
     - name: chart
       url: https://github.com/daluca/helm-charts/tree/main/charts/synapse
     - name: source
-      url: https://github.com/matrix-org/synapse
+      url: https://github.com/element-hq/synapse
     - name: support
       url: https://github.com/daluca/helm-charts/issues
