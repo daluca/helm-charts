@@ -60,4 +60,71 @@ local net = import 'networking.libsonnet';
       },
     },
   },
+  volumeMount:: js.object(additionalProperties=false, required=['mountPath', 'name']) {
+    properties: {
+      mountPath: js.string(pattern='^/'),
+      mountPropagation: js.multipleTypes(['string', 'null']),
+      name: js.string(),
+      readOnly: js.boolean,
+      subPath: js.multipleTypes(['string', 'null']),
+      subPathExpr: js.multipleTypes(['string', 'null']),
+    },
+  },
+  volume:: js.object(additionalProperties={ type: 'object' }, required=['name']) {
+    properties: {
+      name: js.string(),
+      configMap: js.object(additionalProperties=false, required=['name']) {
+        properties: {
+          defaultModes: js.integer(),
+          items: js.array(uniqueItems=true, unevaluatedItems=false) {
+            type: ['array', 'null'],
+            items: js.object(additionalProperties=false, required=['key', 'path']) {
+              properties: {
+                key: js.string(),
+                path: js.string(),
+                mode: js.integer(),
+              },
+            },
+          },
+          name: js.string(),
+          optional: js.boolean,
+        },
+      },
+      emptyDir: js.object(additionalProperties=false) {
+        properties: {
+          medium: js.multipleTypes(['string', 'null']),
+          sizeLimit: js.oneOf([js.multipleTypes(['string', 'null']), js.integer()])
+        },
+      },
+      hostPath: js.object(additionalProperties=false, required=['path']) {
+        properties: {
+          path: js.string(pattern='^/'),
+          type: js.multipleTypes(['string', 'null']),
+        },
+      },
+      persistentVolumeClaim: js.object(additionalProperties=false, required=['claimName']) {
+        properties: {
+          claimName: js.string(),
+          readOnly: js.boolean,
+        },
+      },
+      secret: js.object(additionalProperties=false, required=['secretName']) {
+        properties: {
+          defaultModes: js.integer(),
+          items: js.array(uniqueItems=true, unevaluatedItems=false) {
+            type: ['array', 'null'],
+            items: js.object(additionalProperties=false, required=['key', 'path']) {
+              properties: {
+                key: js.string(),
+                path: js.string(),
+                mode: js.integer(),
+              },
+            },
+          },
+          optional: js.boolean,
+          secretName: js.string(),
+        },
+      },
+    },
+  },
 }

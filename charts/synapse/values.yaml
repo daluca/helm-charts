@@ -145,6 +145,10 @@ delegation:
       headers: X-Requested-With, Content-Type, Authorization, Date
       methods: GET, HEAD, POST, PUT, DELETE, OPTIONS
 
+  slidingSync:
+    enabled: false
+    host: example.org
+
 database:
   type: postgresql
   external: false

@@ -3,11 +3,11 @@ apiVersion: v2
 name: synapse
 type: application
 description: Matrix homeserver written in Python/Twisted
-version: 0.9.0
-appVersion: 1.103.0
+version: 0.10.0
+appVersion: 1.104.0
 kubeVersion: ">=1.19.0-0"
 icon: https://matrix.org/images/matrix-favicon.svg
-home: https://github.com/matrix-org/synapse
+home: https://github.com/element-hq/synapse
 sources:
   - https://github.com/daluca/helm-charts/tree/main/charts/synapse
 dependencies:
@@ -19,12 +19,12 @@ annotations:
   artifacthub.io/alternativeName: matrix-synapse
   artifacthub.io/images: |-
     - name: synapse
-      image: ghcr.io/element-hq/synapse:v1.103.0
+      image: ghcr.io/element-hq/synapse:v1.104.0
       platforms:
         - linux/amd64
         - linux/arm64
     - name: postgresql
-      image: docker.io/bitnami/postgresql:16.2.0-debian-12-r8
+      image: docker.io/bitnami/postgresql:16.2.0-debian-12-r12
       platforms:
         - linux/amd64
         - linux/arm64
@@ -39,7 +39,7 @@ annotations:
         - linux/ppc64le
         - linux/s390x
     - name: yq
-      image: docker.io/mikefarah/yq:4.42.1
+      image: docker.io/mikefarah/yq:4.43.1
       platforms:
         - linux/amd64
         - linux/arm64
@@ -48,6 +48,6 @@ annotations:
     - name: chart
       url: https://github.com/daluca/helm-charts/tree/main/charts/synapse
     - name: source
-      url: https://github.com/matrix-org/synapse
+      url: https://github.com/element-hq/synapse
     - name: support
       url: https://github.com/daluca/helm-charts/issues

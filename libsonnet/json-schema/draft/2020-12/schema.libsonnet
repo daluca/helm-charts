@@ -94,4 +94,7 @@
   multipleTypes(types=[]):: {
     type: if std.length(types) >= 2 then types else error 'Must pass array containing at least two types to multipleTypes function.',
   },
+  oneOf(types=[]):: {
+    oneOf: if std.length(types) >= 2 then types else error 'Must pass array containinc at least two types to oneOf function.'
+  }
 }

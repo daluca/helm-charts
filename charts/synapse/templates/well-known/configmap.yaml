@@ -35,7 +35,11 @@ data:
             }
 
             location /.well-known/matrix/client {
+                {{- if .Values.delegation.slidingSync.enabled }}
+                return 200 '{ "m.homeserver": {"base_url": "https://{{ $.Values.ingress.host }}"}, "org.matrix.msc3575.proxy": {"url": {{ .Values.delegation.slidingSync.host | quote }}}, "m.identity_server": {"base_url": "https://vector.im"} }\n\n';
+                {{- else }}
                 return 200 '{ "m.homeserver": {"base_url": "https://{{ $.Values.ingress.host }}"}, "m.identity_server": {"base_url": "https://vector.im"} }\n\n';
+                {{- end }}
             }
         }
     }
