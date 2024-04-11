@@ -74,12 +74,18 @@ jobs:
       - name: lint ${{ matrix.chart }} chart
         run: ct lint --config ct.yaml --print-config --debug --charts charts/${{ matrix.chart }}
 
+      - name: check for application chart
+        id: chart-type
+        run: echo "type=$(yq '.type' charts/${{ matrix.chart }}/Chart.yaml)" >> $GITHUB_OUTPUT
+
       - name: create kind cluster
+        if: steps.chart-type.outputs.type == 'application'
         uses: helm/kind-action@v1.9.0
         with:
           node_image: kindest/node:v${{ matrix.kubernetes_version }}
 
       - name: install ${{ matrix.chart }} chart
+        if: steps.chart-type.outputs.type == 'application'
         run: ct install --config ct.yaml --print-config --debug --charts charts/${{ matrix.chart }}
 
   protection:
