@@ -3,8 +3,8 @@ apiVersion: v2
 name: common
 type: library
 description: A common set of helper functions and templates.
-version: 0.1.0
-appVersion: 0.1.0
+version: 0.1.1
+appVersion: 0.1.1
 icon: https://artifacthub.io/static/media/placeholder_pkg_helm.png
 home: https://github.com/daluca/helm-charts/
 annotations:
