@@ -1,3 +1,3 @@
 *.tgz
 /.direnv/
-/.kind-cluster.lock
+/kind/.cluster.lock
