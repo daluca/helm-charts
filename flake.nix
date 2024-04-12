@@ -24,6 +24,7 @@
       shellHook = ''
         echo "Loaded $name...";
       '';
+      JUST_UNSTABLE=true;
     };
   };
 }

@@ -83,6 +83,7 @@ jobs:
         uses: helm/kind-action@v1.9.0
         with:
           node_image: kindest/node:v${{ matrix.kubernetes_version }}
+          config: kind/multi-node-cluster.yaml
 
       - name: install ${{ matrix.chart }} chart
         if: steps.chart-type.outputs.type == 'application'
