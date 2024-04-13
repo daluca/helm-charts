@@ -8,6 +8,7 @@ local net = import 'networking.libsonnet';
   schema(
     schemaId,
     jsonSchemaVersion='',
+    commonLibrary=false,
     ingress=false,
   ):: js.object(additionalProperties=false) {
     '$id': schemaId,
@@ -24,6 +25,7 @@ local net = import 'networking.libsonnet';
       livenessProbe: helm.probe,
       readinessProbe: helm.probe,
       startupProbe: helm.probe,
+      [if commonLibrary then 'common']: helm.commonLibrary,
     },
   },
   image:: js.object(additionalProperties=false) {
@@ -64,6 +66,13 @@ local net = import 'networking.libsonnet';
   probe:: kube.probe {
     properties+: {
       enabled: js.boolean,
+    },
+  },
+  commonLibrary:: js.object(additionalProperties=false) {
+    properties: {
+      global: js.object(additionalProperties=true) {
+        properties:: { hidden: true },
+      },
     },
   },
 }

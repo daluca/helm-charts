@@ -1,0 +1,33 @@
+---
+apiVersion: v2
+name: eturnal
+type: application
+description: STUN / TURN standalone server
+version: 0.1.0
+appVersion: 1.12.0
+kubeVersion: ">=1.19.0-0"
+icon: https://eturnal.net/hello.png
+home: https://eturnal.net/
+sources:
+  - https://github.com/daluca/helm-charts/tree/main/charts/eturnal
+dependencies:
+  - name: common
+    version: ">=0.1.0 <0.2.0"
+    repository: oci://ghcr.io/daluca/charts
+annotations:
+  artifacthub.io/images: |-
+    - name: eturnal
+      image: ghcr.io/processone/eturnal:1.12.0
+      platforms:
+        - linux/386
+        - linux/amd64
+        - linux/arm/v7
+        - linux/arm64
+        - linux/ppc64le
+  artifacthub.io/links: |-
+    - name: chart
+      url: https://github.com/daluca/helm-charts/tree/main/charts/eturnal
+    - name: source
+      url: https://github.com/processone/eturnal
+    - name: support
+      url: https://github.com/daluca/helm-charts/issues
