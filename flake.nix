@@ -17,9 +17,12 @@
         chart-testing
         just
         unstable.kind
+        unstable.helm-ls
         helm-docs
         nodePackages.prettier
         go-jsonnet
+        unstable.jsonnet-language-server
+        pre-commit
       ];
       shellHook = ''
         echo "Loaded $name...";
