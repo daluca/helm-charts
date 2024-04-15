@@ -1,0 +1,87 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "common.fullname" . }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+    app.kubernetes.io/component: eturnal
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "common.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: eturnal
+  template:
+    metadata:
+      labels:
+        {{- include "common.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: eturnal
+      annotations:
+        eturnal-config-hash: {{ toJson .Values.config | sha256sum }}
+    spec:
+      serviceAccountName: {{ include "common.serviceAccountName" . }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ include "common.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- with .Values.containerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          ports:
+            {{- range $listen := $.Values.config.listen }}
+            - name: {{ printf "stunturn-%s" (ternary "tcp" $listen.transport (or (eq $listen.transport "tls") (eq $listen.transport "auto"))) }}
+              containerPort: {{ $.Values.service.containerPort }}
+              protocol: {{ upper (ternary "tcp" $listen.transport (or (eq $listen.transport "tls") (eq $listen.transport "auto"))) }}
+            {{- end }}
+          env:
+            - name: ETURNAL_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: shared-secret
+                  {{- if .Values.existingSecret }}
+                  name: {{ .Values.existingSecret }}
+                  {{- else }}
+                  name: {{ printf "%s-secrets" (include "common.fullname" .) }}
+                  {{- end }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if .Values.livenessProbe.enabled }}
+          livenessProbe:
+            tcpSocket:
+              port: stunturn-tcp
+          {{- with omit .Values.livenessProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.readinessProbe.enabled }}
+          readinessProbe:
+            tcpSocket:
+              port: stunturn-tcp
+          {{- with omit .Values.readinessProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.startupProbe.enabled }}
+          startupProbe:
+            tcpSocket:
+              port: stunturn-tcp
+          {{- with omit .Values.startupProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          volumeMounts:
+            - mountPath: /etc/eturnal.yml
+              subPath: eturnal.yaml
+              name: eturnal-config
+      volumes:
+        - name: eturnal-config
+          configMap:
+            name: {{ printf "%s-config" (include "common.fullname" .) }}

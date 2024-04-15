@@ -44,7 +44,7 @@
   boolean:: {
     type: 'boolean',
   },
-  'null':: {
+  Null:: {
     type: 'null',
   },
   object(
@@ -77,9 +77,9 @@
     uniqueItems=null,
   ):: {
     type: 'array',
-    items: error 'Must provide "item" to array function',
+    items: error 'Must provide "items" to array function',
     [if std.length(prefixItems) > 0 then 'prefixItems']: prefixItems,
-    [if std.isBoolean(unevaluatedItems) then 'unevaluatedItems']: unevaluatedItems,
+    [if std.isBoolean(unevaluatedItems) || std.isObject(unevaluatedItems) then 'unevaluatedItems']: unevaluatedItems,
     [if std.length(contains) > 0 then 'contains']: contains,
     [if std.isNumber(minContains) then 'minContains']: minContains,
     [if std.isNumber(maxContains) then 'maxContains']: maxContains,
@@ -94,7 +94,13 @@
   multipleTypes(types=[]):: {
     type: if std.length(types) >= 2 then types else error 'Must pass array containing at least two types to multipleTypes function.',
   },
+  allOf(types=[]):: {
+    allOf: if std.length(types) >= 2 then types else error 'Must pass array containing at least two types to allOf function.',
+  },
+  anyOf(types=[]):: {
+    anyOf: if std.length(types) >= 2 then types else error 'Must pass array containing at least two types to angOf function.',
+  },
   oneOf(types=[]):: {
-    oneOf: if std.length(types) >= 2 then types else error 'Must pass array containinc at least two types to oneOf function.'
-  }
+    oneOf: if std.length(types) >= 2 then types else error 'Must pass array containing at least two types to oneOf function.',
+  },
 }

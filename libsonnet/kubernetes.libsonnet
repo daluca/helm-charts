@@ -1,5 +1,6 @@
 local js = import 'json-schema/draft/2020-12/schema.libsonnet';
 local net = import 'networking.libsonnet';
+local unix = import 'unix.libsonnet';
 
 {
   local kube = self,
@@ -11,8 +12,8 @@ local net = import 'networking.libsonnet';
   imagePullPolicy:: js.enum(['Always', 'Never', 'IfNotPresent']),
   resource:: js.object(additionalProperties=false) {
     properties: {
-      cpu: js.string(),
-      memory: js.string(),
+      cpu: js.oneOf([js.string(), js.Null]),
+      memory: js.oneOf([js.string(), js.Null]),
     },
     patternProperties: {
       '^hugepages-': js.string(),
@@ -20,8 +21,8 @@ local net = import 'networking.libsonnet';
   },
   resources:: js.object(additionalProperties=false) {
     properties: {
-      requests: kube.resource,
-      limits: kube.resource,
+      requests: js.oneOf([kube.resource, js.Null]),
+      limits: js.oneOf([kube.resource, js.Null]),
     },
   },
   probe:: js.object(additionalProperties=false) {
@@ -124,6 +125,77 @@ local net = import 'networking.libsonnet';
           optional: js.boolean,
           secretName: js.string(),
         },
+      },
+    },
+  },
+  securityContext:: js.object(additionalProperties=false) {
+    properties: {
+      allowPrivilegeEscalation: js.boolean,
+      capabilities: kube.capabilities,
+      privileged: js.boolean,
+      procMount: js.string(),
+      readOnlyRootFilesystem: js.boolean,
+      runAsGroup: unix.gid,
+      runAsNonRoot: js.boolean,
+      runAsUser: unix.uid,
+      seLinuxOptions: kube.SELinuxOptions,
+      seccompProfile: kube.seccompProfile,
+      windowsOptions: kube.windowsSecurtiyContextOptions,
+    },
+  },
+  podSecurityContext:: js.object(additionalProperties=false) {
+    properties: {
+      fsGroup: unix.gid,
+      fsGroupChangePolicy: js.enum(["OnRootMismatch", "Always"]),
+      runAsGroup: unix.gid,
+      runAsNonRoot: js.boolean,
+      runAsUser: unix.uid,
+      seLinuxOptions: kube.SELinuxOptions,
+      seccompProfile: kube.seccompProfile,
+      supplementalGroups: js.array(unevaluatedItems=false, uniqueItems=true) {
+        items: unix.gid,
+      },
+      sysctls: js.array(unevaluatedItems=false, uniqueItems=true) {
+        items: kube.sysctl,
+      },
+      windowsOptions: kube.windowsSecurtiyContextOptions,
+    },
+  },
+  SELinuxOptions:: js.object(additionalProperties=false) {
+    properties: {
+      level: js.string(),
+      role: js.string(),
+      type: js.string(),
+      user: js.string(),
+    },
+  },
+  seccompProfile:: js.object(additionalProperties=false) {
+    properties: {
+      localhostProfile: js.string(),
+      type: js.enum(['Localhost', 'RuntimeDefault', 'Unconfined']),
+    },
+  },
+  sysctl:: js.object(additionalProperties=false) {
+    properties: {
+      name: js.string(),
+      value: js.string(),
+    },
+  },
+  windowsSecurtiyContextOptions:: js.object(additionalProperties=false) {
+    properties: {
+      gmsaCredentialSpec: js.string(),
+      gmsaCredentialSpecName: js.string(),
+      hostProcess: js.string(),
+      runAsUserName: js.string(),
+    },
+  },
+  capabilities:: js.object(additionalProperties=false) {
+    properties: {
+      add: js.array(unevaluatedItems=false, uniqueItems=true) {
+        items: js.string(),
+      },
+      drop: js.array(unevaluatedItems=false, uniqueItems=true) {
+        items: js.string(),
       },
     },
   },

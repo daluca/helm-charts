@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ printf "%s-config" (include "common.fullname" .) }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+    app.kubernetes.io/component: eturnal
+data:
+  eturnal.yaml: |-
+    {{- with omit .Values.config "listen" "secret" }}
+    eturnal:
+      listen:
+        {{- range $listen := $.Values.config.listen }}
+        - ip: "::"
+          port: {{ $.Values.service.containerPort }}
+          transport: {{ $listen.transport }}
+          proxy_protocol: {{ default false $listen.proxy_protocol }}
+          enable_turn: {{ ternary $listen.enable_turn true (kindIs "bool" $listen.enable_turn) }}
+        {{- end }}
+      {{- toYaml . | nindent 6 -}}
+    {{- end }}
