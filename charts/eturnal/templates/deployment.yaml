@@ -34,9 +34,9 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           ports:
-            {{- range $listen := $.Values.config.listen }}
+            {{- range $index, $listen := .Values.config.listen }}
             - name: {{ printf "stunturn-%s" (ternary "tcp" $listen.transport (or (eq $listen.transport "tls") (eq $listen.transport "auto"))) }}
-              containerPort: {{ $.Values.service.containerPort }}
+              containerPort: {{ add $.Values.service.containerPort $index }}
               protocol: {{ upper (ternary "tcp" $listen.transport (or (eq $listen.transport "tls") (eq $listen.transport "auto"))) }}
             {{- end }}
           env:
