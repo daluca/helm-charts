@@ -11,9 +11,9 @@ data:
     {{- with omit .Values.config "listen" "secret" }}
     eturnal:
       listen:
-        {{- range $listen := $.Values.config.listen }}
+        {{- range $index, $listen := $.Values.config.listen }}
         - ip: "::"
-          port: {{ $.Values.service.containerPort }}
+          port: {{ add $.Values.service.containerPort $index }}
           transport: {{ $listen.transport }}
           proxy_protocol: {{ default false $listen.proxy_protocol }}
           enable_turn: {{ ternary $listen.enable_turn true (kindIs "bool" $listen.enable_turn) }}
