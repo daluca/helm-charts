@@ -13,8 +13,12 @@ image:
 
 service:
   type: ClusterIP
-  port: 3478
-  containerPort: 3478
+  udp:
+    port: 3478
+    containerPort: 3478
+  tcp:
+    port: 5349
+    containerPort: 5349
   annotations: {}
 
 serviceAccount:

@@ -34,10 +34,10 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           ports:
-            {{- range $index, $listen := .Values.config.listen }}
-            - name: {{ printf "stunturn-%s" (ternary "tcp" $listen.transport (or (eq $listen.transport "tls") (eq $listen.transport "auto"))) }}
-              containerPort: {{ add $.Values.service.containerPort $index }}
-              protocol: {{ upper (ternary "tcp" $listen.transport (or (eq $listen.transport "tls") (eq $listen.transport "auto"))) }}
+            {{- range $listen := .Values.config.listen }}
+            - name: {{ printf "stunturn-%s" (ternary "udp" "tcp" (eq $listen.transport "udp")) }}
+              containerPort: {{ ternary $.Values.service.udp.containerPort $.Values.service.tcp.containerPort (eq $listen.transport "udp") }}
+              protocol: {{ ternary "udp" "tcp" (eq $listen.transport "udp") | upper }}
             {{- end }}
           env:
             - name: ETURNAL_SECRET

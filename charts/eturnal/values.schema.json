@@ -860,18 +860,40 @@
                     },
                     "type": "object"
                 },
-                "containerPort": {
-                    "maximum": 65535,
-                    "minimum": 0,
-                    "type": "integer"
-                },
-                "port": {
-                    "maximum": 65535,
-                    "minimum": 0,
-                    "type": "integer"
+                "tcp": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "containerPort": {
+                            "maximum": 65535,
+                            "minimum": 0,
+                            "type": "integer"
+                        },
+                        "port": {
+                            "maximum": 65535,
+                            "minimum": 0,
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
                 },
                 "type": {
                     "enum": ["ClusterIP", "NodePort", "LoadBalancer"]
+                },
+                "udp": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "containerPort": {
+                            "maximum": 65535,
+                            "minimum": 0,
+                            "type": "integer"
+                        },
+                        "port": {
+                            "maximum": 65535,
+                            "minimum": 0,
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
                 }
             },
             "type": "object"

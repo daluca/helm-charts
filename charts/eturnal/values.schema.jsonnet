@@ -12,6 +12,24 @@ helm.schema(
   local logLevels = js.enum(['debug', 'info', 'notice', 'warning', 'error', 'critical']),
 
   properties+: {
+    service: js.object(additionalProperties=false) {
+      properties: {
+        type: js.enum(['ClusterIP', 'NodePort', 'LoadBalancer']),
+        udp: js.object(additionalProperties=false) {
+          properties: {
+            port: net.port,
+            containerPort: net.port,
+          },
+        },
+        tcp: js.object(additionalProperties=false) {
+          properties: {
+            port: net.port,
+            containerPort: net.port,
+          },
+        },
+        annotations: kube.annotations,
+      },
+    },
     podSecurityContext: kube.podSecurityContext,
     securityContext: kube.securityContext,
     extraVolumeMounts: js.array(uniqueItems=true, unevaluatedItems=false) {

@@ -11,11 +11,11 @@ data:
     {{- with omit .Values.config "listen" "secret" }}
     eturnal:
       listen:
-        {{- range $index, $listen := $.Values.config.listen }}
+        {{- range $listen := $.Values.config.listen }}
         - ip: "::"
-          port: {{ add $.Values.service.containerPort $index }}
+          port: {{ ternary $.Values.service.udp.containerPort $.Values.service.tcp.containerPort (eq $listen.transport "udp") }}
           transport: {{ $listen.transport }}
-          proxy_protocol: {{ default false $listen.proxy_protocol }}
+          proxy_protocol: {{ default false (ternary false $listen.proxy_protocol (eq $listen.transport "udp")) }}
           enable_turn: {{ ternary $listen.enable_turn true (kindIs "bool" $listen.enable_turn) }}
         {{- end }}
       {{- toYaml . | nindent 6 -}}
