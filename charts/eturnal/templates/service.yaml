@@ -12,9 +12,9 @@ spec:
     {{- include "common.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/component: eturnal
   ports:
-    {{- range $index, $listen := .Values.config.listen }}
-    - name: {{ printf "stunturn-%s" (ternary "tcp" $listen.transport (or (eq $listen.transport "tls") (eq $listen.transport "auto"))) }}
-      port: {{ default (add $.Values.service.containerPort $index) (add $.Values.service.port $index) }}
-      targetPort: {{ printf "stunturn-%s" (ternary "tcp" $listen.transport (or (eq $listen.transport "tls") (eq $listen.transport "auto"))) }}
-      protocol: {{ upper (ternary "tcp" $listen.transport (or (eq $listen.transport "tls") (eq $listen.transport "auto"))) }}
+    {{- range $listen := .Values.config.listen }}
+    - name: {{ printf "stunturn-%s" (ternary "udp" "tcp" (eq $listen.transport "udp")) }}
+      port: {{ ternary (default $.Values.service.udp.containerPort $.Values.service.udp.port) (default $.Values.service.tcp.containerPort $.Values.service.tcp.port) (eq $listen.transport "udp") }}
+      targetPort: {{ printf "stunturn-%s" (ternary "udp" "tcp" (eq $listen.transport "udp")) }}
+      protocol: {{ ternary "UDP" "TCP" (eq $listen.transport "udp") }}
     {{- end }}
