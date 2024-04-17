@@ -1,6 +1,6 @@
 # eturnal
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.12.0](https://img.shields.io/badge/AppVersion-1.12.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.12.0](https://img.shields.io/badge/AppVersion-1.12.0-informational?style=flat-square)
 
 STUN / TURN standalone server
 
@@ -55,6 +55,9 @@ Kubernetes: `>=1.19.0-0`
 | securityContext.privileged | bool | `false` |  |
 | securityContext.capabilities.drop | list | `["ALL"]` | "" |
 | securityContext.capabilities.add | list | `["NET_BIND_SERVICE"]` | "" |
+| extraVolumeMounts | list | `[]` |  |
+| extraVolumes | list | `[]` |  |
+| existingSecret | string | `""` | Name of a secret with a key containing `shared-secret` |
 | config.blacklist_clients | list | `[]` |  |
 | config.blacklist_peers | list | `["recommended"]` | "" |
 | config.credentials | object | `{}` |  |
@@ -77,4 +80,3 @@ Kubernetes: `>=1.19.0-0`
 | config.tls_options | list | `["cipher_server_preference"]` | "" |
 | config.whitelist_clients | list | `[]` |  |
 | config.whitelist_peers | list | `[]` |  |
-| existingSecret | string | `""` |  |

@@ -57,6 +57,13 @@ securityContext:
     # -- ""
     add: [NET_BIND_SERVICE]
 
+extraVolumeMounts: []
+
+extraVolumes: []
+
+# -- Name of a secret with a key containing `shared-secret`
+existingSecret: ""
+
 config:
   blacklist_clients: []
   # -- ""
@@ -99,5 +106,3 @@ config:
   tls_options: [cipher_server_preference]
   whitelist_clients: []
   whitelist_peers: []
-
-existingSecret: ""

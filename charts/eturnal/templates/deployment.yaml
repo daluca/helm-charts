@@ -81,7 +81,13 @@ spec:
             - mountPath: /etc/eturnal.yml
               subPath: eturnal.yaml
               name: eturnal-config
+            {{- with .Values.extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
       volumes:
         - name: eturnal-config
           configMap:
             name: {{ printf "%s-config" (include "common.fullname" .) }}
+        {{- with .Values.extraVolumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
