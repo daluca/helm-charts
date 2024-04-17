@@ -21,7 +21,6 @@ config:
   listen:
     - transport: udp
     - transport: auto
-      proxy_protocol: true
       enable_turn: false
   log_level: debug
   modules:
