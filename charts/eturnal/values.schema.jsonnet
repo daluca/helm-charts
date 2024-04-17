@@ -14,6 +14,13 @@ helm.schema(
   properties+: {
     podSecurityContext: kube.podSecurityContext,
     securityContext: kube.securityContext,
+    extraVolumeMounts: js.array(uniqueItems=true, unevaluatedItems=false) {
+      items: kube.volumeMount,
+    },
+    extraVolumes: js.array(uniqueItems=true, unevaluatedItems=false) {
+      items: kube.volume
+    },
+    existingSecret: js.string(),
     config: js.object(additionalProperties=true) {
       properties: {
         blacklist_clients: js.array(uniqueItems=true, unevaluatedItems=false) {
@@ -85,6 +92,5 @@ helm.schema(
         },
       },
     },
-    existingSecret: js.string(),
   },
 }
