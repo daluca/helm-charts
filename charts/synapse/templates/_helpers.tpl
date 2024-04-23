@@ -25,13 +25,6 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{/*
-Delegation full name.
-*/}}
-{{- define "synapse.wellKnownFullname" -}}
-{{ printf "%s-%s" (include "synapse.fullname" . | trunc 53 | trimSuffix "-") "well-known" }}
-{{- end }}
-
-{{/*
 Create chart name and version as used by the chart label.
 */}}
 {{- define "synapse.chart" -}}
