@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ printf "%s-%s" (include "synapse.fullname" .) "signing-key" }}
+  name: {{ printf "%s-signing-key" (include "synapse.fullname" .) }}
   labels:
     {{- include "synapse.labels" . | nindent 4 }}
     app.kubernetes.io/component: synapse

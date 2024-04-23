@@ -65,5 +65,5 @@ spec:
       volumes:
         - name: nginx-config
           configMap:
-            name: {{ printf "%s-%s" (include "synapse.wellKnownFullname" .) "config" }}
+            name: {{ printf "%s-config" (include "synapse.wellKnownFullname" .) }}
 {{- end }}

@@ -86,7 +86,7 @@ spec:
               subPath: logging.yaml
               name: synapse-config
             {{- if .Values.signingKey.enabled }}
-            - mountPath: /synapse/{{ printf "%s.key" .Values.homeserver.server_name }}
+            - mountPath: {{ printf "/synapse/%s.key" .Values.homeserver.server_name }}
               subPath: signing.key
               name: signing-key
             {{- end }}
@@ -120,23 +120,23 @@ spec:
       volumes:
         - name: synapse-config
           configMap:
-            name: {{ printf "%s-%s" (include "synapse.fullname" .) "config" }}
+            name: {{ printf "%s-config" (include "synapse.fullname" .) }}
         - name: synapse-secrets
           secret:
-            secretName: {{ printf "%s-%s" (include "synapse.fullname" .) "secrets" }}
+            secretName: {{ printf "%s-secrets" (include "synapse.fullname" .) }}
         {{- if not (eq "sqlite" .Values.database.type) }}
         - name: database-credentials
           secret:
             {{- if and .Values.database.external .Values.database.existingSecret }}
             secretName: {{ .Values.database.existingSecret }}
             {{- else }}
-            secretName: {{ printf "%s-%s" (include "synapse.fullname" .) "database-credentials" }}
+            secretName: {{ printf "%s-database-credentials" (include "synapse.fullname" .) }}
             {{- end }}
         {{- end }}
         - name: synapse-data
           {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: {{ printf "%s-%s" (include "synapse.fullname" .) "data" }}
+            claimName: {{ printf "%s-data" (include "synapse.fullname" .) }}
           {{- else }}
           emptyDir: {}
           {{- end }}
@@ -146,13 +146,13 @@ spec:
             {{- if .Values.signingKey.existingSecret }}
             secretName: {{ .Values.signingKey.existingSecret }}
             {{- else }}
-            secretName: {{ printf "%s-%s" (include "synapse.fullname" .) "signing-key" }}
+            secretName: {{ printf "%s-signing-key" (include "synapse.fullname" .) }}
             {{- end }}
         {{- end }}
         {{- if any (eq "postgresql" .Values.database.type) }}
         - name: scripts
           configMap:
-            name: {{ printf "%s-%s" (include "synapse.fullname" .) "scripts" }}
+            name: {{ printf "%s-scripts" (include "synapse.fullname" .) }}
             defaultMode: 0777
         {{- end }}
         - name: config-data

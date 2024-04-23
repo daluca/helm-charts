@@ -20,7 +20,7 @@ spec:
   tls:
     - hosts:
         - {{ .Values.homeserver.server_name }}
-      secretName: {{ printf "%s-%s" .Values.homeserver.server_name "tls" }}
+      secretName: {{ printf "%s-tls" .Values.homeserver.server_name }}
   {{- end }}
   rules:
     - host: {{ .Values.homeserver.server_name }}

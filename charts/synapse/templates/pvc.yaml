@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ printf "%s-%s" (include "synapse.fullname" .) "data" }}
+  name: {{ printf "%s-data" (include "synapse.fullname" .) }}
   labels:
     {{- include "synapse.labels" . | nindent 4 }}
     app.kubernetes.io/component: synapse

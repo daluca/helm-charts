@@ -3,7 +3,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ printf "%s-%s" (include "synapse.fullname" .) "create-admin" }}
+  name: {{ printf "%s-create-admin" (include "synapse.fullname" .) }}
   labels:
     {{- include "synapse.labels" . | nindent 4 }}
   annotations:
@@ -12,7 +12,7 @@ metadata:
 spec:
   template:
     metadata:
-      name: {{ printf "%s-%s" (include "synapse.fullname" .) "create-admin" }}
+      name: {{ printf "%s-create-admin" (include "synapse.fullname" .) }}
       labels:
         app.kubernetes.io/component: backend
         {{- include "synapse.selectorLabels" . | nindent 8 }}
@@ -40,7 +40,7 @@ spec:
                   {{- if .Values.admin.existingSecret }}
                   name: {{ .Values.admin.existingSecret }}
                   {{- else }}
-                  name: {{ printf "%s-%s" (include "synapse.fullname" .) "admin-credentials" }}
+                  name: {{ printf "%s-admin-credentials" (include "synapse.fullname" .) }}
                   {{- end }}
             - name: ADMIN_PASSWORD
               valueFrom:
@@ -49,7 +49,7 @@ spec:
                   {{- if .Values.admin.existingSecret }}
                   name: {{ .Values.admin.existingSecret }}
                   {{- else }}
-                  name: {{ printf "%s-%s" (include "synapse.fullname" .) "admin-credentials" }}
+                  name: {{ printf "%s-admin-credentials" (include "synapse.fullname" .) }}
                   {{- end }}
           volumeMounts:
             - mountPath: /synapse/homeserver.d/secrets.yaml
@@ -58,5 +58,5 @@ spec:
       volumes:
         - name: synapse-secrets
           secret:
-            secretName: {{ printf "%s-%s" (include "synapse.fullname" .) "secrets" }}
+            secretName: {{ printf "%s-secrets" (include "synapse.fullname" .) }}
 {{- end }}

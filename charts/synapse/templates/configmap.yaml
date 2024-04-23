@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ printf "%s-%s" (include "synapse.fullname" .) "config" }}
+  name: {{ printf "%s-config" (include "synapse.fullname" .) }}
   labels:
     {{- include "synapse.labels" . | nindent 4 }}
     app.kubernetes.io/component: synapse
@@ -74,7 +74,7 @@ data:
       txn_limit: 10000
       args:
         database: {{ if .Values.database.external }}{{ .Values.database.name }}{{ else }}{{ .Values.postgresql.auth.database }}{{ end }}
-        host: {{ if .Values.database.external }}{{ .Values.database.host }}{{ else }}{{ printf "%s-%s.%s" .Release.Name "postgresql" .Release.Namespace }}{{ end }}
+        host: {{ if .Values.database.external }}{{ .Values.database.host }}{{ else }}{{ printf "%s-postgresql.%s" .Release.Name .Release.Namespace }}{{ end }}
         port: {{ if .Values.database.external }}{{ .Values.database.port }}{{ else }}{{ .Values.postgresql.service.ports.postgresql }}{{ end }}
         {{- with .Values.database.arguments }}
         {{- toYaml . | nindent 8 }}
