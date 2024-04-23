@@ -68,6 +68,41 @@ local net = import 'networking.libsonnet';
       enabled: js.boolean,
     },
   },
+  externalDatabase(
+    types=[]
+  ):: js.object(additionalProperties=false, required=['type', 'external']) {
+    properties: {
+      type: js.enum(types),
+      external: js.boolean,
+      name: js.string(),
+      host: net.hostname,
+      port: net.port,
+      username: js.string(),
+      password: js.string(),
+      existingSecret: js.string(),
+    },
+  },
+  postgresql:: js.object(additionalProperties=true, required=['enabled']) {
+    properties: {
+      enabled: js.boolean,
+      auth: js.object(additionalProperties=true) {
+        properties: {
+          username: js.string(),
+          password: js.string(),
+          database: js.string(),
+        },
+      },
+      service: js.object(additionalProperties=true) {
+        properties: {
+          ports: js.object(additionalProperties=true) {
+            properties: {
+              postgresql: net.port,
+            },
+          },
+        },
+      },
+    },
+  },
   commonLibrary:: js.object(additionalProperties=false) {
     properties: {
       global: js.object(additionalProperties=true) {
