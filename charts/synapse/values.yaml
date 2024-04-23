@@ -90,9 +90,11 @@ logging:
   console:
     level: NOTSET
 
-extraMergeVolumeMounts: []
+extraVolumeMounts: []
 
 extraVolumes: []
+
+extraMergeVolumeMounts: []
 
 delegation:
   enabled: false

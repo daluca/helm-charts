@@ -90,6 +90,9 @@ spec:
               subPath: signing.key
               name: signing-key
             {{- end }}
+            {{- with .Values.extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
       {{- if any (eq "postgresql" .Values.database.type) .Values.extraMergeVolumeMounts }}
       initContainers:
         - name: merge-config
