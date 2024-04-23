@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "synapse.fullname" . }}
+  name: {{ include "common.fullname" . }}
   labels:
-    {{- include "synapse.labels" . | nindent 4 }}
+    {{- include "common.labels" . | nindent 4 }}
     app.kubernetes.io/component: synapse
   {{- with .Values.service.annotations }}
   annotations:
@@ -13,7 +13,7 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   selector:
-    {{- include "synapse.selectorLabels" . | nindent 4 }}
+    {{- include "common.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/component: synapse
   ports:
     - port: {{ default .Values.service.containerPort .Values.service.port }}

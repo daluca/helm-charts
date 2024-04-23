@@ -5,7 +5,7 @@ kind: Service
 metadata:
   name: {{ include "synapse.wellKnownFullname" . }}
   labels:
-    {{- include "synapse.labels" . | nindent 4 }}
+    {{- include "common.labels" . | nindent 4 }}
     app.kubernetes.io/component: delegation
   {{- with .Values.service.annotations }}
   annotations:
@@ -14,7 +14,7 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   selector:
-    {{- include "synapse.selectorLabels" . | nindent 4 }}
+    {{- include "common.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/component: delegation
   ports:
     - port: {{ default .Values.delegation.service.containerPort .Values.delegation.service.port }}

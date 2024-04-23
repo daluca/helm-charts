@@ -4,13 +4,16 @@ name: synapse
 type: application
 description: Matrix homeserver written in Python/Twisted
 version: 0.11.1
-appVersion: 1.105.0
+appVersion: 1.105.1
 kubeVersion: ">=1.19.0-0"
 icon: https://matrix.org/images/matrix-favicon.svg
 home: https://github.com/element-hq/synapse
 sources:
   - https://github.com/daluca/helm-charts/tree/main/charts/synapse
 dependencies:
+  - name: common
+    version: ">=0.1.0 <0.2.0"
+    repository: oci://ghcr.io/daluca/charts
   - name: postgresql
     version: ">=15.0.0 <16.0.0"
     repository: oci://registry-1.docker.io/bitnamicharts
@@ -19,7 +22,7 @@ annotations:
   artifacthub.io/alternativeName: matrix-synapse
   artifacthub.io/images: |-
     - name: synapse
-      image: ghcr.io/element-hq/synapse:v1.105.0
+      image: ghcr.io/element-hq/synapse:v1.105.1
       platforms:
         - linux/amd64
         - linux/arm64

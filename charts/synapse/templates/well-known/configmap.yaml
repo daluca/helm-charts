@@ -3,9 +3,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ printf "%s-%s" (include "synapse.wellKnownFullname" .) "config" }}
+  name: {{ printf "%s-config" (include "synapse.wellKnownFullname" .) }}
   labels:
-    {{- include "synapse.labels" . | nindent 4 }}
+    {{- include "common.labels" . | nindent 4 }}
     app.kubernetes.io/component: delegation
 data:
   nginx.conf: |

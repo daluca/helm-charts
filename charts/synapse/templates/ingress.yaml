@@ -3,9 +3,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "synapse.fullname" . }}
+  name: {{ include "common.fullname" . }}
   labels:
-    {{- include "synapse.labels" . | nindent 4 }}
+    {{- include "common.labels" . | nindent 4 }}
     app.kubernetes.io/component: synapse
   {{- with .Values.ingress.annotations }}
   annotations:
@@ -19,7 +19,7 @@ spec:
   tls:
     - hosts:
         - {{ .Values.ingress.host }}
-      secretName: {{ printf "%s-%s" .Values.ingress.host "tls" }}
+      secretName: {{ printf "%s-tls" .Values.ingress.host }}
   {{- end }}
   rules:
     - host: {{ .Values.ingress.host }}
@@ -29,21 +29,21 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ include "synapse.fullname" . }}
+                name: {{ include "common.fullname" . }}
                 port:
                   name: http
           - path: /_synapse/client
             pathType: Prefix
             backend:
               service:
-                name: {{ include "synapse.fullname" . }}
+                name: {{ include "common.fullname" . }}
                 port:
                   name: http
           - path: /
             pathType: Exact
             backend:
               service:
-                name: {{ include "synapse.fullname" . }}
+                name: {{ include "common.fullname" . }}
                 port:
                   name: http
 {{- end }}

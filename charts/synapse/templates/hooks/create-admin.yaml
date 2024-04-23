@@ -3,19 +3,19 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ printf "%s-%s" (include "synapse.fullname" .) "create-admin" }}
+  name: {{ printf "%s-create-admin" (include "common.fullname" .) }}
   labels:
-    {{- include "synapse.labels" . | nindent 4 }}
+    {{- include "common.labels" . | nindent 4 }}
   annotations:
     helm.sh/hook: post-install
     helm.sh/hook-delete-policy: hook-succeeded
 spec:
   template:
     metadata:
-      name: {{ printf "%s-%s" (include "synapse.fullname" .) "create-admin" }}
+      name: {{ printf "%s-create-admin" (include "common.fullname" .) }}
       labels:
         app.kubernetes.io/component: backend
-        {{- include "synapse.selectorLabels" . | nindent 8 }}
+        {{- include "common.selectorLabels" . | nindent 8 }}
     spec:
       restartPolicy: OnFailure
       containers:
@@ -31,7 +31,7 @@ spec:
             - "$(ADMIN_PASSWORD)"
             - --config
             - /synapse/homeserver.d/secrets.yaml
-            - http://{{ include "synapse.fullname" . }}{{ if ne 80.0 (default .Values.service.containerPort .Values.service.port) }}:{{ default .Values.service.containerPort .Values.service.port }}{{ end }}
+            - http://{{ include "common.fullname" . }}{{ if ne 80.0 (default .Values.service.containerPort .Values.service.port) }}:{{ default .Values.service.containerPort .Values.service.port }}{{ end }}
           env:
             - name: ADMIN_USERNAME
               valueFrom:
@@ -40,7 +40,7 @@ spec:
                   {{- if .Values.admin.existingSecret }}
                   name: {{ .Values.admin.existingSecret }}
                   {{- else }}
-                  name: {{ printf "%s-%s" (include "synapse.fullname" .) "admin-credentials" }}
+                  name: {{ printf "%s-admin-credentials" (include "common.fullname" .) }}
                   {{- end }}
             - name: ADMIN_PASSWORD
               valueFrom:
@@ -49,7 +49,7 @@ spec:
                   {{- if .Values.admin.existingSecret }}
                   name: {{ .Values.admin.existingSecret }}
                   {{- else }}
-                  name: {{ printf "%s-%s" (include "synapse.fullname" .) "admin-credentials" }}
+                  name: {{ printf "%s-admin-credentials" (include "common.fullname" .) }}
                   {{- end }}
           volumeMounts:
             - mountPath: /synapse/homeserver.d/secrets.yaml
@@ -58,5 +58,5 @@ spec:
       volumes:
         - name: synapse-secrets
           secret:
-            secretName: {{ printf "%s-%s" (include "synapse.fullname" .) "secrets" }}
+            secretName: {{ printf "%s-secrets" (include "common.fullname" .) }}
 {{- end }}

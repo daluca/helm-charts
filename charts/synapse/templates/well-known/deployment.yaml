@@ -5,21 +5,21 @@ kind: Deployment
 metadata:
   name: {{ include "synapse.wellKnownFullname" . }}
   labels:
-    {{- include "synapse.labels" . | nindent 4 }}
+    {{- include "common.labels" . | nindent 4 }}
     app.kubernetes.io/component: delegation
 spec:
   replicas: {{ default 1 .Values.delegation.replicaCount }}
   selector:
     matchLabels:
-      {{- include "synapse.selectorLabels" . | nindent 6 }}
+      {{- include "common.selectorLabels" . | nindent 6 }}
       app.kubernetes.io/component: delegation
   template:
     metadata:
       labels:
-        {{- include "synapse.selectorLabels" . | nindent 8 }}
+        {{- include "common.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: delegation
     spec:
-      serviceAccountName: {{ include "synapse.serviceAccountName" . }}
+      serviceAccountName: {{ include "common.serviceAccountName" . }}
       containers:
         - name: nginx
           image: {{ if .Values.delegation.image.registry }}{{ .Values.delegation.image.registry }}/{{ end }}{{ .Values.delegation.image.repository }}:{{ .Values.delegation.image.tag }}{{ if .Values.delegation.image.sha256 }}@sha256:{{ .Values.delegation.image.sha256 }}{{ end }}
@@ -65,5 +65,5 @@ spec:
       volumes:
         - name: nginx-config
           configMap:
-            name: {{ printf "%s-%s" (include "synapse.wellKnownFullname" .) "config" }}
+            name: {{ printf "%s-config" (include "synapse.wellKnownFullname" .) }}
 {{- end }}
