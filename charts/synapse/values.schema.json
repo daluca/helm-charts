@@ -58,7 +58,7 @@
                     "type": "string"
                 }
             },
-            "required": ["type"],
+            "required": ["type", "external"],
             "type": "object"
         },
         "delegation": {
@@ -211,38 +211,80 @@
                     "additionalProperties": false,
                     "properties": {
                         "limits": {
-                            "additionalProperties": false,
-                            "patternProperties": {
-                                "^hugepages-": {
-                                    "type": "string"
-                                }
-                            },
-                            "properties": {
-                                "cpu": {
-                                    "type": "string"
+                            "oneOf": [
+                                {
+                                    "additionalProperties": false,
+                                    "patternProperties": {
+                                        "^hugepages-": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "properties": {
+                                        "cpu": {
+                                            "oneOf": [
+                                                {
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "type": "null"
+                                                }
+                                            ]
+                                        },
+                                        "memory": {
+                                            "oneOf": [
+                                                {
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "type": "null"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
                                 },
-                                "memory": {
-                                    "type": "string"
+                                {
+                                    "type": "null"
                                 }
-                            },
-                            "type": "object"
+                            ]
                         },
                         "requests": {
-                            "additionalProperties": false,
-                            "patternProperties": {
-                                "^hugepages-": {
-                                    "type": "string"
-                                }
-                            },
-                            "properties": {
-                                "cpu": {
-                                    "type": "string"
+                            "oneOf": [
+                                {
+                                    "additionalProperties": false,
+                                    "patternProperties": {
+                                        "^hugepages-": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "properties": {
+                                        "cpu": {
+                                            "oneOf": [
+                                                {
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "type": "null"
+                                                }
+                                            ]
+                                        },
+                                        "memory": {
+                                            "oneOf": [
+                                                {
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "type": "null"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
                                 },
-                                "memory": {
-                                    "type": "string"
+                                {
+                                    "type": "null"
                                 }
-                            },
-                            "type": "object"
+                            ]
                         }
                     },
                     "type": "object"
@@ -322,6 +364,37 @@
             "type": "object"
         },
         "extraMergeVolumeMounts": {
+            "items": {
+                "additionalProperties": false,
+                "properties": {
+                    "mountPath": {
+                        "pattern": "^/",
+                        "type": "string"
+                    },
+                    "mountPropagation": {
+                        "type": ["string", "null"]
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "readOnly": {
+                        "type": "boolean"
+                    },
+                    "subPath": {
+                        "type": ["string", "null"]
+                    },
+                    "subPathExpr": {
+                        "type": ["string", "null"]
+                    }
+                },
+                "required": ["mountPath", "name"],
+                "type": "object"
+            },
+            "type": "array",
+            "unevaluatedItems": false,
+            "uniqueItems": true
+        },
+        "extraVolumeMounts": {
             "items": {
                 "additionalProperties": false,
                 "properties": {
@@ -700,8 +773,55 @@
         "postgresql": {
             "additionalProperties": true,
             "properties": {
+                "auth": {
+                    "additionalProperties": true,
+                    "properties": {
+                        "database": {
+                            "type": "string"
+                        },
+                        "password": {
+                            "type": "string"
+                        },
+                        "username": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
                 "enabled": {
                     "type": "boolean"
+                },
+                "primary": {
+                    "additionalProperties": true,
+                    "properties": {
+                        "initdb": {
+                            "additionalProperties": true,
+                            "properties": {
+                                "args": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "service": {
+                    "additionalProperties": true,
+                    "properties": {
+                        "ports": {
+                            "additionalProperties": true,
+                            "properties": {
+                                "postgresql": {
+                                    "maximum": 65535,
+                                    "minimum": 0,
+                                    "type": "integer"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
                 }
             },
             "required": ["enabled"],
@@ -748,38 +868,80 @@
             "additionalProperties": false,
             "properties": {
                 "limits": {
-                    "additionalProperties": false,
-                    "patternProperties": {
-                        "^hugepages-": {
-                            "type": "string"
-                        }
-                    },
-                    "properties": {
-                        "cpu": {
-                            "type": "string"
+                    "oneOf": [
+                        {
+                            "additionalProperties": false,
+                            "patternProperties": {
+                                "^hugepages-": {
+                                    "type": "string"
+                                }
+                            },
+                            "properties": {
+                                "cpu": {
+                                    "oneOf": [
+                                        {
+                                            "type": "string"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                },
+                                "memory": {
+                                    "oneOf": [
+                                        {
+                                            "type": "string"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                }
+                            },
+                            "type": "object"
                         },
-                        "memory": {
-                            "type": "string"
+                        {
+                            "type": "null"
                         }
-                    },
-                    "type": "object"
+                    ]
                 },
                 "requests": {
-                    "additionalProperties": false,
-                    "patternProperties": {
-                        "^hugepages-": {
-                            "type": "string"
-                        }
-                    },
-                    "properties": {
-                        "cpu": {
-                            "type": "string"
+                    "oneOf": [
+                        {
+                            "additionalProperties": false,
+                            "patternProperties": {
+                                "^hugepages-": {
+                                    "type": "string"
+                                }
+                            },
+                            "properties": {
+                                "cpu": {
+                                    "oneOf": [
+                                        {
+                                            "type": "string"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                },
+                                "memory": {
+                                    "oneOf": [
+                                        {
+                                            "type": "string"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                }
+                            },
+                            "type": "object"
                         },
-                        "memory": {
-                            "type": "string"
+                        {
+                            "type": "null"
                         }
-                    },
-                    "type": "object"
+                    ]
                 }
             },
             "type": "object"

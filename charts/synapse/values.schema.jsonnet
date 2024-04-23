@@ -78,11 +78,14 @@ helm.schema(
         },
       },
     },
-    extraMergeVolumeMounts: js.array(uniqueItems=true, unevaluatedItems=false) {
+    extraVolumeMounts: js.array(uniqueItems=true, unevaluatedItems=false) {
       items: kube.volumeMount,
     },
     extraVolumes: js.array(uniqueItems=true, unevaluatedItems=false) {
       items: kube.volume,
+    },
+    extraMergeVolumeMounts: js.array(uniqueItems=true, unevaluatedItems=false) {
+      items: kube.volumeMount,
     },
     delegation: js.object(additionalProperties=false) {
       properties: {
@@ -125,24 +128,24 @@ helm.schema(
         },
       },
     },
-    database: js.object(additionalProperties=false, required=['type']) {
-      properties: {
-        type: js.enum(['postgresql', 'sqlite']),
-        external: js.boolean,
-        name: js.string(),
-        host: net.hostname,
-        port: net.port,
-        username: js.string(),
-        password: js.string(),
-        existingSecret: js.string(),
+    database: helm.externalDatabase(types=['postgresql', 'sqlite']) {
+      properties+: {
         arguments: js.object(additionalProperties=js.multipleTypes(['integer', 'null'])) {
           properties:: { hidden: true },
         },
       },
     },
-    postgresql: js.object(additionalProperties=true, required=['enabled']) {
-      properties: {
-        enabled: js.boolean,
+    postgresql: helm.postgresql {
+      properties+: {
+        primary: js.object(additionalProperties=true) {
+          properties: {
+            initdb: js.object(additionalProperties=true) {
+              properties: {
+                args: js.string(),
+              },
+            },
+          },
+        },
       },
     },
   },
