@@ -5,7 +5,7 @@ kind: ConfigMap
 metadata:
   name: {{ printf "%s-config" (include "synapse.wellKnownFullname" .) }}
   labels:
-    {{- include "synapse.labels" . | nindent 4 }}
+    {{- include "common.labels" . | nindent 4 }}
     app.kubernetes.io/component: delegation
 data:
   nginx.conf: |

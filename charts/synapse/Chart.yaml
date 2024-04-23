@@ -11,6 +11,9 @@ home: https://github.com/element-hq/synapse
 sources:
   - https://github.com/daluca/helm-charts/tree/main/charts/synapse
 dependencies:
+  - name: common
+    version: ">=0.1.0 <0.2.0"
+    repository: oci://ghcr.io/daluca/charts
   - name: postgresql
     version: ">=15.0.0 <16.0.0"
     repository: oci://registry-1.docker.io/bitnamicharts

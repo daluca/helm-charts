@@ -21,6 +21,16 @@
             },
             "type": "object"
         },
+        "common": {
+            "additionalProperties": false,
+            "properties": {
+                "global": {
+                    "additionalProperties": true,
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
         "database": {
             "additionalProperties": false,
             "properties": {

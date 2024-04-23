@@ -6,6 +6,7 @@ local net = import 'networking.libsonnet';
 helm.schema(
   schemaId='https://raw.githubusercontent.com/daluca/helm-charts/main/charts/synapse/values.schema.json',
   ingress=false,
+  commonLibrary=true,
 ) {
   local logLevels = js.enum(['NOTSET', 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']),
 

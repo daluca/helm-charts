@@ -2,28 +2,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "synapse.fullname" . }}
+  name: {{ include "common.fullname" . }}
   labels:
-    {{- include "synapse.labels" . | nindent 4 }}
+    {{- include "common.labels" . | nindent 4 }}
     app.kubernetes.io/component: synapse
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "synapse.selectorLabels" . | nindent 6 }}
+      {{- include "common.selectorLabels" . | nindent 6 }}
       app.kubernetes.io/component: synapse
   template:
     metadata:
       labels:
-        {{- include "synapse.selectorLabels" . | nindent 8 }}
+        {{- include "common.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: synapse
       annotations:
         synapse-config-hash: {{ toJson .Values.homeserver | sha256sum }}
     spec:
-      serviceAccountName: {{ include "synapse.fullname" . }}
+      serviceAccountName: {{ include "common.fullname" . }}
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ if .Values.image.registry }}{{ .Values.image.registry }}/{{ end }}{{ .Values.image.repository }}:{{ default (printf "v%s" .Chart.AppVersion) .Values.image.tag }}{{ if .Values.image.sha256 }}@sha256:{{ .Values.image.sha256 }}{{ end }}
+          image: {{ include "common.vimage" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: [python3, -m, synapse.app.homeserver]
           args:
@@ -120,23 +120,23 @@ spec:
       volumes:
         - name: synapse-config
           configMap:
-            name: {{ printf "%s-config" (include "synapse.fullname" .) }}
+            name: {{ printf "%s-config" (include "common.fullname" .) }}
         - name: synapse-secrets
           secret:
-            secretName: {{ printf "%s-secrets" (include "synapse.fullname" .) }}
+            secretName: {{ printf "%s-secrets" (include "common.fullname" .) }}
         {{- if not (eq "sqlite" .Values.database.type) }}
         - name: database-credentials
           secret:
             {{- if and .Values.database.external .Values.database.existingSecret }}
             secretName: {{ .Values.database.existingSecret }}
             {{- else }}
-            secretName: {{ printf "%s-database-credentials" (include "synapse.fullname" .) }}
+            secretName: {{ printf "%s-database-credentials" (include "common.fullname" .) }}
             {{- end }}
         {{- end }}
         - name: synapse-data
           {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: {{ printf "%s-data" (include "synapse.fullname" .) }}
+            claimName: {{ printf "%s-data" (include "common.fullname" .) }}
           {{- else }}
           emptyDir: {}
           {{- end }}
@@ -146,13 +146,13 @@ spec:
             {{- if .Values.signingKey.existingSecret }}
             secretName: {{ .Values.signingKey.existingSecret }}
             {{- else }}
-            secretName: {{ printf "%s-signing-key" (include "synapse.fullname" .) }}
+            secretName: {{ printf "%s-signing-key" (include "common.fullname" .) }}
             {{- end }}
         {{- end }}
         {{- if any (eq "postgresql" .Values.database.type) }}
         - name: scripts
           configMap:
-            name: {{ printf "%s-scripts" (include "synapse.fullname" .) }}
+            name: {{ printf "%s-scripts" (include "common.fullname" .) }}
             defaultMode: 0777
         {{- end }}
         - name: config-data
