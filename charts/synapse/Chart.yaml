@@ -4,7 +4,7 @@ name: synapse
 type: application
 description: Matrix homeserver written in Python/Twisted
 version: 0.11.1
-appVersion: 1.105.0
+appVersion: 1.105.1
 kubeVersion: ">=1.19.0-0"
 icon: https://matrix.org/images/matrix-favicon.svg
 home: https://github.com/element-hq/synapse
@@ -19,7 +19,7 @@ annotations:
   artifacthub.io/alternativeName: matrix-synapse
   artifacthub.io/images: |-
     - name: synapse
-      image: ghcr.io/element-hq/synapse:v1.105.0
+      image: ghcr.io/element-hq/synapse:v1.105.1
       platforms:
         - linux/amd64
         - linux/arm64
