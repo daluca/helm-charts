@@ -1,6 +1,6 @@
 # eturnal
 
-![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.12.0](https://img.shields.io/badge/AppVersion-1.12.0-informational?style=flat-square)
+![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.12.0](https://img.shields.io/badge/AppVersion-1.12.0-informational?style=flat-square)
 
 STUN / TURN standalone server
 
@@ -31,8 +31,10 @@ Kubernetes: `>=1.19.0-0`
 | image.sha256 | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | service.type | string | `"ClusterIP"` |  |
-| service.port | int | `3478` |  |
-| service.containerPort | int | `3478` |  |
+| service.udp.port | int | `3478` |  |
+| service.udp.containerPort | int | `3478` |  |
+| service.tcp.port | int | `5349` |  |
+| service.tcp.containerPort | int | `5349` |  |
 | service.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
