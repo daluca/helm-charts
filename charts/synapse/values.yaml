@@ -70,6 +70,7 @@ homeserver:
   macaroon_secret_key: ""
   registration_shared_secret: ""
   form_secret: ""
+  app_service_config_files: []
   existingSecret: ""
 
 signingKey:
@@ -89,6 +90,14 @@ logging:
     location: /synapse/homeserver.log
   console:
     level: NOTSET
+
+appServices:
+  doublepuppet:
+    enabled: false
+    as_token: somethingSecureIPromise
+    hs_token: somethingSecureIPromise
+    sender_localpart: somethingSecureIPromise
+    existingSecret: ""
 
 extraVolumeMounts: []
 

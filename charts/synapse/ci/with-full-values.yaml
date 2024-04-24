@@ -33,6 +33,10 @@ homeserver:
   server_name: example.org
   trusted_key_servers: []
 
+appServices:
+  doublepuppet:
+    enabled: true
+
 logging:
   level: DEBUG
 

@@ -30,7 +30,13 @@ data:
     {{- end }}
     report_stats: {{ .Values.homeserver.report_stats }}
     signing_key_path: /synapse/{{ printf "%s.key" .Values.homeserver.server_name }}
-    {{- with omit .Values.homeserver "server_name" "report_stats" "database" "media_store_path" "signing_key_path" "macaroon_secret_key" "registration_shared_secret" "form_secret" "existingSecret" }}
+    {{- if or .Values.appServices.doublepuppet.enabled .Values.homeserver.app_service_config_files }}
+    app_service_config_files:
+    {{- range concat .Values.homeserver.app_service_config_files (ternary (list "/synapse/appservices/double-puppeting-registration.yaml") (list) .Values.appServices.doublepuppet.enabled) }}
+      {{- printf "- %s" . | nindent 6 }}
+    {{- end }}
+    {{- end }}
+    {{- with omit .Values.homeserver "server_name" "report_stats" "database" "media_store_path" "signing_key_path" "macaroon_secret_key" "registration_shared_secret" "form_secret" "app_service_config_files" "existingSecret" }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
   logging.yaml: |

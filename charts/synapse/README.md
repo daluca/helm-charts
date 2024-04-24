@@ -1,6 +1,6 @@
 # synapse
 
-![Version: 0.11.1](https://img.shields.io/badge/Version-0.11.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.105.1](https://img.shields.io/badge/AppVersion-1.105.1-informational?style=flat-square)
+![Version: 0.11.3](https://img.shields.io/badge/Version-0.11.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.105.1](https://img.shields.io/badge/AppVersion-1.105.1-informational?style=flat-square)
 
 Matrix homeserver written in Python/Twisted
 
@@ -14,6 +14,7 @@ Matrix homeserver written in Python/Twisted
 
 | Repository | Name | Version |
 |------------|------|---------|
+| <oci://ghcr.io/daluca/charts> | common | >=0.1.0 <0.2.0 |
 | <oci://registry-1.docker.io/bitnamicharts> | postgresql | >=15.0.0 <16.0.0 |
 
 ## Values
@@ -64,6 +65,7 @@ Matrix homeserver written in Python/Twisted
 | homeserver.macaroon_secret_key | string | `""` |  |
 | homeserver.registration_shared_secret | string | `""` |  |
 | homeserver.form_secret | string | `""` |  |
+| homeserver.app_service_config_files | list | `[]` |  |
 | homeserver.existingSecret | string | `""` |  |
 | signingKey.enabled | bool | `false` |  |
 | signingKey.key | string | `""` |  |
@@ -75,6 +77,11 @@ Matrix homeserver written in Python/Twisted
 | logging.buffer.level | string | `"NOTSET"` |  |
 | logging.buffer.location | string | `"/synapse/homeserver.log"` |  |
 | logging.console.level | string | `"NOTSET"` |  |
+| appServices.doublepuppet.enabled | bool | `false` |  |
+| appServices.doublepuppet.as_token | string | `"somethingSecureIPromise"` |  |
+| appServices.doublepuppet.hs_token | string | `"somethingSecureIPromise"` |  |
+| appServices.doublepuppet.sender_localpart | string | `"somethingSecureIPromise"` |  |
+| appServices.doublepuppet.existingSecret | string | `""` |  |
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
 | extraMergeVolumeMounts | list | `[]` |  |
