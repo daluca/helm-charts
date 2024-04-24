@@ -21,6 +21,33 @@
             },
             "type": "object"
         },
+        "appServices": {
+            "additionalProperties": false,
+            "properties": {
+                "doublepuppet": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "as_token": {
+                            "type": "string"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "existingSecret": {
+                            "type": "string"
+                        },
+                        "hs_token": {
+                            "type": "string"
+                        },
+                        "sender_localpart": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
         "common": {
             "additionalProperties": false,
             "properties": {
@@ -580,6 +607,15 @@
         "homeserver": {
             "additionalProperties": true,
             "properties": {
+                "app_service_config_files": {
+                    "items": {
+                        "pattern": "^/",
+                        "type": "string"
+                    },
+                    "type": "array",
+                    "unevaluatedItems": false,
+                    "uniqueItems": true
+                },
                 "existingSecret": {
                     "type": "string"
                 },

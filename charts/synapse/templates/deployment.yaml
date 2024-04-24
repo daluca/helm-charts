@@ -90,6 +90,11 @@ spec:
               subPath: signing.key
               name: signing-key
             {{- end }}
+            {{- if .Values.appServices.doublepuppet.enabled }}
+            - mountPath: /synapse/appservices/double-puppeting-registration.yaml
+              subPath: registration.yaml
+              name: synapse-double-puppet-secrets
+            {{- end }}
             {{- with .Values.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
@@ -157,6 +162,15 @@ spec:
         {{- end }}
         - name: config-data
           emptyDir: {}
+        {{- if .Values.appServices.doublepuppet.enabled }}
+        - name: synapse-double-puppet-secrets
+          secret:
+            {{- if .Values.appServices.doublepuppet.existingSecret }}
+            secretName: {{ .Values.appServices.doublepuppet.existingSecret }}
+            {{- else }}
+            secretName: {{ printf "%s-double-puppet-config" (include "common.fullname" .) }}
+            {{- end }}
+        {{- end }}
         {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 8 }}
         {{- end }}

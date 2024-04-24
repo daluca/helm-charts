@@ -2,6 +2,7 @@ local helm = import 'helm.libsonnet';
 local js = import 'json-schema/draft/2020-12/schema.libsonnet';
 local kube = import 'kubernetes.libsonnet';
 local net = import 'networking.libsonnet';
+local unix = import 'unix.libsonnet';
 
 helm.schema(
   schemaId='https://raw.githubusercontent.com/daluca/helm-charts/main/charts/synapse/values.schema.json',
@@ -44,6 +45,9 @@ helm.schema(
       properties: {
         server_name: net.hostname,
         report_stats: js.boolean,
+        app_service_config_files: js.array(uniqueItems=true, unevaluatedItems=false) {
+          items: unix.fullPath,
+        },
         existingSecret: js.string(),
       },
     },
@@ -75,6 +79,19 @@ helm.schema(
         console: js.object(additionalProperties=false) {
           properties: {
             level: logLevels,
+          },
+        },
+      },
+    },
+    appServices: js.object(additionalProperties=false) {
+      properties: {
+        doublepuppet: js.object(additionalProperties=false) {
+          properties: {
+            enabled: js.boolean,
+            as_token: js.string(),
+            hs_token: js.string(),
+            sender_localpart: js.string(),
+            existingSecret: js.string(),
           },
         },
       },
