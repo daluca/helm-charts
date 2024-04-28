@@ -24,7 +24,7 @@ spec:
           image: {{ if .Values.image.registry }}{{ .Values.image.registry }}{{ end }}/{{ .Values.image.repository }}:{{ default .Chart.AppVersion .Values.image.tag }}{{ if .Values.image.sha }}{{ .Values.image.sha }}{{ end }}
           imagePullPolicy: {{ default "IfNotPresent" .Values.image.pullPolicy }}
           command: [miniflux]
-          args: [-create-admin, -debug]
+          args: [-run-cleanup-tasks, -debug]
           env:
             - name: DATABASE_URL
               valueFrom:
@@ -35,6 +35,8 @@ spec:
                   {{- else }}
                   name: {{ printf "%s-%s" (include "miniflux.fullname" .) "database-credentials" }}
                   {{- end }}
+            - name: CREATE_ADMIN
+              value: "true"
             - name: ADMIN_USERNAME
               valueFrom:
                 secretKeyRef:
