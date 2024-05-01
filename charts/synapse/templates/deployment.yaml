@@ -20,7 +20,7 @@ spec:
       annotations:
         synapse-config-hash: {{ toJson .Values.homeserver | sha256sum }}
     spec:
-      serviceAccountName: {{ include "common.fullname" . }}
+      serviceAccountName: {{ include "common.serviceAccountName" . }}
       containers:
         - name: {{ .Chart.Name }}
           image: {{ include "common.vimage" . }}
