@@ -95,7 +95,7 @@ config:
   realm: eturnal.net
   # relay_ipv4_addr:
   # relay_ipv6_addr:
-  relay_max_port: 65535
+  relay_max_port: 49251
   relay_min_port: 49152
   run_dir: run
   secret: somethingSecureIPromise

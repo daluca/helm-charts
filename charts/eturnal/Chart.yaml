@@ -3,7 +3,7 @@ apiVersion: v2
 name: eturnal
 type: application
 description: STUN / TURN standalone server
-version: 0.2.2
+version: 0.2.3
 appVersion: 1.12.0
 kubeVersion: ">=1.19.0-0"
 icon: https://eturnal.net/hello.png
