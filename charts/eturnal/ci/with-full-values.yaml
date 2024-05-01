@@ -28,3 +28,5 @@ config:
       level: debug
     mod_stats_prometheus:
       vm_metrics: false
+  relay_max_port: 50100
+  relay_min_port: 50001

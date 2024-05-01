@@ -39,6 +39,11 @@ spec:
               containerPort: {{ ternary $.Values.service.udp.containerPort $.Values.service.tcp.containerPort (eq $listen.transport "udp") }}
               protocol: {{ ternary "udp" "tcp" (eq $listen.transport "udp") | upper }}
             {{- end }}
+            {{- range $port := untilStep (int .Values.config.relay_min_port) (int .Values.config.relay_max_port) 1 }}
+            - name: {{ printf "relay-%s" (toString $port) }}
+              containerPort: {{ $port }}
+              protocol: UDP
+            {{- end }}
           env:
             - name: ETURNAL_SECRET
               valueFrom:

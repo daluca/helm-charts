@@ -22,3 +22,9 @@ spec:
       targetPort: {{ printf "stunturn-%s" (ternary "udp" "tcp" (eq $listen.transport "udp")) }}
       protocol: {{ ternary "UDP" "TCP" (eq $listen.transport "udp") }}
     {{- end }}
+    {{- range $port := untilStep (int .Values.config.relay_min_port) (int .Values.config.relay_max_port) 1 }}
+    - name: {{ printf "relay-%s" (toString $port) }}
+      port: {{ $port }}
+      targetPort: {{ printf "relay-%s" (toString $port) }}
+      protocol: UDP
+    {{- end }}
