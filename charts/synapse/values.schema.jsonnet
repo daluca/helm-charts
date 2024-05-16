@@ -146,7 +146,7 @@ helm.schema(
         },
       },
     },
-    database: helm.externalDatabase(types=['postgresql', 'sqlite']) {
+    database: helm.externalDatabase(['postgresql', 'sqlite']) {
       properties+: {
         arguments: js.object(additionalProperties=js.multipleTypes(['integer', 'null'])) {
           properties:: { hidden: true },
