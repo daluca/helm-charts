@@ -1,5 +1,5 @@
-# https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/24.0.1/kubernetes/keycloaks.k8s.keycloak.org-v1.yml
 ---
+# https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/24.0.3/kubernetes/keycloaks.k8s.keycloak.org-v1.yml
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
@@ -55,26 +55,16 @@ spec:
                       type: object
                   type: object
                 db:
-                  description:
-                    In this section you can find all properties related to
-                    connect to a database.
+                  description: In this section you can find all properties related to connect to a database.
                   properties:
                     database:
-                      description:
-                        "Sets the database name of the default JDBC URL of\
-                        \ the chosen vendor. If the `url` option is set, this option\
-                        \ is ignored."
+                      description: "Sets the database name of the default JDBC URL of the chosen vendor. If the `url` option is set, this option is ignored."
                       type: string
                     host:
-                      description:
-                        "Sets the hostname of the default JDBC URL of the\
-                        \ chosen vendor. If the `url` option is set, this option is\
-                        \ ignored."
+                      description: "Sets the hostname of the default JDBC URL of the chosen vendor. If the `url` option is set, this option is ignored."
                       type: string
                     passwordSecret:
-                      description:
-                        The reference to a secret holding the password of
-                        the database user.
+                      description: The reference to a secret holding the password of the database user.
                       properties:
                         key:
                           type: string
@@ -93,23 +83,16 @@ spec:
                       description: The minimal size of the connection pool.
                       type: integer
                     port:
-                      description:
-                        "Sets the port of the default JDBC URL of the chosen\
-                        \ vendor. If the `url` option is set, this option is ignored."
+                      description: "Sets the port of the default JDBC URL of the chosen vendor. If the `url` option is set, this option is ignored."
                       type: integer
                     schema:
                       description: The database schema to be used.
                       type: string
                     url:
-                      description:
-                        "The full database JDBC URL. If not provided, a default\
-                        \ URL is set based on the selected database vendor. For instance,\
-                        \ if using 'postgres', the default JDBC URL would be 'jdbc:postgresql://localhost/keycloak'. "
+                      description: "The full database JDBC URL. If not provided, a default URL is set based on the selected database vendor. For instance, if using 'postgres', the default JDBC URL would be 'jdbc:postgresql://localhost/keycloak'. "
                       type: string
                     usernameSecret:
-                      description:
-                        The reference to a secret holding the username of
-                        the database user.
+                      description: The reference to a secret holding the username of the database user.
                       properties:
                         key:
                           type: string
@@ -123,9 +106,7 @@ spec:
                       type: string
                   type: object
                 features:
-                  description:
-                    "In this section you can configure Keycloak features,\
-                    \ which should be enabled/disabled."
+                  description: "In this section you can configure Keycloak features, which should be enabled/disabled."
                   properties:
                     disabled:
                       description: Disabled Keycloak features
@@ -139,36 +120,26 @@ spec:
                       type: array
                   type: object
                 hostname:
-                  description:
-                    In this section you can configure Keycloak hostname and
-                    related properties.
+                  description: In this section you can configure Keycloak hostname and related properties.
                   properties:
                     admin:
                       description: The hostname for accessing the administration console.
                       type: string
                     adminUrl:
-                      description:
-                        "Set the base URL for accessing the administration\
-                        \ console, including scheme, host, port and path"
+                      description: "Set the base URL for accessing the administration console, including scheme, host, port and path"
                       type: string
                     hostname:
                       description: Hostname for the Keycloak server.
                       type: string
                     strict:
-                      description:
-                        Disables dynamically resolving the hostname from
-                        request headers.
+                      description: Disables dynamically resolving the hostname from request headers.
                       type: boolean
                     strictBackchannel:
-                      description:
-                        By default backchannel URLs are dynamically resolved
-                        from request headers to allow internal and external applications.
+                      description: By default backchannel URLs are dynamically resolved from request headers to allow internal and external applications.
                       type: boolean
                   type: object
                 http:
-                  description:
-                    In this section you can configure Keycloak features related
-                    to HTTP and HTTPS
+                  description: In this section you can configure Keycloak features related to HTTP and HTTPS
                   properties:
                     httpEnabled:
                       description: Enables the HTTP listener.
@@ -180,18 +151,14 @@ spec:
                       description: The used HTTPS port.
                       type: integer
                     tlsSecret:
-                      description:
-                        "A secret containing the TLS configuration for HTTPS.\
-                        \ Reference: https://kubernetes.io/docs/concepts/configuration/secret/#tls-secrets."
+                      description: "A secret containing the TLS configuration for HTTPS. Reference: https://kubernetes.io/docs/concepts/configuration/secret/#tls-secrets."
                       type: string
                   type: object
                 image:
                   description: Custom Keycloak image to be used.
                   type: string
                 imagePullSecrets:
-                  description:
-                    Secret(s) that might be used when pulling an image from
-                    a private container image registry or repository.
+                  description: Secret(s) that might be used when pulling an image from a private container image registry or repository.
                   items:
                     properties:
                       name:
@@ -206,9 +173,7 @@ spec:
                     annotations:
                       additionalProperties:
                         type: string
-                      description:
-                        Additional annotations to be appended to the Ingress
-                        object
+                      description: Additional annotations to be appended to the Ingress object
                       type: object
                     className:
                       type: string
@@ -219,15 +184,10 @@ spec:
                   description: Number of Keycloak instances in HA mode. Default is 1.
                   type: integer
                 proxy:
-                  description:
-                    In this section you can configure Keycloak's reverse
-                    proxy setting
+                  description: In this section you can configure Keycloak's reverse proxy setting
                   properties:
                     headers:
-                      description:
-                        The proxy headers that should be accepted by the
-                        server. Misconfiguration might leave the server exposed to security
-                        vulnerabilities.
+                      description: The proxy headers that should be accepted by the server. Misconfiguration might leave the server exposed to security vulnerabilities.
                       type: string
                   type: object
                 resources:
@@ -256,20 +216,13 @@ spec:
                       type: object
                   type: object
                 startOptimized:
-                  description:
-                    Set to force the behavior of the --optimized flag for
-                    the start command. If left unspecified the operator will assume
-                    custom images have already been augmented.
+                  description: Set to force the behavior of the --optimized flag for the start command. If left unspecified the operator will assume custom images have already been augmented.
                   type: boolean
                 transaction:
-                  description:
-                    In this section you can find all properties related to
-                    the settings of transaction behavior.
+                  description: In this section you can find all properties related to the settings of transaction behavior.
                   properties:
                     xaEnabled:
-                      description:
-                        Determine whether Keycloak should use a non-XA datasource
-                        in case the database does not support XA transactions.
+                      description: Determine whether Keycloak should use a non-XA datasource in case the database does not support XA transactions.
                       type: boolean
                   type: object
                 truststores:
