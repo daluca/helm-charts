@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        kubernetes_version: [1.27.11, 1.28.7, 1.29.2]
+        kubernetes_version: [1.27.11, 1.28.7, 1.29.2, 1.30.0]
 
     steps:
       - name: checkout repository
