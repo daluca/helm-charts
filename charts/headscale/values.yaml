@@ -1,0 +1,144 @@
+---
+nameOverride: ""
+fullnameOverride: ""
+
+replicaCount: 1
+
+image:
+  registry: ghcr.io
+  repository: juanfont/headscale
+  tag: ""
+  sha256: ""
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+  containerPort: 8080
+  annotations: {}
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  tls:
+    - secretName: example.org-tls
+      hosts:
+        - example.org
+  hosts:
+    - host: example.org
+      paths:
+        - pathType: Prefix
+          path: /
+
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+resources:
+  requests:
+    cpu: 25m
+    memory: 92Mi
+  limits:
+    cpu: 250m
+    memory: 1Gi
+
+livenessProbe:
+  enabled: true
+
+readinessProbe:
+  enabled: false
+
+startupProbe:
+  enabled: true
+  periodSeconds: 2
+  failureThreshold: 30
+
+persistence:
+  enabled: false
+  storageClass: ""
+  size: 1Gi
+  accessModes: [ReadWriteOnce]
+
+config:
+  prefixes:
+    v4: 100.64.0.0/10
+  derp:
+    urls: [https://controlplane.tailscale.com/derpmap/default]
+
+webui:
+  enabled: false
+
+  replicaCount: 1
+
+  image:
+    registry: docker.io
+    repository: goodieshq/headscale-admin
+    tag: 0.1.12b
+    sha256: ""
+    pullPolicy: IfNotPresent
+
+  service:
+    type: ClusterIP
+    port: 80
+    containerPort: 80
+    annotations: {}
+
+  ingress:
+    enabled: false
+    className: ""
+    annotations: {}
+    tls:
+      - secretName: example.org-tls
+        hosts:
+          - example.org
+    hosts:
+      - host: example.org
+        paths:
+          - pathType: Prefix
+            path: /admin
+
+  resources:
+    requests:
+      cpu: 25m
+      memory: 92Mi
+    limits:
+      cpu: 250m
+      memory: 1Gi
+
+  livenessProbe:
+    enabled: true
+
+  readinessProbe:
+    enabled: false
+
+  startupProbe:
+    enabled: true
+    periodSeconds: 2
+    failureThreshold: 30
+
+database:
+  external: false
+  type: postgres
+  name: headscale
+  host: localhost
+  port: 5432
+  username: headscale_user
+  password: somethingSecureIPromise
+  existingSecret: ""
+  arguments:
+    max_open_conns: 10
+    max_idle_conns: 10
+    conn_max_idle_time_secs: 3600
+  ssl: false
+
+postgresql:
+  enabled: true
+  auth:
+    username: headscale
+    password: headscale
+    database: headscale
+  service:
+    ports:
+      postgresql: 5432

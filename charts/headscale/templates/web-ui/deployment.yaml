@@ -1,0 +1,63 @@
+{{- if .Values.webui.enabled -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "web-ui.fullname" . }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+    app.kubernetes.io/component: web-ui
+spec:
+  replicas: {{ .Values.webui.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "common.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: web-ui
+  template:
+    metadata:
+      labels:
+        {{- include "common.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: web-ui
+    spec:
+      serviceAccountName: {{ include "common.serviceAccountName" . }}
+      containers:
+        - name: {{ printf "%s-web-ui" .Chart.Name }}
+          image: goodieshq/headscale-admin:0.1.12b
+          imagePullPolicy: {{ .Values.webui.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.webui.service.containerPort }}
+              protocol: TCP
+          {{- with .Values.webui.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if .Values.webui.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /admin
+              port: http
+          {{- with omit .Values.webui.livenessProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.webui.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: /admin
+              port: http
+          {{- with omit .Values.webui.readinessProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.webui.startupProbe.enabled }}
+          startupProbe:
+            httpGet:
+              path: /admin
+              port: http
+          {{- with omit .Values.webui.startupProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+
+{{- end }}

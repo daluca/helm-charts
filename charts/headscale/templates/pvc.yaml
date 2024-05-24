@@ -1,0 +1,21 @@
+{{- if .Values.persistence.enabled -}}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ printf "%s-data" (include "common.fullname" .) }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+    app.kubernetes.io/component: headscale
+spec:
+  {{- if .Values.persistence.storageClass }}
+  storageClassName: {{ .Values.persistence.storageClass }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.size }}
+  accessModes:
+  {{- range .Values.persistence.accessModes }}
+    - {{ . }}
+  {{- end }}
+{{- end }}
