@@ -1,0 +1,123 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "common.fullname" . }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+    app.kubernetes.io/component: headscale
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "common.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: headscale
+  template:
+    metadata:
+      labels:
+        {{- include "common.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: headscale
+      annotations:
+        headscale-config-hash: {{ toJson .Values.config | sha256sum }}
+    spec:
+      serviceAccountName: {{ include "common.serviceAccountName" . }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ include "common.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: [headscale]
+          args: [serve, --config=/headscale/config/config.yaml]
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.containerPort }}
+              protocol: TCP
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if .Values.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          {{- with omit .Values.livenessProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          {{- with omit .Values.readinessProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.startupProbe.enabled }}
+          startupProbe:
+            httpGet:
+              path: /health
+              port: http
+          {{- with omit .Values.startupProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          volumeMounts:
+            {{- if not (eq "sqlite3" .Values.database.type) }}
+            - mountPath: /headscale/config
+              subPath: merged
+              name: config-data
+            {{- else }}
+            - mountPath: /headscale/config/config.yaml
+              subPath: config.yaml
+              name: headscale-config
+            {{- end }}
+            - mountPath: /headscale
+              subPath: etc
+              name: headscale-data
+      {{- if not (eq "sqlite3" .Values.database.type) }}
+      initContainers:
+        - name: merge-config
+          image: docker.io/mikefarah/yq:4.43.1
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: [merge.sh]
+          volumeMounts:
+            - mountPath: /usr/local/bin/merge.sh
+              subPath: merge.sh
+              name: scripts
+            - mountPath: /target
+              subPath: merged
+              name: config-data
+            - mountPath: /workdir/config/config.yaml
+              subPath: config.yaml
+              name: headscale-config
+            - mountPath: /workdir/secrets/config.yaml
+              subPath: config.yaml
+              name: database-credentials
+      {{- end }}
+      volumes:
+        - name: headscale-config
+          configMap:
+            name: {{ printf "%s-config" (include "common.fullname" .) }}
+        - name: headscale-data
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ printf "%s-data" (include "common.fullname" .) }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        {{- if not (eq "sqlite3" .Values.database.type) }}
+        - name: database-credentials
+          secret:
+            {{- if and .Values.database.external .Values.database.existingSecret }}
+            secretName: {{ .Values.database.existingSecret }}
+            {{- else }}
+            secretName: {{ printf "%s-database-credentials" (include "common.fullname" .) }}
+            {{- end }}
+        - name: scripts
+          configMap:
+            name: {{ printf "%s-scripts" (include "common.fullname" .) }}
+            defaultMode: 0777
+        - name: config-data
+          emptyDir: {}
+        {{- end }}

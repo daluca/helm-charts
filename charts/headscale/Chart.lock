@@ -1,0 +1,9 @@
+dependencies:
+- name: common
+  repository: oci://ghcr.io/daluca/charts
+  version: 0.1.2
+- name: postgresql
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 15.4.0
+digest: sha256:db7896f66fc4a37662e1d1b3e5fbcb8fee477ad83cffa94a76a69c10e5ab3599
+generated: "2024-05-24T16:10:01.493833957+12:00"

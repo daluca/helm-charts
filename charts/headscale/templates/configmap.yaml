@@ -1,0 +1,42 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ printf "%s-config" (include "common.fullname" .) }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+    app.kubernetes.io/component: headscale
+data:
+  config.yaml: |-
+    server_url: {{ printf "https://%s" (first .Values.ingress.hosts).host }}
+    listen_addr: {{ printf "0.0.0.0:%s" (toString .Values.service.containerPort) }}
+    noise:
+      private_key_path: /headscale/noise_private.key
+    database:
+      type: {{ .Values.database.type }}
+      {{- if eq "sqlite3" .Values.database.type }}
+      sqlite:
+        path: /headscale/db.sqlite
+      {{- else if eq "postgres" .Values.database.type }}
+      postgres:
+      {{- if .Values.database.external }}
+        host: {{ .Values.database.host }}
+        port: {{ toString .Values.database.port }}
+        name: {{ .Values.database.name }}
+        max_open_conns: {{ .Values.database.arguments.max_open_conns }}
+        max_idle_conns: {{ .Values.database.arguments.max_idle_conns }}
+        conn_max_idle_time_secs: {{ .Values.database.arguments.conn_max_idle_time_secs }}
+        ssl: {{ .Values.database.ssl }}
+      {{- else }}
+        host: {{ printf "%s-postgresql.%s" .Release.Name .Release.Namespace }}
+        port: {{ toString .Values.postgresql.service.ports.postgresql }}
+        name: {{ .Values.postgresql.auth.database }}
+        max_open_conns: {{ .Values.database.arguments.max_open_conns }}
+        max_idle_conns: {{ .Values.database.arguments.max_idle_conns }}
+        conn_max_idle_time_secs: {{ .Values.database.arguments.conn_max_idle_time_secs }}
+        ssl: {{ .Values.database.ssl }}
+      {{- end }}
+      {{- end }}
+    {{- with omit .Values.config "server_url" "listen_addr" "noise" "database" }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}

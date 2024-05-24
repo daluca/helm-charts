@@ -1,0 +1,17 @@
+{{- if not (eq "sqlite3" .Values.database.type) -}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ printf "%s-scripts" (include "common.fullname" .) }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+data:
+  merge.sh: |
+    #!/bin/sh
+
+    yq eval-all '. as $item ireduce ({}; . *d $item)' /workdir/config/*.yaml /workdir/secrets/*.yaml > /target/config.yaml
+
+    echo "These files have been merged"
+    ls -1 /workdir/config/*.yaml /workdir/secrets/*.yaml
+{{- end }}
