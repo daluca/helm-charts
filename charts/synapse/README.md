@@ -1,6 +1,6 @@
 # synapse
 
-![Version: 0.13.0](https://img.shields.io/badge/Version-0.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.107.0](https://img.shields.io/badge/AppVersion-1.107.0-informational?style=flat-square)
+![Version: 0.14.0](https://img.shields.io/badge/Version-0.14.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.108.0](https://img.shields.io/badge/AppVersion-1.108.0-informational?style=flat-square)
 
 Matrix homeserver written in Python/Twisted
 
@@ -89,7 +89,7 @@ Matrix homeserver written in Python/Twisted
 | delegation.replicaCount | int | `1` |  |
 | delegation.image.registry | string | `"docker.io"` |  |
 | delegation.image.repository | string | `"nginx"` |  |
-| delegation.image.tag | string | `"1.25.5-alpine"` |  |
+| delegation.image.tag | string | `"1.26.1-alpine"` |  |
 | delegation.image.sha256 | string | `""` |  |
 | delegation.image.pullPolicy | string | `"IfNotPresent"` |  |
 | delegation.service.type | string | `"ClusterIP"` |  |
