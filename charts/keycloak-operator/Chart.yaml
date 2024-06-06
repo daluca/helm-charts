@@ -5,8 +5,8 @@ type: application
 description: >-
   Open source Identity and Access Management for modern applications and
   services
-version: 0.3.4
-appVersion: 24.0.3
+version: 0.3.5
+appVersion: 24.0.5
 kubeVersion: ">=1.19.0"
 icon: https://www.keycloak.org/resources/images/icon.svg
 home: https://www.keycloak.org
@@ -59,12 +59,12 @@ annotations:
           displayName: Example
   artifacthub.io/images: |-
     - name: keycloak-operator
-      image: quay.io/keycloak/keycloak:24.0.3
+      image: quay.io/keycloak/keycloak:24.0.5
       platforms:
         - linux/amd64
         - linux/arm64
     - name: keycloak
-      image: quay.io/keycloak/keycloak-operator:24.0.3
+      image: quay.io/keycloak/keycloak-operator:24.0.5
       platforms:
         - linux/amd64
   artifacthub.io/links: |-
