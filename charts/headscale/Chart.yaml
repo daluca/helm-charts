@@ -4,8 +4,8 @@ name: headscale
 type: application
 description: >-
   An open source, self-hosted implementation of the Tailscale control server
-version: 0.1.0
-appVersion: 0.23.0-alpha11
+version: 0.1.1
+appVersion: 0.23.0-alpha12
 kubeVersion: ">=1.19.0-0"
 icon: https://raw.githubusercontent.com/juanfont/headscale/main/docs/logo/headscale3-dots.png
 home: https://headscale.net/
@@ -22,7 +22,7 @@ dependencies:
 annotations:
   artifacthub.io/images: |-
     - name: headscale
-      image: ghcr.io/juanfont/headscale:v0.22.3-alpha11
+      image: ghcr.io/juanfont/headscale:v0.23.0-alpha12
       platforms:
         - linux/amd64
         - linux/arm64
