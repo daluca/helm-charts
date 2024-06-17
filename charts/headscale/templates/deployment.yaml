@@ -75,6 +75,9 @@ spec:
             - mountPath: /headscale
               subPath: etc
               name: headscale-data
+            {{- with .Values.extraVolumeMouts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
       {{- if not (eq "sqlite3" .Values.database.type) }}
       initContainers:
         - name: merge-config
@@ -120,4 +123,7 @@ spec:
             defaultMode: 0777
         - name: config-data
           emptyDir: {}
+        {{- end }}
+        {{- with .Values.extraVolumes }}
+        {{- toYaml . | nindent 8 }}
         {{- end }}

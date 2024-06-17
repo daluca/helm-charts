@@ -172,6 +172,12 @@ helm.schema(
         randomize_client_port: js.boolean,
       },
     },
+    extraVolumeMounts: js.array(uniqueItems=true, unevaluatedItems=false) {
+      items: kube.volumeMount,
+    },
+    extraVolumes: js.array(uniqueItems=true, unevaluatedItems=false) {
+      items: kube.volume,
+    },
     webui: js.object(additionalProperties=false) {
       properties: {
         enabled: js.boolean,

@@ -67,6 +67,10 @@ config:
   derp:
     urls: [https://controlplane.tailscale.com/derpmap/default]
 
+extraVolumeMounts: []
+
+extraVolumes: []
+
 webui:
   enabled: false
 
