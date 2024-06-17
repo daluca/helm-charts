@@ -61,6 +61,8 @@ Kubernetes: `>=1.19.0-0`
 | persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
 | config.prefixes.v4 | string | `"100.64.0.0/10"` |  |
 | config.derp.urls[0] | string | `"https://controlplane.tailscale.com/derpmap/default"` |  |
+| extraVolumeMounts | list | `[]` |  |
+| extraVolumes | list | `[]` |  |
 | webui.enabled | bool | `false` |  |
 | webui.replicaCount | int | `1` |  |
 | webui.image.registry | string | `"docker.io"` |  |

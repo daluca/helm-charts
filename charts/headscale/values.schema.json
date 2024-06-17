@@ -463,6 +463,174 @@
             "required": ["type", "external"],
             "type": "object"
         },
+        "extraVolumeMounts": {
+            "items": {
+                "additionalProperties": false,
+                "properties": {
+                    "mountPath": {
+                        "pattern": "^/",
+                        "type": "string"
+                    },
+                    "mountPropagation": {
+                        "type": ["string", "null"]
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "readOnly": {
+                        "type": "boolean"
+                    },
+                    "subPath": {
+                        "type": ["string", "null"]
+                    },
+                    "subPathExpr": {
+                        "type": ["string", "null"]
+                    }
+                },
+                "required": ["mountPath", "name"],
+                "type": "object"
+            },
+            "type": "array",
+            "unevaluatedItems": false,
+            "uniqueItems": true
+        },
+        "extraVolumes": {
+            "items": {
+                "additionalProperties": {
+                    "type": "object"
+                },
+                "properties": {
+                    "configMap": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "defaultModes": {
+                                "type": "integer"
+                            },
+                            "items": {
+                                "items": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "key": {
+                                            "type": "string"
+                                        },
+                                        "mode": {
+                                            "type": "integer"
+                                        },
+                                        "path": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": ["key", "path"],
+                                    "type": "object"
+                                },
+                                "type": ["array", "null"],
+                                "unevaluatedItems": false,
+                                "uniqueItems": true
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "optional": {
+                                "type": "boolean"
+                            }
+                        },
+                        "required": ["name"],
+                        "type": "object"
+                    },
+                    "emptyDir": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "medium": {
+                                "type": ["string", "null"]
+                            },
+                            "sizeLimit": {
+                                "oneOf": [
+                                    {
+                                        "type": ["string", "null"]
+                                    },
+                                    {
+                                        "type": "integer"
+                                    }
+                                ]
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "hostPath": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "path": {
+                                "pattern": "^/",
+                                "type": "string"
+                            },
+                            "type": {
+                                "type": ["string", "null"]
+                            }
+                        },
+                        "required": ["path"],
+                        "type": "object"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "persistentVolumeClaim": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "claimName": {
+                                "type": "string"
+                            },
+                            "readOnly": {
+                                "type": "boolean"
+                            }
+                        },
+                        "required": ["claimName"],
+                        "type": "object"
+                    },
+                    "secret": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "defaultModes": {
+                                "type": "integer"
+                            },
+                            "items": {
+                                "items": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "key": {
+                                            "type": "string"
+                                        },
+                                        "mode": {
+                                            "type": "integer"
+                                        },
+                                        "path": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": ["key", "path"],
+                                    "type": "object"
+                                },
+                                "type": ["array", "null"],
+                                "unevaluatedItems": false,
+                                "uniqueItems": true
+                            },
+                            "optional": {
+                                "type": "boolean"
+                            },
+                            "secretName": {
+                                "type": "string"
+                            }
+                        },
+                        "required": ["secretName"],
+                        "type": "object"
+                    }
+                },
+                "required": ["name"],
+                "type": "object"
+            },
+            "type": "array",
+            "unevaluatedItems": false,
+            "uniqueItems": true
+        },
         "fullnameOverride": {
             "maxLength": 63,
             "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?|)$",
