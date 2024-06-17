@@ -75,7 +75,7 @@ spec:
             - mountPath: /headscale
               subPath: etc
               name: headscale-data
-            {{- with .Values.extraVolumeMouts }}
+            {{- with .Values.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
       {{- if not (eq "sqlite3" .Values.database.type) }}
