@@ -27,7 +27,7 @@ annotations:
         - linux/amd64
         - linux/arm64
     - name: postgresql
-      image: docker.io/bitnami/postgresql:16.3.0-debian-12-r10
+      image: docker.io/bitnami/postgresql:16.3.0-debian-12-r14
       platforms:
         - linux/amd64
         - linux/arm64
