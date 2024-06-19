@@ -42,7 +42,7 @@ annotations:
         - linux/ppc64le
         - linux/s390x
     - name: yq
-      image: docker.io/mikefarah/yq:4.44.1
+      image: docker.io/mikefarah/yq:4.44.2
       platforms:
         - linux/amd64
         - linux/arm64
