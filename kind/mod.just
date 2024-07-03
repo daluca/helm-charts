@@ -1,4 +1,4 @@
-kubernetes_version := "1.29.2"
+kubernetes_version := "1.29.4"
 
 create version=kubernetes_version: _create-kind-lock-file
   kind create cluster --image kindest/node:v{{ version }} --config multi-node-cluster.yaml
