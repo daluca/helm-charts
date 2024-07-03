@@ -32,7 +32,7 @@ annotations:
         - linux/amd64
         - linux/arm64
     - name: nginx
-      image: docker.io/nginx:1.26.1-alpine
+      image: docker.io/nginx:1.27.0-alpine
       platforms:
         - linux/386
         - linux/amd64
