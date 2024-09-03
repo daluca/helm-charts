@@ -1,0 +1,7 @@
+---
+config:
+  LOG_LEVEL: debug
+
+postgresql:
+  image:
+    tag: 14
