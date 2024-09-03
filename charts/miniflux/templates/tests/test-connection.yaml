@@ -14,7 +14,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: curl
-          image: docker.io/curlimages/curl:8.7.1
+          image: docker.io/curlimages/curl:8.9.1
           args:
             - -sIL
             - http://{{ include "miniflux.fullname" . }}:{{ default .Values.service.containerPort .Values.service.port }}{{ if .Values.config.BASE_URL }}/{{ trimPrefix "http://localhost/" .Values.config.BASE_URL | trimSuffix "/" }}{{ end }}/healthcheck
