@@ -1,0 +1,92 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "common.fullname" . }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+    app.kubernetes.io/component: mealie
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "common.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: mealie
+  template:
+    metadata:
+      labels:
+        {{- include "common.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: mealie
+      annotations:
+        mealie-config-hash: {{ toJson .Values.config | sha256sum }}
+    spec:
+      serviceAccountName: {{ include "common.serviceAccountName" . }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ include "common.vimage" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.containerPort }}
+              protocol: TCP
+          env:
+            - name: DB_ENGINE
+              value: {{ .Values.database.type }}
+            {{- if (eq "postgres" .Values.database.type) }}
+            - name: POSTGRES_USER
+              value: {{ ternary .Values.database.username .Values.postgresql.auth.username .Values.database.external }}
+            - name: POSTGRES_PASSWORD
+              value: {{ ternary .Values.database.password .Values.postgresql.auth.password .Values.database.external }}
+            - name: POSTGRES_SERVER
+              value: {{ ternary .Values.database.host (printf "%s-postgresql.%s" .Release.Name .Release.Namespace) .Values.database.external }}
+            - name: POSTGRES_PORT
+              value: {{ (ternary .Values.database.port .Values.postgresql.service.port .Values.database.external) | quote }}
+            - name: POSTGRES_DB
+              value: {{ ternary .Values.database.name .Values.postgresql.auth.database .Values.database.external }}
+            {{- end }}
+          envFrom:
+            - configMapRef:
+                name: {{ printf "%s-config" (include "common.fullname" .) }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if .Values.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /api/app/about
+              port: http
+          {{- with omit .Values.livenessProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: /api/app/about
+              port: http
+          {{- with omit .Values.readinessProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.startupProbe.enabled }}
+          startupProbe:
+            httpGet:
+              path: /api/app/about
+              port: http
+          {{- with omit .Values.startupProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          volumeMounts:
+            - mountPath: /app/data
+              subPath: data
+              name: mealie-data
+      volumes:
+        - name: mealie-data
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ printf "%s-data" (include "common.fullname" .) }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}

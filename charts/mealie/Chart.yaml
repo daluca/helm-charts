@@ -1,0 +1,39 @@
+---
+apiVersion: v2
+name: mealie
+type: application
+description: Mealie is a self hosted recipe manager and meal planner
+version: 0.1.0
+appVersion: 1.12.0
+kubeVersion: ">=1.19.0-0"
+icon: https://github.com/mealie-recipes/mealie/blob/mealie-next/frontend/static/icon.png
+home: https://mealie.io/
+sources:
+  - https://github.com/daluca/helm-charts/tree/main/charts/mealie
+dependencies:
+  - name: common
+    version: ">=0.1.0 <0.2.0"
+    repository: oci://ghcr.io/daluca/charts
+  - name: postgresql
+    version: ">=15.0.0 <16.0.0"
+    repository: oci://registry-1.docker.io/bitnamicharts
+    condition: postgresql.enabled
+annotations:
+  artifacthub.io/images: |-
+    - name: mealie
+      image: ghcr.io/mealie-recipes/mealie:v1.12.0
+      platforms:
+        - linux/amd64
+        - linux/arm64
+    - name: postgresql
+      image: docker.io/bitnami/postgresql:16.4.0-debian-12-r5
+      platforms:
+        - linux/amd64
+        - linux/arm64
+  artifacthub.io/links: |-
+    - name: chart
+      url: https://github.com/daluca/helm-charts/tree/main/charts/mealie
+    - name: source
+      url: https://github.com/mealie-recipes/mealie
+    - name: support
+      url: https://github.com/daluca/helm-charts/issues

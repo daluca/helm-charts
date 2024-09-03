@@ -1,0 +1,26 @@
+---
+nameOverride: whisky-pig
+
+service:
+  port: 80
+
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: kind-testing
+
+resources:
+  requests:
+    cpu: 600m
+    memory: 512Mi
+  limits: null
+
+persistence:
+  enabled: true
+
+config:
+  ALLOW_SIGNUP: true
+  LOG_LEVEL: debug
+  DAILY_SCHEDULE_TIME: 01:36
+
+postgresql:
+  enabled: true
