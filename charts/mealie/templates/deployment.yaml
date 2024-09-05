@@ -34,9 +34,15 @@ spec:
               value: {{ .Values.database.type }}
             {{- if (eq "postgres" .Values.database.type) }}
             - name: POSTGRES_USER
-              value: {{ ternary .Values.database.username .Values.postgresql.auth.username .Values.database.external }}
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: {{ default (printf "%s-database-credentials" (include "common.fullname" .)) .Values.database.existingSecret }}
             - name: POSTGRES_PASSWORD
-              value: {{ ternary .Values.database.password .Values.postgresql.auth.password .Values.database.external }}
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: {{ default (printf "%s-database-credentials" (include "common.fullname" .)) .Values.database.existingSecret }}
             - name: POSTGRES_SERVER
               value: {{ ternary .Values.database.host (printf "%s-postgresql.%s" .Release.Name .Release.Namespace) .Values.database.external }}
             - name: POSTGRES_PORT
