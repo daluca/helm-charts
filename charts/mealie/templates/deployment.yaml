@@ -50,6 +50,9 @@ spec:
             - name: POSTGRES_DB
               value: {{ ternary .Values.database.name .Values.postgresql.auth.database .Values.database.external }}
             {{- end }}
+            {{- if .Values.extraEnvs }}
+            {{- toYaml .Values.extraEnvs | nindent 12 }}
+            {{- end }}
           envFrom:
             - configMapRef:
                 name: {{ printf "%s-config" (include "common.fullname" .) }}
