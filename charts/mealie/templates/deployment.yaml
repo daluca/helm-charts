@@ -46,7 +46,7 @@ spec:
             - name: POSTGRES_SERVER
               value: {{ ternary .Values.database.host (printf "%s-postgresql.%s" .Release.Name .Release.Namespace) .Values.database.external }}
             - name: POSTGRES_PORT
-              value: {{ (ternary .Values.database.port .Values.postgresql.service.port .Values.database.external) | quote }}
+              value: {{ (ternary .Values.database.port .Values.postgresql.service.ports.postgresql .Values.database.external) | quote }}
             - name: POSTGRES_DB
               value: {{ ternary .Values.database.name .Values.postgresql.auth.database .Values.database.external }}
             {{- end }}
