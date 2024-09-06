@@ -54,6 +54,8 @@ persistence:
   size: 1Gi
   accessModes: [ReadWriteOnce]
 
+extraEnvs: []
+
 config:
   PUID: 65534
   PGID: 65534

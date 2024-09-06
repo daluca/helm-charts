@@ -2,6 +2,7 @@ local helm = import 'helm.libsonnet';
 local js = import 'json-schema/draft/2020-12/schema.libsonnet';
 local unix = import 'unix.libsonnet';
 local net = import 'networking.libsonnet';
+local kube = import 'kubernetes.libsonnet';
 
 helm.schema(
   schemaId='https://raw.githubusercontent.com/daluca/helm-charts/main/charts/mealie/values.schema.json',
@@ -18,6 +19,9 @@ helm.schema(
           items: js.enum(['ReadWriteOnce', 'ReadOnlyMany', 'ReadWriteMany', 'ReadWriteOncePod'])
         },
       },
+    },
+    extraEnvs: js.array(uniqueItems=true) {
+      items: kube.envVar,
     },
     config: js.object(additionalProperties=false, required=['SMTP_AUTH_STRATEGY']) {
       properties: {

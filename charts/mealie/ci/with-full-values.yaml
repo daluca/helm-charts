@@ -17,6 +17,14 @@ resources:
 persistence:
   enabled: true
 
+extraEnvs:
+  - name: TESTING
+    value: "true"
+  - name: FOO
+    valueFrom:
+      fieldRef:
+        fieldPath: metadata.namespace
+
 config:
   ALLOW_SIGNUP: true
   LOG_LEVEL: debug
