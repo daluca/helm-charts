@@ -199,4 +199,46 @@ local unix = import 'unix.libsonnet';
       },
     },
   },
+  envVar:: js.object(additionalProperties=false) {
+    properties: {
+      name: js.string(),
+      value: js.string(),
+      valueFrom: kube.envVarSource()
+    },
+  },
+  envVarSource:: js.object(additionalProperties=false) {
+    properties: {
+      configMapKeyRef: kube.configMapKeySelector,
+      fieldRef: kube.objectFieldSelector,
+      resourceFieldRef: kube.resourceFieldSelector,
+      secretKeyRef: kube.secretKeySelector,
+    },
+  },
+  configMapKeySelector:: js.object(additionalProperties=false) {
+    properties: {
+      key: js.string(),
+      name: js.string(),
+      optional: js.boolean,
+    },
+  },
+  objectFieldSelector:: js.object(additionalProperties=false) {
+    properties: {
+      apiVersion: js.string(),
+      fieldPath: js.string(),
+    },
+  },
+  resourceFieldSelector:: js.object(additionalProperties=false) {
+    properties: {
+      containerName: js.string(),
+      divisor: js.oneOf([js.integer(), js.string()]),
+      resource: js.string(),
+    },
+  },
+  secretKeySelector:: js.object(additionalProperties=false) {
+    properties: {
+      key: js.strict(),
+      name: js.string(),
+      optional: js.boolean,
+    },
+  },
 }
