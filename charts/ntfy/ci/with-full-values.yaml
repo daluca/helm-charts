@@ -1,0 +1,28 @@
+---
+nameOverride: whisky-pig
+
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: kind-testing
+
+ingress:
+  enabled: true
+  className: nginx
+  hosts:
+    - host: localhost
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: localhost-tls
+      hosts:
+        - localhost
+
+resources:
+  requests:
+    cpu: 600m
+    memory: 512Mi
+  limits: null
+
+persistence:
+  enabled: true
