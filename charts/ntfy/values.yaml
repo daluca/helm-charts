@@ -1,0 +1,82 @@
+---
+nameOverride: ""
+fullnameOverride: ""
+
+image:
+  registry: docker.io
+  repository: binwiederhier/ntfy
+  tag: ""
+  sha256: ""
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+  containerPort: 80
+  annotations: {}
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts: []
+  tls: []
+
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+resources:
+  requests:
+    cpu: 25m
+    memory: 92Mi
+  limits:
+    cpu: 250m
+    memory: 1Gi
+
+livenessProbe:
+  enabled: true
+
+readinessProbe:
+  enabled: false
+
+startupProbe:
+  enabled: true
+  periodSeconds: 2
+  failureThreshold: 30
+
+persistence:
+  enabled: false
+  storageClass: ""
+  size: 1Gi
+  accessModes: [ReadWriteOnce]
+
+config:
+  base_url: http://localhost
+  cache_duration: 12h
+  cache_batch_size: 0
+  cache_batch_timeout: 0ms
+  attachment_file_size_limit: 15M
+  attachment_expiry_duration: 3h
+  keepalive_interval: 45s
+  manager_interval: 1m
+  web_root: /
+  enable_signup: false
+  enable_login: false
+  enable_reservations: false
+  message_size_limit: 4k
+  message_delay_limit: 3d
+  global_topic_limit: 15000
+  visitor_subscription_limit: 30
+  visitor_request_limit_burst: 60
+  visitor_request_limit_replenish: 5s
+  visitor_message_daily_limit: 0
+  visitor_email_limit_burst: 16
+  visitor_email_limit_replenish: 1h
+  visitor_attachment_total_size_limit: 100M
+  visitor_attachment_daily_bandwidth_limit: 500M
+  visitor_subscriber_rate_limiting: false
+  enable_metrics: false
+  log_level: info
+  log_format: text

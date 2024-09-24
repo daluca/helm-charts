@@ -1,0 +1,32 @@
+---
+apiVersion: v2
+name: ntfy
+type: application
+description: Send push notifications to your phone or desktop using PUT/POST
+version: 0.1.0
+appVersion: 2.11.0
+kubeVersion: ">=1.19.0-0"
+icon: https://raw.githubusercontent.com/binwiederhier/ntfy/main/web/src/img/ntfy.png
+home: https://ntfy.sh/
+sources:
+  - https://github.com/daluca/helm-charts/tree/main/charts/ntfy
+dependencies:
+  - name: common
+    version: ">=0.1.0 <0.2.0"
+    repository: oci://ghcr.io/daluca/charts
+annotations:
+  artifacthub.io/images: |-
+    - name: mealie
+      image: docker.io/binwiederhier/ntfy:v2.11.0
+      platforms:
+        - linux/amd64
+        - linux/arm/v6
+        - linux/arm/v7
+        - linux/arm64
+  artifacthub.io/links: |-
+    - name: chart
+      url: https://github.com/daluca/helm-charts/tree/main/charts/ntfy
+    - name: source
+      url: https://github.com/binwiederhier/ntfy
+    - name: support
+      url: https://github.com/daluca/helm-charts/issues

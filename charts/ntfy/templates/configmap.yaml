@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ printf "%s-config" (include "common.fullname" .) }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+    app.kubernetes.io/component: ntfy
+data:
+  server.yaml: |
+    listen_http: {{ printf ":%s" (default .Values.service.containerPort .Values.service.port | toString) }}
+    {{- if .Values.persistence.enabled }}
+    cache_file: /var/cache/ntfy/cache.db
+    auth_file: /var/lib/ntfy/user.db
+    web_push_file: /var/cache/ntfy/webpush.db
+    {{- end }}
+    attachment_cache_dir: /var/cache/ntfy/attachments
+    attachment_total_size_limit: {{ .Values.persistence.size | trimSuffix "i" }}
+    {{- if .Values.ingress.enabled }}
+    behind_proxy: true
+    {{- end }}
+    {{- range $key, $value := .Values.config }}
+    {{- if $value }}
+    {{ $key }}: {{ $value }}
+    {{- end }}
+    {{- end }}
