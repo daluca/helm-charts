@@ -52,6 +52,8 @@ persistence:
   size: 1Gi
   accessModes: [ReadWriteOnce]
 
+extraEnvs: []
+
 config:
   base_url: http://localhost
   cache_duration: 12h

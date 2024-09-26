@@ -1,6 +1,6 @@
 # ntfy
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.11.0](https://img.shields.io/badge/AppVersion-2.11.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.11.0](https://img.shields.io/badge/AppVersion-2.11.0-informational?style=flat-square)
 
 Send push notifications to your phone or desktop using PUT/POST
 
@@ -52,6 +52,7 @@ Send push notifications to your phone or desktop using PUT/POST
 | persistence.storageClass | string | `""` |  |
 | persistence.size | string | `"1Gi"` |  |
 | persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
+| extraEnvs | list | `[]` |  |
 | config.base_url | string | `"http://localhost"` |  |
 | config.cache_duration | string | `"12h"` |  |
 | config.cache_batch_size | int | `0` |  |

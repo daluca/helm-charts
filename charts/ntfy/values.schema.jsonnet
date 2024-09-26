@@ -2,6 +2,7 @@ local helm = import 'helm.libsonnet';
 local js = import 'json-schema/draft/2020-12/schema.libsonnet';
 local net = import 'networking.libsonnet';
 local unix = import 'unix.libsonnet';
+local kube = import 'kubernetes.libsonnet';
 
 local duration = js.string(pattern='[0-9]{1,}(s|m|h|d)');
 local size = js.string(pattern='[0-9]{1,}(k|M|G)');
@@ -23,6 +24,9 @@ helm.schema(
           items: js.enum(['ReadWriteOnce', 'ReadOnlyMany', 'ReadWriteMany', 'ReadWriteOncePod']),
         },
       },
+    },
+    extraEnvs: js.array(uniqueItems=true) {
+      items: kube.envVar,
     },
     config: js.object(additionalProperties=true) {
       properties: {
