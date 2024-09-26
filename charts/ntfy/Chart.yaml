@@ -3,7 +3,7 @@ apiVersion: v2
 name: ntfy
 type: application
 description: Send push notifications to your phone or desktop using PUT/POST
-version: 0.1.1
+version: 0.1.2
 appVersion: 2.11.0
 kubeVersion: ">=1.19.0-0"
 icon: https://raw.githubusercontent.com/binwiederhier/ntfy/main/web/src/img/ntfy.png
