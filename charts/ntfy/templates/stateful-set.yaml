@@ -27,11 +27,13 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
             - serve
-            - --config=/etc/ntfy/server.yaml
           ports:
             - name: http
               containerPort: {{ .Values.service.containerPort }}
               protocol: TCP
+          env:
+            - name: NTFY_CONFIG_FILE
+              value: /etc/ntfy/server.yaml
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
