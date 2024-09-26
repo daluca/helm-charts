@@ -34,6 +34,9 @@ spec:
           env:
             - name: NTFY_CONFIG_FILE
               value: /etc/ntfy/server.yaml
+          {{- if .Values.extraEnvs }}
+          {{- toYaml .Values.extraEnvs | nindent 12 }}
+          {{- end }}
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
