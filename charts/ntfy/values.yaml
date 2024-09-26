@@ -67,6 +67,7 @@ config:
   enable_signup: false
   enable_login: false
   enable_reservations: false
+  upstream_base_url: https://ntfy.sh
   message_size_limit: 4k
   message_delay_limit: 3d
   global_topic_limit: 15000
