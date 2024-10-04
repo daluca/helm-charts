@@ -3,8 +3,8 @@ apiVersion: v2
 name: synapse
 type: application
 description: Matrix homeserver written in Python/Twisted
-version: 0.18.0
-appVersion: 1.115.0
+version: 0.19.0
+appVersion: 1.116.0
 kubeVersion: ">=1.19.0-0"
 icon: https://matrix.org/images/matrix-favicon.svg
 home: https://github.com/element-hq/synapse
@@ -22,17 +22,17 @@ annotations:
   artifacthub.io/alternativeName: matrix-synapse
   artifacthub.io/images: |-
     - name: synapse
-      image: ghcr.io/element-hq/synapse:v1.115.0
+      image: ghcr.io/element-hq/synapse:v1.116.0
       platforms:
         - linux/amd64
         - linux/arm64
     - name: postgresql
-      image: docker.io/bitnami/postgresql:16.4.0-debian-12-r9
+      image: docker.io/bitnami/postgresql:16.4.0-debian-12-r14
       platforms:
         - linux/amd64
         - linux/arm64
     - name: nginx
-      image: docker.io/nginx:1.27.1-alpine
+      image: docker.io/nginx:1.27.2-alpine
       platforms:
         - linux/386
         - linux/amd64

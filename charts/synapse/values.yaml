@@ -113,7 +113,7 @@ delegation:
   image:
     registry: docker.io
     repository: nginx
-    tag: 1.27.1-alpine
+    tag: 1.27.2-alpine
     sha256: ""
     pullPolicy: IfNotPresent
 
