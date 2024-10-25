@@ -62,6 +62,8 @@ config:
   LOG_LEVEL: info
   SMTP_AUTH_STRATEGY: NONE
 
+existingSecret: ""
+
 database:
   type: postgres
   external: false

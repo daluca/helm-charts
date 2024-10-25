@@ -49,6 +49,35 @@
                     ]
                 }
             ],
+            "anyOf": [
+                {
+                    "properties": {
+                        "OIDC_CLIENT_ID": {
+                            "maxLength": 0,
+                            "minLength": 0,
+                            "type": "string"
+                        },
+                        "OIDC_CLIENT_SECRET": {
+                            "maxLength": 0,
+                            "minLength": 0,
+                            "type": "string"
+                        }
+                    }
+                },
+                {
+                    "properties": {
+                        "OIDC_CLIENT_ID": {
+                            "minLength": 1,
+                            "type": "string"
+                        },
+                        "OIDC_CLIENT_SECRET": {
+                            "minLength": 1,
+                            "type": "string"
+                        }
+                    },
+                    "required": ["OIDC_CLIENT_ID", "OIDC_CLIENT_SECRET"]
+                }
+            ],
             "properties": {
                 "ALLOW_SIGNUP": {
                     "type": "boolean"
@@ -137,6 +166,9 @@
                     "type": "boolean"
                 },
                 "OIDC_CLIENT_ID": {
+                    "type": "string"
+                },
+                "OIDC_CLIENT_SECRET": {
                     "type": "string"
                 },
                 "OIDC_CONFIGURATION_URL": {
@@ -338,6 +370,9 @@
             },
             "required": ["type", "external"],
             "type": "object"
+        },
+        "existingSecret": {
+            "type": "string"
         },
         "extraEnvs": {
             "items": {
