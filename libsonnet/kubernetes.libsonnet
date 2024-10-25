@@ -203,7 +203,7 @@ local unix = import 'unix.libsonnet';
     properties: {
       name: js.string(),
       value: js.string(),
-      valueFrom: kube.envVarSource()
+      valueFrom: kube.envVarSource,
     },
   },
   envVarSource:: js.object(additionalProperties=false) {
@@ -236,7 +236,7 @@ local unix = import 'unix.libsonnet';
   },
   secretKeySelector:: js.object(additionalProperties=false) {
     properties: {
-      key: js.strict(),
+      key: js.string(),
       name: js.string(),
       optional: js.boolean,
     },
