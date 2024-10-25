@@ -3,9 +3,9 @@ CHART VERSION: {{ .Chart.Version }}
 APP VERSION: {{ .Chart.AppVersion }}
 
 Mealie is now ready to take connections
-
 {{- if .Values.config.OIDC_SIGNING_ALGORITHM }}
-Deprecated: `config.OIDC_SIGNING_ALGORITHM` is deprecated. It will no longer has any effect
+
+Deprecated: `config.OIDC_SIGNING_ALGORITHM` is deprecated. It will no longer have any effect
 
 ID Token signing algorithm is now inferred using the `id_token_signing_alg_values_supported` metadata from the discovery URL
 https://docs.mealie.io/documentation/getting-started/authentication/oidc-v2/#changes-in-mealie

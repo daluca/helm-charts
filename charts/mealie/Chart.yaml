@@ -3,7 +3,7 @@ apiVersion: v2
 name: mealie
 type: application
 description: Mealie is a self hosted recipe manager and meal planner
-version: 0.2.1
+version: 0.2.2
 appVersion: 2.0.0
 kubeVersion: ">=1.19.0-0"
 icon: https://github.com/mealie-recipes/mealie/blob/mealie-next/frontend/static/icon.png
