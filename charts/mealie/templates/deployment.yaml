@@ -59,6 +59,9 @@ spec:
           {{- if and (not .Values.existingSecret) (and .Values.config.OIDC_CLIENT_ID .Values.config.OIDC_CLIENT_SECRET) }}
             - secretRef:
                 name: {{ printf "%s-envs" (include "common.fullname" .) }}
+          {{- else if .Values.existingSecret }}
+            - secretRef:
+                name: {{ .Values.existingSecret }}
           {{- end }}
           {{- with .Values.resources }}
           resources:
