@@ -20,7 +20,7 @@
     maximum=null,
     exclusiveMaximum=null,
   ):: {
-    type: 'integer',
+    type: 'number',
     [if std.isNumber(multipleOf) then 'multipleOf']: multipleOf,
     [if std.isNumber(minimum) then 'minimum']: minimum,
     [if std.isNumber(exclusiveMinimum) then 'exclusiveMinimum']: exclusiveMinimum,

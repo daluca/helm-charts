@@ -55,7 +55,11 @@ spec:
             {{- end }}
           envFrom:
             - configMapRef:
-                name: {{ printf "%s-config" (include "common.fullname" .) }}
+                name: {{ printf "%s-envs" (include "common.fullname" .) }}
+          {{- if and (not .Values.existingSecret) (and .Values.config.OIDC_CLIENT_ID .Values.config.OIDC_CLIENT_SECRET) }}
+            - secretRef:
+                name: {{ printf "%s-envs" (include "common.fullname" .) }}
+          {{- end }}
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}

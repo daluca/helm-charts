@@ -64,6 +64,7 @@ helm.schema(
         OIDC_SIGNUP_ENABLED: js.boolean,
         OIDC_CONFIGURATION_URL: net.uri,
         OIDC_CLIENT_ID: js.string(),
+        OIDC_CLIENT_SECRET: js.string(),
         OIDC_USER_GROUP: js.string(),
         OIDC_ADMIN_GROUP: js.string(),
         OIDC_AUTO_REDIRECT: js.boolean,
@@ -95,6 +96,21 @@ helm.schema(
         THEME_DARK_WARNING: js.string(pattern="#[0-9A-F]{6}"),
         THEME_DARK_ERROR: js.string(pattern="#[0-9A-F]{6}"),
       },
+      anyOf: [
+        {
+          properties: {
+            OIDC_CLIENT_ID: js.string(minLength=0, maxLength=0),
+            OIDC_CLIENT_SECRET: js.string(minLength=0, maxLength=0),
+          },
+        },
+        {
+          properties: {
+            OIDC_CLIENT_ID: js.string(minLength=1),
+            OIDC_CLIENT_SECRET: js.string(minLength=1),
+          },
+          required: ['OIDC_CLIENT_ID', 'OIDC_CLIENT_SECRET'],
+        },
+      ],
       allOf: [
         {
           anyOf: [
@@ -126,6 +142,7 @@ helm.schema(
         },
       ],
     },
+    existingSecret: js.string(),
     database: helm.externalDatabase(['postgres', 'sqlite']),
     postgresql: helm.postgresql,
   }
