@@ -3,8 +3,8 @@ apiVersion: v2
 name: mealie
 type: application
 description: Mealie is a self hosted recipe manager and meal planner
-version: 0.3.0
-appVersion: 2.1.0
+version: 0.4.0
+appVersion: 2.2.0
 kubeVersion: ">=1.19.0-0"
 icon: https://github.com/mealie-recipes/mealie/blob/mealie-next/frontend/static/icon.png
 home: https://mealie.io/
@@ -15,18 +15,18 @@ dependencies:
     version: ">=0.1.0 <0.2.0"
     repository: oci://ghcr.io/daluca/charts
   - name: postgresql
-    version: ">=15.0.0 <16.0.0"
+    version: ">=16.0.0 <17.0.0"
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
 annotations:
   artifacthub.io/images: |-
     - name: mealie
-      image: ghcr.io/mealie-recipes/mealie:v2.1.0
+      image: ghcr.io/mealie-recipes/mealie:v2.2.0
       platforms:
         - linux/amd64
         - linux/arm64
     - name: postgresql
-      image: docker.io/bitnami/postgresql:16.4.0-debian-12-r14
+      image: docker.io/bitnami/postgresql:17.0.0-debian-12-r11
       platforms:
         - linux/amd64
         - linux/arm64
