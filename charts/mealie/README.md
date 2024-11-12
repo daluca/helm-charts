@@ -1,6 +1,6 @@
 # mealie
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.0](https://img.shields.io/badge/AppVersion-2.1.0-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.2.0](https://img.shields.io/badge/AppVersion-2.2.0-informational?style=flat-square)
 
 Mealie is a self hosted recipe manager and meal planner
 
@@ -15,7 +15,7 @@ Mealie is a self hosted recipe manager and meal planner
 | Repository | Name | Version |
 |------------|------|---------|
 | <oci://ghcr.io/daluca/charts> | common | >=0.1.0 <0.2.0 |
-| <oci://registry-1.docker.io/bitnamicharts> | postgresql | >=15.0.0 <16.0.0 |
+| <oci://registry-1.docker.io/bitnamicharts> | postgresql | >=16.0.0 <17.0.0 |
 
 ## Values
 

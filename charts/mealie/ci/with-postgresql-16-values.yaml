@@ -4,7 +4,7 @@ config:
 
 postgresql:
   image:
-    tag: 14
+    tag: 16
   primary:
     extraEnvVars:
       # TODO: Remove when upstream resolves issue
