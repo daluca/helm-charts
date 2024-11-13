@@ -72,7 +72,7 @@ Kubernetes: `>=1.19.0-0`
 | config.max_permissions | int | `10` |  |
 | config.modules | object | `{}` |  |
 | config.realm | string | `"eturnal.net"` | This option is virtually meaningless due to shared secret authentication |
-| config.relay_max_port | int | `65535` |  |
+| config.relay_max_port | int | `49251` |  |
 | config.relay_min_port | int | `49152` |  |
 | config.run_dir | string | `"run"` |  |
 | config.secret | string | `"somethingSecureIPromise"` |  |
