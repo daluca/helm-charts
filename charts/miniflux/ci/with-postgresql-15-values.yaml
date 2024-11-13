@@ -5,3 +5,11 @@ config:
 postgresql:
   image:
     tag: 15
+  primary:
+    extraEnvVars:
+      # TODO: Remove when upstream resolves issue
+      #
+      # Workaround to start container normally
+      # https://github.com/bitnami/containers/issues/74788
+      - name: POSTGRESQL_REPLICATION_USE_PASSFILE
+        value: "false"
