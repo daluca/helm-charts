@@ -1,5 +1,6 @@
 [codespell]
 builtin = clear,rare,code
 skip = .git
+ignore-words-list = aNULL
 check-filename =
 check-hidden =

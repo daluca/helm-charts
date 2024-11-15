@@ -85,7 +85,8 @@ config:
   # : eturnal default (log)
   log_dir: stdout
   log_level: info
-  # -- Ignored by default due to being ignored when config.log_dir is set to 'stdout'
+  # -- Ignored by default
+  # due to being ignored when config.log_dir is set to 'stdout'
   log_rotate_count: 10
   log_rotate_size: unlimited
   max_bps: unlimited
@@ -102,7 +103,7 @@ config:
   software_name: eturnal
   strict_expiry: false
   # -- ""
-  tls_ciphers: [HIGH, '!aNULL', '@STRENGTH']
+  tls_ciphers: [HIGH, "!aNULL", "@STRENGTH"]
   # tls_crt_file:
   # tls_dh_file:
   # tls_key_file:
