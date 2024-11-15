@@ -1,6 +1,6 @@
 # synapse
 
-![Version: 0.21.0](https://img.shields.io/badge/Version-0.21.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.118.0](https://img.shields.io/badge/AppVersion-1.118.0-informational?style=flat-square)
+![Version: 0.22.0](https://img.shields.io/badge/Version-0.22.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.119.0](https://img.shields.io/badge/AppVersion-1.119.0-informational?style=flat-square)
 
 Matrix homeserver written in Python/Twisted
 
@@ -15,7 +15,7 @@ Matrix homeserver written in Python/Twisted
 | Repository | Name | Version |
 |------------|------|---------|
 | <oci://ghcr.io/daluca/charts> | common | >=0.1.0 <0.2.0 |
-| <oci://registry-1.docker.io/bitnamicharts> | postgresql | >=15.0.0 <16.0.0 |
+| <oci://registry-1.docker.io/bitnamicharts> | postgresql | >=16.0.0 <17.0.0 |
 
 ## Values
 
