@@ -4,4 +4,4 @@ logging:
 
 postgresql:
   image:
-    tag: 12
+    tag: 16
