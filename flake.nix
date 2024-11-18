@@ -16,7 +16,7 @@
     checks = forAllSystems (system: {
       pre-commit-check = git-hooks.lib.${system}.run {
         src = ./.;
-        hooks = import ./.pre-commit-config.nix { inherit nixpkgs system; };
+        hooks = import ./.pre-commit-config.nix { pkgs = nixpkgs.legacyPackages.${system}; };
       };
     });
 

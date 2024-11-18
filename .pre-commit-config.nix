@@ -1,4 +1,4 @@
-{ nixpkgs, system }:
+{ pkgs }:
 
 rec {
   check-added-large-files.enable = true;
@@ -13,7 +13,7 @@ rec {
     enable = true;
     name = "markdownlint-cli2";
     description = "Checks the style of Markdown/CommonMark files.";
-    package = nixpkgs.legacyPackages.${system}.markdownlint-cli2;
+    package = pkgs.markdownlint-cli2;
     entry = "${markdownlint-cli2.package}/bin/markdownlint-cli2";
     types = [ "markdown" ];
   };
@@ -21,7 +21,7 @@ rec {
     enable = true;
     name = "Detect hardcoded secrets";
     description = "Detect hardcoded secrets using Gitleaks";
-    package = nixpkgs.legacyPackages.${system}.gitleaks;
+    package = pkgs.gitleaks;
     entry = "${gitleaks.package}/bin/gitleaks protect --verbose --redact --staged";
     pass_filenames = false;
   };
@@ -29,7 +29,7 @@ rec {
     enable = true;
     name = "codespell";
     description = "Checks for common misspellings in text files.";
-    package = nixpkgs.legacyPackages.${system}.codespell;
+    package = pkgs.codespell;
     entry = "${codespell.package}/bin/codespell";
     types = [ "text" ];
   };
@@ -37,7 +37,7 @@ rec {
     enable = true;
     name = "Helm Docs";
     description = "Uses 'helm-docs' to create documentation from the Helm chart's 'values.yaml' file, and inserts the result into a corresponding 'README.md' file.";
-    package = nixpkgs.legacyPackages.${system}.helm-docs;
+    package = pkgs.helm-docs;
     entry = "${helm-docs.package}/bin/helm-docs";
     args = [
       "--template-files=charts/_templates.gotmpl"
@@ -51,7 +51,7 @@ rec {
     enable = true;
     name = "Validate GitHub Workflows";
     description = "Validate GitHub Workflows against the schema provided by SchemaStore";
-    package = nixpkgs.legacyPackages.${system}.check-jsonschema;
+    package = pkgs.check-jsonschema;
     entry = "${check-github-workflows.package}/bin/check-jsonschema --builtin-schema vendor.github-workflows";
     args = [
       "--verbose"

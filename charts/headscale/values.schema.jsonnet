@@ -132,7 +132,7 @@ helm.schema(
             client_id: js.string(),
             client_secret: true,
             client_secret_path: true,
-            expiry: js.string(),
+            expiry: js.oneOf([js.string(), js.integer(minimum=0, maximum=0)]),
             use_expiry_from_token: js.boolean,
             scope: js.array(uniqueItems=true, unevaluatedItems=false, minContains=1) {
               items: js.string(),
