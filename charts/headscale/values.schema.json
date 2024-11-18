@@ -290,7 +290,16 @@
                         "client_secret": true,
                         "client_secret_path": true,
                         "expiry": {
-                            "type": "string"
+                            "oneOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "maximum": 0,
+                                    "minimum": 0,
+                                    "type": "integer"
+                                }
+                            ]
                         },
                         "extra_params": {
                             "additionalProperties": {
