@@ -101,7 +101,7 @@ spec:
       {{- if any (eq "postgresql" .Values.database.type) .Values.extraMergeVolumeMounts }}
       initContainers:
         - name: merge-config
-          image: docker.io/mikefarah/yq:4.44.3
+          image: docker.io/mikefarah/yq:4.44.5
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: [merge.sh]
           volumeMounts:
