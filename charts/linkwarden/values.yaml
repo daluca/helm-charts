@@ -1,0 +1,77 @@
+---
+nameOverride: ""
+fullnameOverride: ""
+
+replicaCount: 1
+
+image:
+  registry: ghcr.io
+  repository: linkwarden/linkwarden
+  tag: ""
+  sha256: ""
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 3000
+  containerPort: 3000
+  annotations: {}
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts: []
+  tls: []
+
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 256Mi
+  limits:
+    cpu: "1"
+    memory: 1Gi
+
+livenessProbe:
+  enabled: true
+
+readinessProbe:
+  enabled: false
+
+startupProbe:
+  enabled: true
+  periodSeconds: 2
+  failureThreshold: 30
+
+persistence:
+  enabled: false
+  storageClass: ""
+  size: 1Gi
+  accessModes: [ReadWriteOnce]
+
+config:
+  NEXTAUTH_SECRET: somethingSecureIPromise
+
+database:
+  external: false
+  name: linkwarden
+  host: localhost
+  port: 5432
+  username: linkwarden_user
+  password: somethingSecureIPromise
+  existingSecret: ""
+
+postgresql:
+  enabled: true
+  auth:
+    username: linkwarden
+    password: linkwarden
+    database: linkwarden
+  service:
+    ports:
+      postgresql: 5432

@@ -1,0 +1,558 @@
+{
+    "$id": "https://raw.githubusercontent.com/daluca/helm-charts/main/charts/linkwarden/values.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+        "common": {
+            "additionalProperties": false,
+            "properties": {
+                "global": {
+                    "additionalProperties": true,
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "config": {
+            "additionalProperties": false,
+            "patternProperties": {
+                "^NEXT_PUBLIC_.*_ENABLED$": {
+                    "type": "boolean"
+                },
+                "_CLIENT_NAME$": {
+                    "type": "string"
+                },
+                "_CLIENT_SECRET$": {
+                    "type": "string"
+                },
+                "_CUSTOM_NAME$": {
+                    "type": "string"
+                },
+                "_ISSUER$": {
+                    "type": "string"
+                }
+            },
+            "properties": {
+                "ATLASSIAN_SCOPE": {
+                    "type": "string"
+                },
+                "AUTHELIA_WELLKNOWN_URL": {
+                    "type": "string"
+                },
+                "AUTOSCROLL_TIMEOUT": {
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "AZURE_AD_B2C_PRIMARY_USER_FLOW": {
+                    "type": "string"
+                },
+                "BUNGIE_API_KEY": {
+                    "type": "string"
+                },
+                "DISABLE_NEW_SSO_USERS": {
+                    "type": "boolean"
+                },
+                "EMAIL_FROM": {
+                    "type": "string"
+                },
+                "EMAIL_SERVER": {
+                    "format": "uri",
+                    "pattern": "^smtp://",
+                    "type": "string"
+                },
+                "FOURSQUARE_APIVERSION": {
+                    "type": "string"
+                },
+                "FUSIONAUTH_TENANT_ID": {
+                    "type": "string"
+                },
+                "GITHUB_ID": {
+                    "type": "string"
+                },
+                "GITHUB_SECRET": {
+                    "type": "string"
+                },
+                "NEXTAUTH_SECRET": {
+                    "type": "string"
+                },
+                "NEXT_PUBLIC_CREDENTIALS_ENABLED": {
+                    "type": "boolean"
+                },
+                "NEXT_PUBLIC_DISABLE_REGISTRATION": {
+                    "type": "boolean"
+                },
+                "NEXT_PUBLIC_EMAIL_PROVIDER": {
+                    "type": "boolean"
+                },
+                "PAGINATION_TAKE_COUNT": {
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "RE_ARCHIVE_LIMIT": {
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "SPACES_BUCKET_NAME": {
+                    "type": "string"
+                },
+                "SPACES_ENDPOINT": {
+                    "type": "string"
+                },
+                "SPACES_FORCE_PATH_STYLE": {
+                    "type": "boolean"
+                },
+                "SPACES_KEY": {
+                    "type": "string"
+                },
+                "SPACES_REGION": {
+                    "type": "string"
+                },
+                "SPACES_SECRET": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "database": {
+            "additionalProperties": false,
+            "properties": {
+                "existingSecret": {
+                    "type": "string"
+                },
+                "external": {
+                    "type": "boolean"
+                },
+                "host": {
+                    "format": "hostname",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "port": {
+                    "maximum": 65535,
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                }
+            },
+            "required": ["external"],
+            "type": "object"
+        },
+        "fullnameOverride": {
+            "maxLength": 63,
+            "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?|)$",
+            "type": "string"
+        },
+        "image": {
+            "additionalProperties": false,
+            "properties": {
+                "pullPolicy": {
+                    "enum": ["Always", "Never", "IfNotPresent"]
+                },
+                "registry": {
+                    "type": "string"
+                },
+                "repository": {
+                    "type": "string"
+                },
+                "sha256": {
+                    "pattern": "^(|[a-z0-9]{64})$",
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "ingress": {
+            "additionalProperties": false,
+            "properties": {
+                "annotations": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                },
+                "className": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "hosts": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "host": {
+                                "format": "hostname",
+                                "type": "string"
+                            },
+                            "paths": {
+                                "items": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "path": {
+                                            "pattern": "^/",
+                                            "type": "string"
+                                        },
+                                        "pathType": {
+                                            "enum": [
+                                                "Prefix",
+                                                "Exact",
+                                                "ImplementationSpecific"
+                                            ]
+                                        }
+                                    },
+                                    "required": ["path", "pathType"],
+                                    "type": "object"
+                                },
+                                "minItems": 1,
+                                "type": "array",
+                                "uniqueItems": true
+                            }
+                        },
+                        "required": ["host", "paths"],
+                        "type": "object"
+                    },
+                    "type": "array",
+                    "uniqueItems": true
+                },
+                "tls": {
+                    "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "hosts": {
+                                "items": {
+                                    "format": "hostname",
+                                    "type": "string"
+                                },
+                                "minItems": 1,
+                                "type": "array",
+                                "uniqueItems": true
+                            },
+                            "secretName": {
+                                "type": "string"
+                            }
+                        },
+                        "required": ["hosts", "secretName"],
+                        "type": "object"
+                    },
+                    "type": "array",
+                    "uniqueItems": true
+                }
+            },
+            "type": "object"
+        },
+        "livenessProbe": {
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "failureThreshold": {
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "initialDelaySeconds": {
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "periodSeconds": {
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "successThreshold": {
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "terminationGracePeriodSeconds": {
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "timeoutSeconds": {
+                    "minimum": 1,
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "nameOverride": {
+            "maxLength": 63,
+            "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?|)$",
+            "type": "string"
+        },
+        "persistence": {
+            "additionalProperties": false,
+            "properties": {
+                "accessModes": {
+                    "items": {
+                        "enum": [
+                            "ReadWriteOnce",
+                            "ReadOnlyMany",
+                            "ReadWriteMany",
+                            "ReadWriteOncePod"
+                        ]
+                    },
+                    "type": "array",
+                    "unevaluatedItems": false,
+                    "uniqueItems": true
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "size": {
+                    "type": "string"
+                },
+                "storageClass": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "postgresql": {
+            "additionalProperties": true,
+            "properties": {
+                "auth": {
+                    "additionalProperties": true,
+                    "properties": {
+                        "database": {
+                            "type": "string"
+                        },
+                        "password": {
+                            "type": "string"
+                        },
+                        "username": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "service": {
+                    "additionalProperties": true,
+                    "properties": {
+                        "ports": {
+                            "additionalProperties": true,
+                            "properties": {
+                                "postgresql": {
+                                    "maximum": 65535,
+                                    "minimum": 0,
+                                    "type": "integer"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "required": ["enabled"],
+            "type": "object"
+        },
+        "readinessProbe": {
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "failureThreshold": {
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "initialDelaySeconds": {
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "periodSeconds": {
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "successThreshold": {
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "terminationGracePeriodSeconds": {
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "timeoutSeconds": {
+                    "minimum": 1,
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "replicaCount": {
+            "minimum": 0,
+            "type": "integer"
+        },
+        "resources": {
+            "additionalProperties": false,
+            "properties": {
+                "limits": {
+                    "oneOf": [
+                        {
+                            "additionalProperties": false,
+                            "patternProperties": {
+                                "^hugepages-": {
+                                    "type": "string"
+                                }
+                            },
+                            "properties": {
+                                "cpu": {
+                                    "oneOf": [
+                                        {
+                                            "type": "string"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                },
+                                "memory": {
+                                    "oneOf": [
+                                        {
+                                            "type": "string"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                }
+                            },
+                            "type": "object"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "requests": {
+                    "oneOf": [
+                        {
+                            "additionalProperties": false,
+                            "patternProperties": {
+                                "^hugepages-": {
+                                    "type": "string"
+                                }
+                            },
+                            "properties": {
+                                "cpu": {
+                                    "oneOf": [
+                                        {
+                                            "type": "string"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                },
+                                "memory": {
+                                    "oneOf": [
+                                        {
+                                            "type": "string"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                }
+                            },
+                            "type": "object"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                }
+            },
+            "type": "object"
+        },
+        "service": {
+            "additionalProperties": false,
+            "properties": {
+                "annotations": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                },
+                "containerPort": {
+                    "maximum": 65535,
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "port": {
+                    "maximum": 65535,
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "type": {
+                    "enum": ["ClusterIP", "NodePort", "LoadBalancer"]
+                }
+            },
+            "type": "object"
+        },
+        "serviceAccount": {
+            "additionalProperties": false,
+            "properties": {
+                "annotations": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                },
+                "create": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "startupProbe": {
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "failureThreshold": {
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "initialDelaySeconds": {
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "periodSeconds": {
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "successThreshold": {
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "terminationGracePeriodSeconds": {
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "timeoutSeconds": {
+                    "minimum": 1,
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "type": "object"
+}

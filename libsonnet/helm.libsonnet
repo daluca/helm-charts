@@ -10,10 +10,12 @@ local net = import 'networking.libsonnet';
     jsonSchemaVersion='',
     commonLibrary=false,
     ingress=false,
+    persistence=false,
   ):: js.object(additionalProperties=false) {
     '$id': schemaId,
     '$schema': if std.length(jsonSchemaVersion) > 0 then jsonSchemaVersion else js.url,
     properties: {
+      [if commonLibrary then 'common']: helm.commonLibrary,
       nameOverride: net.dnsName,
       fullnameOverride: net.dnsName,
       replicaCount: kube.replicaCount,
@@ -25,7 +27,7 @@ local net = import 'networking.libsonnet';
       livenessProbe: helm.probe,
       readinessProbe: helm.probe,
       startupProbe: helm.probe,
-      [if commonLibrary then 'common']: helm.commonLibrary,
+      [if persistence then 'persistence']: helm.persistence,
     },
   },
   image:: js.object(additionalProperties=false) {
@@ -68,11 +70,21 @@ local net = import 'networking.libsonnet';
       enabled: js.boolean,
     },
   },
+  persistence: js.object(additionalProperties=false) {
+    properties: {
+      enabled: js.boolean,
+      storageClass: js.string(),
+      size: js.string(),
+      accessModes: js.array(uniqueItems=true, unevaluatedItems=false) {
+        items: js.enum(['ReadWriteOnce', 'ReadOnlyMany', 'ReadWriteMany', 'ReadWriteOncePod']),
+      },
+    },
+  },
   externalDatabase(
     types=[]
-  ):: js.object(additionalProperties=false, required=['type', 'external']) {
+  ):: js.object(additionalProperties=false, required=['external']) {
     properties: {
-      type: js.enum(types),
+      [if std.length(types) >= 2 then 'type']: js.enum(types),
       external: js.boolean,
       name: js.string(),
       host: net.hostname,

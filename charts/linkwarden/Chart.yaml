@@ -1,0 +1,41 @@
+---
+apiVersion: v2
+name: linkwarden
+type: application
+description: >
+  Self-hosted collaborative bookmark manager to collect, organize, and preserve
+  webpages, articles, and more...
+version: 0.1.0
+appVersion: 2.8.4
+kubeVersion: ">=1.19.0-0"
+icon: https://raw.githubusercontent.com/linkwarden/linkwarden/refs/heads/main/assets/logo.png
+home: https://linkwarden.app
+sources:
+  - https://github.com/daluca/helm-charts/tree/main/charts/linkwarden
+dependencies:
+  - name: common
+    version: ">=0.1.0 <0.2.0"
+    repository: oci://ghcr.io/daluca/charts
+  - name: postgresql
+    version: ">=16.0.0 <17.0.0"
+    repository: oci://registry-1.docker.io/bitnamicharts
+    condition: postgresql.enabled
+annotations:
+  artifacthub.io/images: |-
+    - name: linkwarden
+      image: ghcr.io/linkwarden/linkwarden:v2.8.4
+      platforms:
+        - linux/amd64
+        - linux/arm64
+    - name: postgresql
+      image: docker.io/bitnami/postgresql:17.2.0-debian-12-r1
+      platforms:
+        - linux/amd64
+        - linux/arm64
+  artifacthub.io/links: |-
+    - name: chart
+      url: https://github.com/daluca/helm-charts/tree/main/charts/linkwarden
+    - name: source
+      url: https://github.com/linkwarden/linkwarden
+    - name: support
+      url: https://github.com/daluca/helm-charts/issues

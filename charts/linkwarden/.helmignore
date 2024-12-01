@@ -1,0 +1,3 @@
+README.md.gotmpl
+ci/
+values.schema.jsonnet
