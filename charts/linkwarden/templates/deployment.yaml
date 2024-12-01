@@ -1,0 +1,95 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "common.fullname" . }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+    app.kubernetes.io/component: linkwarden
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "common.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: linkwarden
+  template:
+    metadata:
+      labels:
+        {{- include "common.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: linkwarden
+      annotations:
+        linkwarden-config-hash: {{ toJson .Values.config | sha256sum }}
+    spec:
+      serviceAccountName: {{ include "common.serviceAccountName" . }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ include "common.vimage" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: [yarn]
+          args: [start]
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.containerPort }}
+              protocol: TCP
+          env:
+            - name: STORAGE_FOLDER
+              value: /appdata
+            - name: NEXTAUTH_URL
+              value: {{ printf "http://127.0.0.1:%s/api/v1/auth" (toString .Values.service.containerPort) }}
+          envFrom:
+            - configMapRef:
+                name: {{ printf "%s-config" (include "common.fullname" .) }}
+            - secretRef:
+                name: {{ printf "%s-secrets" (include "common.fullname" .) }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if .Values.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /api/v1/logins
+              port: http
+          {{- with omit .Values.livenessProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: /api/v1/logins
+              port: http
+          {{- with omit .Values.readinessProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.startupProbe.enabled }}
+          startupProbe:
+            httpGet:
+              path: /api/v1/logins
+              port: http
+          {{- with omit .Values.startupProbe "enabled" }}
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          {{- end }}
+          volumeMounts:
+            - mountPath: /data/appdata
+              subPath: appdata
+              name: linkwarden-data
+      initContainers:
+        - name: database-migrations
+          image: {{ include "common.vimage" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: [yarn]
+          args: [prisma, migrate, deploy]
+          envFrom:
+            - secretRef:
+                name: {{ printf "%s-secrets" (include "common.fullname" .) }}
+      volumes:
+        - name: linkwarden-data
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ printf "%s-data" (include "common.fullname" .) }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}

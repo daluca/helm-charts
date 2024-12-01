@@ -35,6 +35,7 @@
           go-jsonnet
           jsonnet-language-server
           custompkgs.packages.${system}.jsonnet-debugger
+          helm-docs
         ];
         JUST_COMMAND_COLOR = "blue";
         JUST_UNSTABLE = true;
