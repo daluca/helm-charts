@@ -7,6 +7,7 @@ local kube = import 'kubernetes.libsonnet';
 helm.schema(
   schemaId='https://raw.githubusercontent.com/daluca/helm-charts/main/charts/linkwarden/values.schema.json',
   ingress=true,
+  persistence=true,
   commonLibrary=true,
 ) {
   properties+: {
