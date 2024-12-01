@@ -15,7 +15,7 @@ helm.schema(
       "^NEXT_PUBLIC_.*_ENABLED$": js.boolean,
       "_CUSTOM_NAME$": js.string(),
       "_ISSUER$": js.string(),
-      "_CLIENT_NAME$": js.string(),
+      "_CLIENT_ID$": js.string(),
       "_CLIENT_SECRET$": js.string(),
     }) {
       properties: {

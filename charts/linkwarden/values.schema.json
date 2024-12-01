@@ -19,7 +19,7 @@
                 "^NEXT_PUBLIC_.*_ENABLED$": {
                     "type": "boolean"
                 },
-                "_CLIENT_NAME$": {
+                "_CLIENT_ID$": {
                     "type": "string"
                 },
                 "_CLIENT_SECRET$": {
