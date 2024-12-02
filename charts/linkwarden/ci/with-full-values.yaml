@@ -5,13 +5,15 @@ service:
 persistence:
   enabled: true
 
-config:
-  PAGINATION_TAKE_COUNT: 100
-  NEXT_PUBLIC_EMAIL_PROVIDER: true
-  EMAIL_FROM: no-reply
-  EMAIL_SERVER: smtp://localhost
-  NEXT_PUBLIC_KEYCLOAK_ENABLED: true
-  KEYCLOAK_CUSTOM_NAME: sso.example.org
-  KEYCLOAK_ISSUER: https://sso.example.org/realms/test
-  KEYCLOAK_CLIENT_ID: something
-  KEYCLOAK_CLIENT_SECRET: somethingSecureIPromise
+linkwarden:
+  config:
+    PAGINATION_TAKE_COUNT: 100
+    NEXT_PUBLIC_EMAIL_PROVIDER: true
+    EMAIL_FROM: no-reply
+    EMAIL_SERVER: smtp://localhost
+    NEXT_PUBLIC_KEYCLOAK_ENABLED: true
+    KEYCLOAK_CUSTOM_NAME: sso.example.org
+    KEYCLOAK_ISSUER: https://sso.example.org/realms/test
+    KEYCLOAK_CLIENT_ID: something
+  secrets:
+    KEYCLOAK_CLIENT_SECRET: somethingSecureIPromise

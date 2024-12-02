@@ -1,6 +1,6 @@
 # linkwarden
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.8.4](https://img.shields.io/badge/AppVersion-2.8.4-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.8.4](https://img.shields.io/badge/AppVersion-2.8.4-informational?style=flat-square)
 
 Self-hosted collaborative bookmark manager to collect, organize, and preserve webpages, articles, and more...
 
@@ -54,7 +54,9 @@ Self-hosted collaborative bookmark manager to collect, organize, and preserve we
 | persistence.storageClass | string | `""` |  |
 | persistence.size | string | `"1Gi"` |  |
 | persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
-| config.NEXTAUTH_SECRET | string | `"somethingSecureIPromise"` |  |
+| linkwarden.config | object | `{}` |  |
+| linkwarden.secrets.NEXTAUTH_SECRET | string | `"somethingSecureIPromise"` |  |
+| linkwarden.existingSecret | string | `""` |  |
 | database.external | bool | `false` |  |
 | database.name | string | `"linkwarden"` |  |
 | database.host | string | `"localhost"` |  |
