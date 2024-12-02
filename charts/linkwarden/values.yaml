@@ -54,8 +54,11 @@ persistence:
   size: 1Gi
   accessModes: [ReadWriteOnce]
 
-config:
-  NEXTAUTH_SECRET: somethingSecureIPromise
+linkwarden:
+  config: {}
+  secrets:
+    NEXTAUTH_SECRET: somethingSecureIPromise
+  existingSecret: ""
 
 database:
   external: false

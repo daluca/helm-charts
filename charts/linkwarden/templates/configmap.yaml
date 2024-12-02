@@ -1,12 +1,13 @@
----
+{{- if .Values.linkwarden.config -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ printf "%s-config" (include "common.fullname" .) }}
+  name: {{ printf "%s-config-envs" (include "common.fullname" .) }}
   labels:
     {{- include "common.labels" . | nindent 4 }}
     app.kubernetes.io/component: linkwarden
 data:
-  {{- range $key, $value := omit .Values.config "NEXTAUTH_SECRET" }}
+  {{- range $key, $value := .Values.linkwarden.config }}
   {{ $key }}: {{ quote $value }}
   {{- end }}
+{{- end -}}

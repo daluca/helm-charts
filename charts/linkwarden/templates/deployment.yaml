@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,7 +17,8 @@ spec:
         {{- include "common.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: linkwarden
       annotations:
-        linkwarden-config-hash: {{ toJson .Values.config | sha256sum }}
+        linkwarden-config-hash: {{ toJson .Values.linkwarden.config | sha256sum }}
+        linkwarden-secrets-hash: {{ toJson .Values.linkwarden.secrets | sha256sum }}
     spec:
       serviceAccountName: {{ include "common.serviceAccountName" . }}
       containers:
@@ -37,10 +37,14 @@ spec:
             - name: NEXTAUTH_URL
               value: {{ printf "http://127.0.0.1:%s/api/v1/auth" (toString .Values.service.containerPort) }}
           envFrom:
+            {{- if .Values.linkwarden.config }}
             - configMapRef:
-                name: {{ printf "%s-config" (include "common.fullname" .) }}
+                name: {{ printf "%s-config-envs" (include "common.fullname" .) }}
+            {{- end }}
             - secretRef:
-                name: {{ printf "%s-secrets" (include "common.fullname" .) }}
+                name: {{ printf "%s-secret-envs" (include "common.fullname" .) }}
+            - secretRef:
+                name: {{ printf "%s-database-credential-envs" (include "common.fullname" .) }}
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
@@ -84,7 +88,9 @@ spec:
           args: [prisma, migrate, deploy]
           envFrom:
             - secretRef:
-                name: {{ printf "%s-secrets" (include "common.fullname" .) }}
+                name: {{ printf "%s-secret-envs" (include "common.fullname" .) }}
+            - secretRef:
+                name: {{ printf "%s-database-credential-envs" (include "common.fullname" .) }}
       volumes:
         - name: linkwarden-data
           {{- if .Values.persistence.enabled }}

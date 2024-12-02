@@ -13,106 +13,6 @@
             },
             "type": "object"
         },
-        "config": {
-            "additionalProperties": false,
-            "patternProperties": {
-                "^NEXT_PUBLIC_.*_ENABLED$": {
-                    "type": "boolean"
-                },
-                "_CLIENT_ID$": {
-                    "type": "string"
-                },
-                "_CLIENT_SECRET$": {
-                    "type": "string"
-                },
-                "_CUSTOM_NAME$": {
-                    "type": "string"
-                },
-                "_ISSUER$": {
-                    "type": "string"
-                }
-            },
-            "properties": {
-                "ATLASSIAN_SCOPE": {
-                    "type": "string"
-                },
-                "AUTHELIA_WELLKNOWN_URL": {
-                    "type": "string"
-                },
-                "AUTOSCROLL_TIMEOUT": {
-                    "minimum": 1,
-                    "type": "integer"
-                },
-                "AZURE_AD_B2C_PRIMARY_USER_FLOW": {
-                    "type": "string"
-                },
-                "BUNGIE_API_KEY": {
-                    "type": "string"
-                },
-                "DISABLE_NEW_SSO_USERS": {
-                    "type": "boolean"
-                },
-                "EMAIL_FROM": {
-                    "type": "string"
-                },
-                "EMAIL_SERVER": {
-                    "format": "uri",
-                    "pattern": "^smtp://",
-                    "type": "string"
-                },
-                "FOURSQUARE_APIVERSION": {
-                    "type": "string"
-                },
-                "FUSIONAUTH_TENANT_ID": {
-                    "type": "string"
-                },
-                "GITHUB_ID": {
-                    "type": "string"
-                },
-                "GITHUB_SECRET": {
-                    "type": "string"
-                },
-                "NEXTAUTH_SECRET": {
-                    "type": "string"
-                },
-                "NEXT_PUBLIC_CREDENTIALS_ENABLED": {
-                    "type": "boolean"
-                },
-                "NEXT_PUBLIC_DISABLE_REGISTRATION": {
-                    "type": "boolean"
-                },
-                "NEXT_PUBLIC_EMAIL_PROVIDER": {
-                    "type": "boolean"
-                },
-                "PAGINATION_TAKE_COUNT": {
-                    "minimum": 1,
-                    "type": "integer"
-                },
-                "RE_ARCHIVE_LIMIT": {
-                    "minimum": 1,
-                    "type": "integer"
-                },
-                "SPACES_BUCKET_NAME": {
-                    "type": "string"
-                },
-                "SPACES_ENDPOINT": {
-                    "type": "string"
-                },
-                "SPACES_FORCE_PATH_STYLE": {
-                    "type": "boolean"
-                },
-                "SPACES_KEY": {
-                    "type": "string"
-                },
-                "SPACES_REGION": {
-                    "type": "string"
-                },
-                "SPACES_SECRET": {
-                    "type": "string"
-                }
-            },
-            "type": "object"
-        },
         "database": {
             "additionalProperties": false,
             "properties": {
@@ -246,6 +146,123 @@
                     },
                     "type": "array",
                     "uniqueItems": true
+                }
+            },
+            "type": "object"
+        },
+        "linkwarden": {
+            "additionalProperties": false,
+            "properties": {
+                "config": {
+                    "additionalProperties": false,
+                    "patternProperties": {
+                        "^NEXT_PUBLIC_.*_ENABLED$": {
+                            "type": "boolean"
+                        },
+                        "_CLIENT_ID$": {
+                            "type": "string"
+                        },
+                        "_CUSTOM_NAME$": {
+                            "type": "string"
+                        },
+                        "_ISSUER$": {
+                            "type": "string"
+                        }
+                    },
+                    "properties": {
+                        "ATLASSIAN_SCOPE": {
+                            "type": "string"
+                        },
+                        "AUTHELIA_WELLKNOWN_URL": {
+                            "type": "string"
+                        },
+                        "AUTOSCROLL_TIMEOUT": {
+                            "minimum": 1,
+                            "type": "integer"
+                        },
+                        "AZURE_AD_B2C_PRIMARY_USER_FLOW": {
+                            "type": "string"
+                        },
+                        "BUNGIE_API_KEY": {
+                            "type": "string"
+                        },
+                        "DISABLE_NEW_SSO_USERS": {
+                            "type": "boolean"
+                        },
+                        "EMAIL_FROM": {
+                            "type": "string"
+                        },
+                        "EMAIL_SERVER": {
+                            "format": "uri",
+                            "pattern": "^smtp://",
+                            "type": "string"
+                        },
+                        "FOURSQUARE_APIVERSION": {
+                            "type": "string"
+                        },
+                        "FUSIONAUTH_TENANT_ID": {
+                            "type": "string"
+                        },
+                        "GITHUB_ID": {
+                            "type": "string"
+                        },
+                        "NEXT_PUBLIC_CREDENTIALS_ENABLED": {
+                            "type": "boolean"
+                        },
+                        "NEXT_PUBLIC_DISABLE_REGISTRATION": {
+                            "type": "boolean"
+                        },
+                        "NEXT_PUBLIC_EMAIL_PROVIDER": {
+                            "type": "boolean"
+                        },
+                        "PAGINATION_TAKE_COUNT": {
+                            "minimum": 1,
+                            "type": "integer"
+                        },
+                        "RE_ARCHIVE_LIMIT": {
+                            "minimum": 1,
+                            "type": "integer"
+                        },
+                        "SPACES_BUCKET_NAME": {
+                            "type": "string"
+                        },
+                        "SPACES_ENDPOINT": {
+                            "type": "string"
+                        },
+                        "SPACES_FORCE_PATH_STYLE": {
+                            "type": "boolean"
+                        },
+                        "SPACES_KEY": {
+                            "type": "string"
+                        },
+                        "SPACES_REGION": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "existingSecret": {
+                    "type": "string"
+                },
+                "secrets": {
+                    "additionalProperties": false,
+                    "patternProperties": {
+                        "_CLIENT_SECRET$": {
+                            "type": "string"
+                        }
+                    },
+                    "properties": {
+                        "GITHUB_SECRET": {
+                            "type": "string"
+                        },
+                        "NEXTAUTH_SECRET": {
+                            "type": "string"
+                        },
+                        "SPACES_SECRET": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
                 }
             },
             "type": "object"
