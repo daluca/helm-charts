@@ -34,6 +34,9 @@ spec:
           env:
             - name: STORAGE_FOLDER
               value: /appdata
+            {{- if .Values.extraEnvs }}
+            {{- toYaml .Values.extraEnvs | nindent 12 }}
+            {{- end }}
           envFrom:
             {{- if .Values.linkwarden.config }}
             - configMapRef:

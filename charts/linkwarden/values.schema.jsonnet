@@ -11,6 +11,9 @@ helm.schema(
   commonLibrary=true,
 ) {
   properties+: {
+    extraEnvs: js.array(uniqueItems=true) {
+      items: kube.envVar,
+    },
     linkwarden: js.object(additionalProperties=false) {
       properties: {
         config: js.object(additionalProperties=false, patternProperties={

@@ -5,7 +5,7 @@ type: application
 description: >
   Self-hosted collaborative bookmark manager to collect, organize, and preserve
   webpages, articles, and more...
-version: 0.1.1
+version: 0.1.2
 appVersion: 2.8.4
 kubeVersion: ">=1.19.0-0"
 icon: https://raw.githubusercontent.com/linkwarden/linkwarden/refs/heads/main/assets/logo.png
