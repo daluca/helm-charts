@@ -54,6 +54,8 @@ persistence:
   size: 1Gi
   accessModes: [ReadWriteOnce]
 
+extraEnvs: []
+
 linkwarden:
   config: {}
   secrets:

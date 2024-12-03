@@ -11,6 +11,7 @@ local js = import 'json-schema/draft/2020-12/schema.libsonnet';
   ipv4:: js.string(format='ipv4'),
   ipv6:: js.string(format='ipv6'),
   uri:: js.string(format='uri'),
+  website:: js.string(format='uri', pattern='^https?://'),
   email:: js.string(format='email'),
   ip:: js.oneOf([self.ipv4, self.ipv6]),
 }

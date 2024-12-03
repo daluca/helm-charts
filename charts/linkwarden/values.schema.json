@@ -44,6 +44,92 @@
             "required": ["external"],
             "type": "object"
         },
+        "extraEnvs": {
+            "items": {
+                "additionalProperties": false,
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    },
+                    "valueFrom": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "configMapKeyRef": {
+                                "additionalProperties": false,
+                                "properties": {
+                                    "key": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "optional": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "fieldRef": {
+                                "additionalProperties": false,
+                                "properties": {
+                                    "apiVersion": {
+                                        "type": "string"
+                                    },
+                                    "fieldPath": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "resourceFieldRef": {
+                                "additionalProperties": false,
+                                "properties": {
+                                    "containerName": {
+                                        "type": "string"
+                                    },
+                                    "divisor": {
+                                        "oneOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "resource": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "secretKeyRef": {
+                                "additionalProperties": false,
+                                "properties": {
+                                    "key": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "optional": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "type": "array",
+            "uniqueItems": true
+        },
         "fullnameOverride": {
             "maxLength": 63,
             "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?|)$",
@@ -204,6 +290,11 @@
                             "type": "string"
                         },
                         "GITHUB_ID": {
+                            "type": "string"
+                        },
+                        "NEXTAUTH_URL": {
+                            "format": "uri",
+                            "pattern": "^https?://",
                             "type": "string"
                         },
                         "NEXT_PUBLIC_CREDENTIALS_ENABLED": {

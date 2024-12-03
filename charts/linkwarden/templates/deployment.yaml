@@ -34,8 +34,9 @@ spec:
           env:
             - name: STORAGE_FOLDER
               value: /appdata
-            - name: NEXTAUTH_URL
-              value: {{ printf "http://127.0.0.1:%s/api/v1/auth" (toString .Values.service.containerPort) }}
+            {{- if .Values.extraEnvs }}
+            {{- toYaml .Values.extraEnvs | nindent 12 }}
+            {{- end }}
           envFrom:
             {{- if .Values.linkwarden.config }}
             - configMapRef:

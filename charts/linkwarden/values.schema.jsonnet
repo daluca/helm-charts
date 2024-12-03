@@ -11,6 +11,9 @@ helm.schema(
   commonLibrary=true,
 ) {
   properties+: {
+    extraEnvs: js.array(uniqueItems=true) {
+      items: kube.envVar,
+    },
     linkwarden: js.object(additionalProperties=false) {
       properties: {
         config: js.object(additionalProperties=false, patternProperties={
@@ -20,6 +23,7 @@ helm.schema(
           "_CLIENT_ID$": js.string(),
         }) {
           properties: {
+            NEXTAUTH_URL: net.website,
             PAGINATION_TAKE_COUNT: js.integer(minimum=1),
             AUTOSCROLL_TIMEOUT: js.integer(minimum=1),
             RE_ARCHIVE_LIMIT: js.integer(minimum=1),
