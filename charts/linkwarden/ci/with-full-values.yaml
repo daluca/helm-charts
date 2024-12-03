@@ -2,6 +2,18 @@
 service:
   port: 80
 
+ingress:
+  enabled: true
+  hosts:
+    - host: localhost
+      paths:
+        - pathType: Prefix
+          path: /
+  tls:
+    - secretName: localhost-tls
+      hosts:
+        - localhost
+
 persistence:
   enabled: true
 

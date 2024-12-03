@@ -206,6 +206,11 @@
                         "GITHUB_ID": {
                             "type": "string"
                         },
+                        "NEXTAUTH_URL": {
+                            "format": "uri",
+                            "pattern": "^https?://",
+                            "type": "string"
+                        },
                         "NEXT_PUBLIC_CREDENTIALS_ENABLED": {
                             "type": "boolean"
                         },

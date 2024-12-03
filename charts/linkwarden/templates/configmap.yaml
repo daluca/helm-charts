@@ -1,4 +1,3 @@
-{{- if .Values.linkwarden.config -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -7,7 +6,13 @@ metadata:
     {{- include "common.labels" . | nindent 4 }}
     app.kubernetes.io/component: linkwarden
 data:
+  {{- if empty .Values.linkwarden.config.NEXTAUTH_URL }}
+  {{- if .Values.ingress.enabled }}
+  NEXTAUTH_URL: {{ printf "http%s://%s/api/v1/auth" (ternary "" "s" (empty .Values.ingress.tls)) (first .Values.ingress.hosts).host }}
+  {{- else }}
+  NEXTAUTH_URL: {{ printf "http://127.0.0.1:%s/api/v1/auth" (toString .Values.service.containerPort) }}
+  {{- end }}
+  {{- end }}
   {{- range $key, $value := .Values.linkwarden.config }}
   {{ $key }}: {{ quote $value }}
   {{- end }}
-{{- end -}}
