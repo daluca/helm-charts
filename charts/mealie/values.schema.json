@@ -368,7 +368,7 @@
                     "type": "string"
                 }
             },
-            "required": ["type", "external"],
+            "required": ["external"],
             "type": "object"
         },
         "existingSecret": {
