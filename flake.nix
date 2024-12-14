@@ -9,37 +9,47 @@
     git-hooks.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{self, nixpkgs, custompkgs, git-hooks, ...}: let
+  outputs = {self, nixpkgs, custompkgs, git-hooks, ...}: let
     supportedSystems = [ "x86_64-linux" ];
     forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
   in {
-    checks = forAllSystems (system: {
-      pre-commit-check = git-hooks.lib.${system}.run {
-        src = ./.;
-        hooks = import ./.pre-commit-config.nix { pkgs = nixpkgs.legacyPackages.${system}; };
-      };
-    });
+    checks = forAllSystems (system:
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
+        git-hooks' = git-hooks.lib.${system};
+      in {
+        pre-commit = git-hooks'.run {
+          src = ./.;
+          hooks = import ./.pre-commit-config.nix { inherit pkgs; };
+        };
+      }
+    );
 
-    devShells = forAllSystems (system: {
-      default = nixpkgs.legacyPackages.${system}.mkShell {
-        inherit (self.checks.${system}.pre-commit-check) shellHook;
-        name = "helm-charts";
-        buildInputs = with nixpkgs.legacyPackages.${system}; [
-          kubectl
-          kubernetes-helm
-          chart-testing
-          just
-          kind
-          helm-ls
-          nodePackages.prettier
-          go-jsonnet
-          jsonnet-language-server
-          custompkgs.packages.${system}.jsonnet-debugger
-          helm-docs
-        ];
-        JUST_COMMAND_COLOR = "blue";
-        JUST_UNSTABLE = true;
-      };
-    });
+    devShells = forAllSystems (system:
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
+        pre-commit = self.checks.${system}.pre-commit;
+      in {
+        default = pkgs.mkShell {
+          inherit (pre-commit) shellHook;
+          name = "helm-charts";
+          buildInputs = with pkgs; [
+            kubectl
+            kubernetes-helm
+            chart-testing
+            just
+            kind
+            helm-ls
+            nodePackages.prettier
+            go-jsonnet
+            jsonnet-language-server
+            custompkgs.packages.${system}.jsonnet-debugger
+            helm-docs
+          ];
+          JUST_COMMAND_COLOR = "blue";
+          JUST_UNSTABLE = true;
+        };
+      }
+    );
   };
 }
