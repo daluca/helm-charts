@@ -45,7 +45,7 @@
             jsonnet-language-server
             custompkgs.packages.${system}.jsonnet-debugger
             helm-docs
-          ];
+          ] ++ pre-commit.enabledPackages;
           JUST_COMMAND_COLOR = "blue";
           JUST_UNSTABLE = true;
         };
