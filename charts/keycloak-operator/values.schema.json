@@ -131,38 +131,80 @@
             "additionalProperties": false,
             "properties": {
                 "limits": {
-                    "additionalProperties": false,
-                    "patternProperties": {
-                        "^hugepages-": {
-                            "type": "string"
-                        }
-                    },
-                    "properties": {
-                        "cpu": {
-                            "type": "string"
+                    "oneOf": [
+                        {
+                            "additionalProperties": false,
+                            "patternProperties": {
+                                "^hugepages-": {
+                                    "type": "string"
+                                }
+                            },
+                            "properties": {
+                                "cpu": {
+                                    "oneOf": [
+                                        {
+                                            "type": "string"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                },
+                                "memory": {
+                                    "oneOf": [
+                                        {
+                                            "type": "string"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                }
+                            },
+                            "type": "object"
                         },
-                        "memory": {
-                            "type": "string"
+                        {
+                            "type": "null"
                         }
-                    },
-                    "type": "object"
+                    ]
                 },
                 "requests": {
-                    "additionalProperties": false,
-                    "patternProperties": {
-                        "^hugepages-": {
-                            "type": "string"
-                        }
-                    },
-                    "properties": {
-                        "cpu": {
-                            "type": "string"
+                    "oneOf": [
+                        {
+                            "additionalProperties": false,
+                            "patternProperties": {
+                                "^hugepages-": {
+                                    "type": "string"
+                                }
+                            },
+                            "properties": {
+                                "cpu": {
+                                    "oneOf": [
+                                        {
+                                            "type": "string"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                },
+                                "memory": {
+                                    "oneOf": [
+                                        {
+                                            "type": "string"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                }
+                            },
+                            "type": "object"
                         },
-                        "memory": {
-                            "type": "string"
+                        {
+                            "type": "null"
                         }
-                    },
-                    "type": "object"
+                    ]
                 }
             },
             "type": "object"

@@ -1,5 +1,5 @@
 ---
-# https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/24.0.5/kubernetes/keycloakrealmimports.k8s.keycloak.org-v1.yml
+# https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/25.0.6/kubernetes/keycloakrealmimports.k8s.keycloak.org-v1.yml
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
@@ -387,6 +387,8 @@ spec:
                             type: boolean
                           surrogateAuthRequired:
                             type: boolean
+                          type:
+                            type: string
                           useTemplateConfig:
                             type: boolean
                           useTemplateMappers:
@@ -890,6 +892,8 @@ spec:
                             type: boolean
                           surrogateAuthRequired:
                             type: boolean
+                          type:
+                            type: string
                           useTemplateConfig:
                             type: boolean
                           useTemplateMappers:
@@ -2220,6 +2224,8 @@ spec:
                             type: boolean
                           surrogateAuthRequired:
                             type: boolean
+                          type:
+                            type: string
                           useTemplateConfig:
                             type: boolean
                           useTemplateMappers:
@@ -2237,6 +2243,273 @@ spec:
                     offlineSessionMaxLifespan:
                       type: integer
                     offlineSessionMaxLifespanEnabled:
+                      type: boolean
+                    organizations:
+                      items:
+                        properties:
+                          attributes:
+                            additionalProperties:
+                              items:
+                                type: string
+                              type: array
+                            type: object
+                          description:
+                            type: string
+                          domains:
+                            items:
+                              properties:
+                                name:
+                                  type: string
+                                verified:
+                                  type: boolean
+                              type: object
+                            type: array
+                          enabled:
+                            type: boolean
+                          id:
+                            type: string
+                          identityProviders:
+                            items:
+                              properties:
+                                addReadTokenRoleOnCreate:
+                                  type: boolean
+                                alias:
+                                  type: string
+                                authenticateByDefault:
+                                  type: boolean
+                                config:
+                                  additionalProperties:
+                                    type: string
+                                  type: object
+                                displayName:
+                                  type: string
+                                enabled:
+                                  type: boolean
+                                firstBrokerLoginFlowAlias:
+                                  type: string
+                                internalId:
+                                  type: string
+                                linkOnly:
+                                  type: boolean
+                                postBrokerLoginFlowAlias:
+                                  type: string
+                                providerId:
+                                  type: string
+                                storeToken:
+                                  type: boolean
+                                trustEmail:
+                                  type: boolean
+                                updateProfileFirstLoginMode:
+                                  type: string
+                              type: object
+                            type: array
+                          members:
+                            items:
+                              properties:
+                                access:
+                                  additionalProperties:
+                                    type: boolean
+                                  type: object
+                                applicationRoles:
+                                  additionalProperties:
+                                    items:
+                                      type: string
+                                    type: array
+                                  type: object
+                                attributes:
+                                  additionalProperties:
+                                    items:
+                                      type: string
+                                    type: array
+                                  type: object
+                                clientConsents:
+                                  items:
+                                    properties:
+                                      clientId:
+                                        type: string
+                                      createdDate:
+                                        type: integer
+                                      grantedClientScopes:
+                                        items:
+                                          type: string
+                                        type: array
+                                      grantedRealmRoles:
+                                        items:
+                                          type: string
+                                        type: array
+                                      lastUpdatedDate:
+                                        type: integer
+                                    type: object
+                                  type: array
+                                clientRoles:
+                                  additionalProperties:
+                                    items:
+                                      type: string
+                                    type: array
+                                  type: object
+                                createdTimestamp:
+                                  type: integer
+                                credentials:
+                                  items:
+                                    properties:
+                                      algorithm:
+                                        type: string
+                                      config:
+                                        additionalProperties:
+                                          items:
+                                            type: string
+                                          type: array
+                                        type: object
+                                      counter:
+                                        type: integer
+                                      createdDate:
+                                        type: integer
+                                      credentialData:
+                                        type: string
+                                      device:
+                                        type: string
+                                      digits:
+                                        type: integer
+                                      hashIterations:
+                                        type: integer
+                                      hashedSaltedValue:
+                                        type: string
+                                      id:
+                                        type: string
+                                      period:
+                                        type: integer
+                                      priority:
+                                        type: integer
+                                      salt:
+                                        type: string
+                                      secretData:
+                                        type: string
+                                      temporary:
+                                        type: boolean
+                                      type:
+                                        type: string
+                                      userLabel:
+                                        type: string
+                                      value:
+                                        type: string
+                                    type: object
+                                  type: array
+                                disableableCredentialTypes:
+                                  items:
+                                    type: string
+                                  type: array
+                                email:
+                                  type: string
+                                emailVerified:
+                                  type: boolean
+                                enabled:
+                                  type: boolean
+                                federatedIdentities:
+                                  items:
+                                    properties:
+                                      identityProvider:
+                                        type: string
+                                      userId:
+                                        type: string
+                                      userName:
+                                        type: string
+                                    type: object
+                                  type: array
+                                federationLink:
+                                  type: string
+                                firstName:
+                                  type: string
+                                groups:
+                                  items:
+                                    type: string
+                                  type: array
+                                id:
+                                  type: string
+                                lastName:
+                                  type: string
+                                notBefore:
+                                  type: integer
+                                origin:
+                                  type: string
+                                realmRoles:
+                                  items:
+                                    type: string
+                                  type: array
+                                requiredActions:
+                                  items:
+                                    type: string
+                                  type: array
+                                self:
+                                  type: string
+                                serviceAccountClientId:
+                                  type: string
+                                socialLinks:
+                                  items:
+                                    properties:
+                                      socialProvider:
+                                        type: string
+                                      socialUserId:
+                                        type: string
+                                      socialUsername:
+                                        type: string
+                                    type: object
+                                  type: array
+                                totp:
+                                  type: boolean
+                                userProfileMetadata:
+                                  properties:
+                                    attributes:
+                                      items:
+                                        properties:
+                                          annotations:
+                                            additionalProperties:
+                                              type: object
+                                            type: object
+                                          displayName:
+                                            type: string
+                                          group:
+                                            type: string
+                                          multivalued:
+                                            type: boolean
+                                          name:
+                                            type: string
+                                          readOnly:
+                                            type: boolean
+                                          required:
+                                            type: boolean
+                                          validators:
+                                            additionalProperties:
+                                              additionalProperties:
+                                                type: object
+                                              type: object
+                                            type: object
+                                        type: object
+                                      type: array
+                                    groups:
+                                      items:
+                                        properties:
+                                          annotations:
+                                            additionalProperties:
+                                              type: object
+                                            type: object
+                                          displayDescription:
+                                            type: string
+                                          displayHeader:
+                                            type: string
+                                          name:
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                username:
+                                  type: string
+                              type: object
+                            type: array
+                          name:
+                            type: string
+                        type: object
+                      type: array
+                    organizationsEnabled:
                       type: boolean
                     otpPolicyAlgorithm:
                       type: string
