@@ -140,7 +140,7 @@ local unix = import 'unix.libsonnet';
       runAsUser: unix.uid,
       seLinuxOptions: kube.SELinuxOptions,
       seccompProfile: kube.seccompProfile,
-      windowsOptions: kube.windowsSecurtiyContextOptions,
+      windowsOptions: kube.windowsSecurityContextOptions,
     },
   },
   podSecurityContext:: js.object(additionalProperties=false) {
@@ -158,7 +158,7 @@ local unix = import 'unix.libsonnet';
       sysctls: js.array(unevaluatedItems=false, uniqueItems=true) {
         items: kube.sysctl,
       },
-      windowsOptions: kube.windowsSecurtiyContextOptions,
+      windowsOptions: kube.windowsSecurityContextOptions,
     },
   },
   SELinuxOptions:: js.object(additionalProperties=false) {
@@ -181,7 +181,7 @@ local unix = import 'unix.libsonnet';
       value: js.string(),
     },
   },
-  windowsSecurtiyContextOptions:: js.object(additionalProperties=false) {
+  windowsSecurityContextOptions:: js.object(additionalProperties=false) {
     properties: {
       gmsaCredentialSpec: js.string(),
       gmsaCredentialSpecName: js.string(),

@@ -2,7 +2,8 @@
 name: Scheduled Testing
 
 on:
-  schedule: [cron: 45 14 * * *]
+  schedule:
+    - cron: 45 14 * * *
 
   workflow_dispatch: {}
 

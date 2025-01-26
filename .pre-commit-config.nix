@@ -9,6 +9,12 @@ rec {
   no-commit-to-branch.enable = true;
   trim-trailing-whitespace.enable = true;
   yamllint.enable = true;
+  yamlfmt.enable = true;
+  typos = {
+    enable = true;
+    settings.configPath = "typos.toml";
+    args = [ "--force-exclude" ];
+  };
   markdownlint-cli2 = {
     enable = true;
     name = "markdownlint-cli2";
@@ -24,14 +30,6 @@ rec {
     package = pkgs.gitleaks;
     entry = "${gitleaks.package}/bin/gitleaks protect --verbose --redact --staged";
     pass_filenames = false;
-  };
-  codespell = {
-    enable = true;
-    name = "codespell";
-    description = "Checks for common misspellings in text files.";
-    package = pkgs.codespell;
-    entry = "${codespell.package}/bin/codespell";
-    types = [ "text" ];
   };
   helm-docs = {
     enable = true;
