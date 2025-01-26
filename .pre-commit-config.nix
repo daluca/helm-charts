@@ -9,6 +9,7 @@ rec {
   no-commit-to-branch.enable = true;
   trim-trailing-whitespace.enable = true;
   yamllint.enable = true;
+  yamlfmt.enable = true;
   typos = {
     enable = true;
     settings.configPath = "typos.toml";

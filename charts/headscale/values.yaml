@@ -65,7 +65,8 @@ config:
   prefixes:
     v4: 100.64.0.0/10
   derp:
-    urls: [https://controlplane.tailscale.com/derpmap/default]
+    urls:
+      - https://controlplane.tailscale.com/derpmap/default
 
 extraVolumeMounts: []
 
