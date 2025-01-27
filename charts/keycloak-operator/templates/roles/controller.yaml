@@ -26,57 +26,44 @@ rules:
     resources:
       - services
     verbs:
+      - create
+      - delete
       - get
       - list
-      - watch
       - patch
       - update
-      - delete
-      - create
-  - apiGroups:
-      - apps
-    resources:
-      - statefulsets
-    verbs:
-      - get
-      - list
       - watch
-      - patch
-      - update
-      - delete
-      - create
-  - apiGroups:
-      - ""
-    resources:
-      - services
-    verbs:
-      - get
-      - list
-      - watch
-      - patch
-      - update
-      - delete
-      - create
   - apiGroups:
       - networking.k8s.io
     resources:
       - ingresses
     verbs:
+      - create
+      - delete
       - get
       - list
-      - watch
       - patch
       - update
-      - delete
-      - create
+      - watch
   - apiGroups:
       - ""
     resources:
       - secrets
     verbs:
+      - create
+      - delete
       - get
       - list
       - watch
-      - delete
+  - apiGroups:
+      - networking.k8s.io
+    resources:
+      - networkpolicies
+    verbs:
       - create
+      - delete
+      - get
+      - list
       - patch
+      - update
+      - watch

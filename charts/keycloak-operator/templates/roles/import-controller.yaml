@@ -26,10 +26,10 @@ rules:
     resources:
       - secrets
     verbs:
+      - create
+      - delete
       - get
       - list
-      - watch
       - patch
       - update
-      - delete
-      - create
+      - watch

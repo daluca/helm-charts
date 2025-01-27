@@ -1,6 +1,6 @@
 # keycloak-operator
 
-![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 25.0.6](https://img.shields.io/badge/AppVersion-25.0.6-informational?style=flat-square)
+![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
 
 Open source Identity and Access Management for modern applications and services
 
@@ -37,7 +37,10 @@ Kubernetes: `>=1.19.0`
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | serviceAccount.annotations | object | `{}` |  |
-| resources | object | `{}` |  |
+| resources.limits.cpu | string | `"700m"` |  |
+| resources.limits.memory | string | `"450Mi"` |  |
+| resources.requests.cpu | string | `"300m"` |  |
+| resources.requests.memory | string | `"450Mi"` |  |
 | livenessProbe.enabled | bool | `true` |  |
 | readinessProbe.enabled | bool | `true` |  |
 | startupProbe.enabled | bool | `true` |  |

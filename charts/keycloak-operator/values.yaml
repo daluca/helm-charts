@@ -24,7 +24,13 @@ serviceAccount:
   name: ""
   annotations: {}
 
-resources: {}
+resources:
+  limits:
+    cpu: 700m
+    memory: 450Mi
+  requests:
+    cpu: 300m
+    memory: 450Mi
 
 livenessProbe:
   enabled: true
